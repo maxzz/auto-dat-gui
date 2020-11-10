@@ -70,7 +70,7 @@
                 const x = pageX - rect.left;
                 const width = rect.right - rect.left;
                 const value = this.min + clamp(x / width, 0, 1) * (this.max - this.min);
-                this.$emit('updateState', value);
+                this.$emit('update:value', value);
                 console.log('listen', value, pageX);
             },
         },

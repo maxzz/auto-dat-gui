@@ -54,8 +54,7 @@
             </ul>
         </div>
 
-        <CtrlSlider />            
-        <Slider @updateState="updateState" />
+        <CtrlNumber />
         <div class="toggle-button">Show controls</div>
   </div>
 </template>
@@ -63,18 +62,13 @@
 <script lang="ts">
     import { defineComponent } from 'vue';
     import { name } from './controls/label/index';
-    import CtrlSlider from "./RowNumber.vue";
-    import Slider from "./RowNumberSlider.vue";
+    import CtrlNumber from "./RowNumber.vue";
 
     export default defineComponent({
-        components: { CtrlSlider, Slider },
+        components: { CtrlNumber },
         setup() {
-            function updateState(payload: any) {
-                console.log('payload', payload);
-            }
             return {
                 name,
-                updateState,
             }
         }
     });
@@ -199,7 +193,7 @@
                 &::-webkit-outer-spin-button {
                     -webkit-appearance: none;
                     margin: 0;
-                }            
+                }
             }
         }
         &.string {

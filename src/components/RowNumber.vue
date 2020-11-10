@@ -1,16 +1,28 @@
 <template>
-    <div></div>
+    <div>
+        <Slider v-model:value="sliderVal" />
+    </div>
 </template>
 
 <script lang="ts">
-    import { defineComponent } from "vue";
+    import { defineComponent, ref } from "vue";
+    import Slider from "./RowNumberSlider.vue";
 
     export default defineComponent({
+        components: { Slider },
         setup() {
-            return {};
+            function updateState(payload: any) {
+                console.log('payload', payload);
+                sliderVal.value = payload;
+            }
+            const sliderVal = ref(40);
+            return {
+                sliderVal,
+                updateState,
+            }
         },
     });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 </style>
