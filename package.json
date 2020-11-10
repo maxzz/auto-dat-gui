@@ -7,7 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@types/lodash.clamp": "^4.0.6",
+    "@types/lodash.tonumber": "^4.0.6",
     "core-js": "^3.6.5",
+    "lodash.clamp": "^4.0.3",
+    "lodash.tonumber": "^4.0.3",
     "vue": "^3.0.0"
   },
   "devDependencies": {
