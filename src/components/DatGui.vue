@@ -118,7 +118,7 @@ export default defineComponent({
         }
 
         li:not(.folder) {
-            height: $row-height;
+            height: $row-height + 1px;
             line-height: $row-height;
 
             padding: 0 $single-padding;
@@ -171,6 +171,7 @@ export default defineComponent({
             $slider-clr: #2fa1d6;
 
             .slider {
+                border: $control-inp-bdr;
                 background-color: $control-inp-bkg;
                 background-image: linear-gradient(90deg, $slider-clr, $slider-clr);
                 background-repeat: no-repeat;
@@ -179,6 +180,7 @@ export default defineComponent({
 
             input[type="number"] {
                 flex: 1;
+                border: 1px solid red;
                 color: $slider-clr;
 
                 -moz-appearance: textfield;
