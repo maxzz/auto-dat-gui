@@ -22,7 +22,8 @@
                     <label>
                         <span class="ctrl-label">number</span>
                         <div class="ctrl-value">
-                            <input type="text">
+                            <span class="slider" style="background-size: 40% 100%"></span>
+                            <input type="number" value="100" min="Infinity" max="Infinity" step="Infinity">
                         </div>
                     </label>
               </li>
@@ -76,8 +77,11 @@ export default defineComponent({
     $row-height: 28px;
     $single-padding: .4em;
 
-    $control-row-bkg: teal;
+    $control-row-bkg: rgb(0, 54, 54);
     $control-row-separator: lighten(teal, 1%);
+
+    $control-inp-bkg: lighten($control-row-bkg, 5%);
+    $control-inp-bdr: 1px solid lighten($control-row-bkg, 1%);
 
     //#endregion variables
 
@@ -142,33 +146,58 @@ export default defineComponent({
             }
             .ctrl-value {
                 width: 60%;
+                display: inline-flex;
 
-                input[type=text] {
+                input[type=text], input[type=number] {
                     width: 100%;
                     padding: $single-padding;
                     font-size: inherit;
                     border-radius: 0;
                     outline: none;
-                    background-color: pink;
-                    border: 1px solid blue;
+                    background-color: $control-inp-bkg;
+                    border: $control-inp-bdr;
                 }
             }
         }
 
+        $temp-fradient: 1;
+
         &.color {
-            background-color: darken($control-row-bkg, 20%);
+            background-color: darken($control-row-bkg, 5% * $temp-fradient);
         }
         &.number {
-            background-color: darken($control-row-bkg, 18%);
+            background-color: darken($control-row-bkg, 4% * $temp-fradient);
+
+            $slider-clr: #2fa1d6;
+
+            .slider {
+                background-color: $control-inp-bkg;
+                background-image: linear-gradient(90deg, $slider-clr, $slider-clr);
+                background-repeat: no-repeat;
+                flex: 3;
+            }
+
+            input[type="number"] {
+                flex: 1;
+                color: $slider-clr;
+
+                -moz-appearance: textfield;
+
+                &::-webkit-inner-spin-button,
+                &::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }            
+            }
         }
         &.string {
-            background-color: darken($control-row-bkg, 16%);
+            background-color: darken($control-row-bkg, 3% * $temp-fradient);
         }
         &.boolean {
-            background-color: darken($control-row-bkg, 14%);
+            background-color: darken($control-row-bkg, 2% * $temp-fradient);
         }
         &.button {
-            background-color: darken($control-row-bkg, 12%);
+            background-color: darken($control-row-bkg, 1% * $temp-fradient);
         }
     }
 
