@@ -75,13 +75,14 @@ export default defineComponent({
 
     $font-size: .8em;
     $row-height: 28px;
+    $row-height-fix: 1px;
     $single-padding: .4em;
 
     $control-row-bkg: rgb(0, 54, 54);
     $control-row-separator: lighten(teal, 1%);
 
     $control-inp-bkg: lighten($control-row-bkg, 5%);
-    $control-inp-bdr: 1px solid lighten($control-row-bkg, 1%);
+    $control-inp-bdr: $row-height-fix solid lighten($control-row-bkg, 1%);
 
     //#endregion variables
 
@@ -118,7 +119,7 @@ export default defineComponent({
         }
 
         li:not(.folder) {
-            height: $row-height + 1px;
+            height: $row-height + $row-height-fix;
             line-height: $row-height;
 
             padding: 0 $single-padding;
@@ -163,10 +164,10 @@ export default defineComponent({
         $temp-fradient: 1;
 
         &.color {
-            background-color: darken($control-row-bkg, 5% * $temp-fradient);
+            background-color: $control-row-bkg;
         }
         &.number {
-            background-color: darken($control-row-bkg, 4% * $temp-fradient);
+            background-color: $control-row-bkg;
 
             $slider-clr: #2fa1d6;
 
@@ -180,7 +181,6 @@ export default defineComponent({
 
             input[type="number"] {
                 flex: 1;
-                border: 1px solid red;
                 color: $slider-clr;
 
                 -moz-appearance: textfield;
@@ -193,13 +193,13 @@ export default defineComponent({
             }
         }
         &.string {
-            background-color: darken($control-row-bkg, 3% * $temp-fradient);
+            background-color: $control-row-bkg;
         }
         &.boolean {
-            background-color: darken($control-row-bkg, 2% * $temp-fradient);
+            background-color: $control-row-bkg;
         }
         &.button {
-            background-color: darken($control-row-bkg, 1% * $temp-fradient);
+            background-color: $control-row-bkg;
         }
     }
 
