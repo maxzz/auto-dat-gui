@@ -4,48 +4,48 @@
           <ul>
               <li class="control-row">
                     <label>
-                        <span class="ctl-label">{{ name }}</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">{{ name }}</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
               </li>
               <li class="control-row color">
                     <label>
-                        <span class="ctl-label">color</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">color</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
               </li>
               <li class="control-row number">
                     <label>
-                        <span class="ctl-label">number</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">number</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
               </li>
               <li class="control-row string">
                     <label>
-                        <span class="ctl-label">string</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">string</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
               </li>
               <li class="control-row boolean">
                     <label>
-                        <span class="ctl-label">boolean</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">boolean</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
               </li>
               <li class="control-row button">
                     <label>
-                        <span class="ctl-label">button</span>
-                        <div class="ctr-value">
+                        <span class="ctrl-label">button</span>
+                        <div class="ctrl-value">
                             <input type="text">
                         </div>
                     </label>
@@ -70,6 +70,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+    //#region variables
+
     $font-size: .8em;
     $row-height: 28px;
     $single-padding: .4em;
@@ -77,10 +79,12 @@ export default defineComponent({
     $control-row-bkg: teal;
     $control-row-separator: lighten(teal, 1%);
 
+    //#endregion variables
+
     .dat-gui {
         position: fixed;
         top: 0;
-        right: 0;
+        right: 1em;
         width: 245px;
 
         font-size: $font-size;
@@ -125,6 +129,32 @@ export default defineComponent({
     }
 
     .control-row {
+        label {
+            display: flex;
+            padding: 0 0 0 $single-padding;
+
+            .ctrl-label {
+                width: 40%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-align: left;
+                white-space: nowrap;
+            }
+            .ctrl-value {
+                width: 60%;
+
+                input[type=text] {
+                    width: 100%;
+                    padding: $single-padding;
+                    font-size: inherit;
+                    border-radius: 0;
+                    outline: none;
+                    background-color: pink;
+                    border: 1px solid blue;
+                }
+            }
+        }
+
         &.color {
             background-color: darken($control-row-bkg, 20%);
         }
