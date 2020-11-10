@@ -1,70 +1,80 @@
 <template>
   <div class="dat-gui">
-      <div class="group--main group">
-          <ul>
-              <li class="control-row">
-                    <label>
-                        <span class="ctrl-label">{{ name }}</span>
-                        <div class="ctrl-value">
-                            <input type="text">
-                        </div>
-                    </label>
-              </li>
-              <li class="control-row color">
-                    <label>
-                        <span class="ctrl-label">color</span>
-                        <div class="ctrl-value">
-                            <input type="text">
-                        </div>
-                    </label>
-              </li>
-              <li class="control-row number">
-                    <label>
-                        <span class="ctrl-label">number</span>
-                        <div class="ctrl-value">
-                            <span class="slider" style="background-size: 40% 100%"></span>
-                            <input type="number" value="100" min="Infinity" max="Infinity" step="Infinity">
-                        </div>
-                    </label>
-              </li>
-              <li class="control-row string">
-                    <label>
-                        <span class="ctrl-label">string</span>
-                        <div class="ctrl-value">
-                            <input type="text">
-                        </div>
-                    </label>
-              </li>
-              <li class="control-row boolean">
-                    <label>
-                        <span class="ctrl-label">boolean</span>
-                        <div class="ctrl-value">
-                            <input type="text">
-                        </div>
-                    </label>
-              </li>
-              <li class="control-row button">
-                    <label>
-                        <span class="ctrl-label">button</span>
-                        <div class="ctrl-value">
-                            <input type="text">
-                        </div>
-                    </label>
-              </li>
-          </ul>
-      </div>
-      <div class="toggle-button">Show controls</div>
+        <div class="group--main group">
+            <ul>
+                <li class="control-row">
+                        <label>
+                            <span class="ctrl-label">{{ name }}</span>
+                            <div class="ctrl-value">
+                                <input type="text">
+                            </div>
+                        </label>
+                </li>
+                <li class="control-row color">
+                        <label>
+                            <span class="ctrl-label">color</span>
+                            <div class="ctrl-value">
+                                <input type="text">
+                            </div>
+                        </label>
+                </li>
+                <li class="control-row number">
+                        <label>
+                            <span class="ctrl-label">number</span>
+                            <div class="ctrl-value">
+                                <span class="slider" style="background-size: 40% 100%"></span>
+                                <input type="number" value="100" min="Infinity" max="Infinity" step="Infinity">
+                            </div>
+                        </label>
+                </li>
+                <li class="control-row string">
+                        <label>
+                            <span class="ctrl-label">string</span>
+                            <div class="ctrl-value">
+                                <input type="text">
+                            </div>
+                        </label>
+                </li>
+                <li class="control-row boolean">
+                        <label>
+                            <span class="ctrl-label">boolean</span>
+                            <div class="ctrl-value">
+                                <input type="text">
+                            </div>
+                        </label>
+                </li>
+                <li class="control-row button">
+                        <label>
+                            <span class="ctrl-label">button</span>
+                            <div class="ctrl-value">
+                                <input type="text">
+                            </div>
+                        </label>
+                </li>
+            </ul>
+        </div>
+
+        <CtrlSlider />            
+        <Slider @updateState="updateState" />
+        <div class="toggle-button">Show controls</div>
   </div>
 </template>
 
 <script lang="ts">
     import { defineComponent } from 'vue';
     import { name } from './controls/label/index';
+    import CtrlSlider from "./RowNumber.vue";
+    import Slider from "./RowNumberSlider.vue";
 
     export default defineComponent({
+        components: { CtrlSlider, Slider },
         setup() {
+            function updateState(payload: any) {
+                console.log('payload', payload);
+            }
             return {
-                name
+                name,
+                updateState,
             }
         }
     });

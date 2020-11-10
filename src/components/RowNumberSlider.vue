@@ -12,26 +12,22 @@
     import toNumber from "lodash.tonumber";
     import clamp from "lodash.clamp";
 
-    // function clamp(number: number | string, lower: number | string, upper: number | string): number {
-    //     number = +number;
-    //     lower = +lower;
-    //     upper = +upper;
-    //     lower = lower === lower ? lower : 0;
-    //     upper = upper === upper ? upper : 0;
-    //     if (number === number) {
-    //         number = number <= upper ? number : upper;
-    //         number = number >= lower ? number : lower;
-    //     }
-    //     return number;
-    // }
-
     export default defineComponent({
         name: 'Slider',
         props: {
             value: [Number, String],
-            min: Number,
-            max: Number,
-            width: Number,
+            min: {
+                type: Number,
+                default: 0,
+            },
+            max: {
+                type: Number,
+                default: 100,
+            },
+            width: {
+                type: Number,
+                default: 40,
+            },
         },
         data() {
             return {
@@ -45,7 +41,7 @@
         },
         watch: {
             value(val) {
-                this.currentValue = toNumber(val)
+                this.currentValue = toNumber(val);
             },
         },
         computed: {
@@ -55,28 +51,46 @@
         },        
         methods: {
             handleMouseDown(evt: MouseEvent) {
-                this.updateState(evt.pageX)
-                window.addEventListener('mousemove', this.handleMouseMove)
-                window.addEventListener('mouseup', this.handleMouseUp)
-            },
-            handleMouseMove(evt: MouseEvent) {
-                this.updateState(evt.pageX)
+                this.updateState(evt.pageX);
+
+                window.addEventListener('mousemove', this.handleMouseMove);
+                window.addEventListener('mouseup', this.handleMouseUp);
             },
             handleMouseUp(evt: MouseEvent) {
-                this.updateState(evt.pageX)
-                window.removeEventListener('mousemove', this.handleMouseMove)
-                window.removeEventListener('mouseup', this.handleMouseUp)
+                this.updateState(evt.pageX);
+
+                window.removeEventListener('mousemove', this.handleMouseMove);
+                window.removeEventListener('mouseup', this.handleMouseUp);
+            },
+            handleMouseMove(evt: MouseEvent) {
+                this.updateState(evt.pageX);
             },
             updateState(pageX: number) {
-                const rect = this.$refs.slider.getBoundingClientRect()
-                const x = pageX - rect.left
-                const width = rect.right - rect.left
-                const value = this.min + clamp(x / width, 0, 1) * (this.max - this.min)
-                this.$emit('updateState', value)
+                const rect = this.$refs.slider.getBoundingClientRect();
+                const x = pageX - rect.left;
+                const width = rect.right - rect.left;
+                const value = this.min + clamp(x / width, 0, 1) * (this.max - this.min);
+                this.$emit('updateState', value);
+                console.log('listen', value, pageX);
             },
         },
       });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+    $background-color: #1a1a1a;
+    $input-background-color: lighten($background-color, 8.5%);
+    $number-color: #2FA1D6;
+
+    .slider {
+        height: 25px;
+        display: block;
+        position: relative;
+        cursor: ew-resize;
+        border: 1px solid $background-color;
+        background-color: $input-background-color;
+        background-image: linear-gradient(90deg, $number-color, $number-color);
+        background-size: 0% 100%;
+        background-repeat: no-repeat;        
+    }
 </style>
