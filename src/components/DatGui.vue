@@ -51,24 +51,30 @@
                             </div>
                         </label>
                 </li>
+
+                <RowNumber v-model:value="testNumber1" label="Font size" :min="-100" :max="100" :step="1" />
+                <RowNumber v-model:value="testNumber1" label="Font size" />
             </ul>
         </div>
 
-        <CtrlNumber />
         <div class="toggle-button">Show controls</div>
   </div>
 </template>
 
 <script lang="ts">
-    import { defineComponent } from 'vue';
+    import { defineComponent, ref } from 'vue';
     import { name } from './controls/label/index';
-    import CtrlNumber from "./RowNumber.vue";
+    import RowNumber from "./RowNumber.vue";
 
     export default defineComponent({
-        components: { CtrlNumber },
+        components: { RowNumber },
         setup() {
+            const testNumber1 = ref(20);
+            const testNumber2 = ref(20);
             return {
                 name,
+                testNumber1,
+                testNumber2,
             }
         }
     });
