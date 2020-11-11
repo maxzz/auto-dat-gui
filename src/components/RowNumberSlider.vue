@@ -1,14 +1,9 @@
 <template>
-    <span
-        ref="slider"
-        class="slider"
-        :style="{'background-size': `${progressWidth}% 100%`}"
-        @mousedown="handleMouseDown"
-    />
+    <span ref="slider" class="slider" :style="{'background-size': `${progressWidth}% 100%`}" @mousedown="handleMouseDown" />
 </template>
 
 <script lang="ts">
-    import { defineComponent } from "vue";
+    import { defineComponent, ref, watch } from "vue";
     import toNumber from "lodash.tonumber";
     import clamp from "lodash.clamp";
 
@@ -28,29 +23,40 @@
                 default: 100,
             }
         },
-        data() {
-            return {
-                currentValue: toNumber(this.value) || 0,
-            };
-        },
-        setup() {
-            return {
+        // data() {
+        //     return {
+        //         currentValue: toNumber(this.value) || 0,
+        //     };
+        // },
+        setup(props) {
+            let currentValue2 = ref(props.value || 0);
 
+            watch(() => props.value, () => {
+                currentValue2.value = toNumber(props.value);
+            });
+
+            return {
+                currentValue2,
             };
         },
-        watch: {
-            value(val) {
-                this.currentValue = toNumber(val);
-            },
-        },
+        // watch: {
+        //     value(val) {
+        //         this.currentValue2 = toNumber(val);
+        //         // this.currentValue = toNumber(val);
+        //         console.log('111', val, this.currentValue);
+        //     },
+        // },
         computed: {
             progressWidth(): number {
-                return clamp((this.currentValue - this.min) * 100 / (this.max - this.min), 0, 100);
+                return clamp((this.currentValue2 - this.min) * 100 / (this.max - this.min), 0, 100);
+                // return clamp((this.currentValue - this.min) * 100 / (this.max - this.min), 0, 100);
             },
         },
         methods: {
             handleMouseDown(evt: MouseEvent) {
-                if (evt.button)
+                if (evt.button !== 0) {
+                    return;
+                }
 
                 this.updateState(evt.pageX);
 
