@@ -23,44 +23,44 @@
                 default: 100,
             }
         },
-        setup(props) {
-            let currentValue = ref(+props.value || 0);
+        setup(props, { emit }) {
+            const currentValue = ref(+props.value || 0);
 
             watch(() => props.value, () => currentValue.value = toNumber(props.value));
-            let progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
+            const progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
 
-            return {
-                progressWidth,
-            };
-        },
-        methods: {
-            handleMouseDown(evt: MouseEvent) {
-                if (evt.button !== 0) {
-                    return;
+            const handleMouseDown = (evt: MouseEvent) => {
+                if (evt.button === 0) {
+                    updateState(evt.pageX);
+                    window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('mouseup', handleMouseUp);
                 }
+            }
+            const handleMouseUp = (evt: MouseEvent) => {
+                updateState(evt.pageX);
+                window.removeEventListener('mousemove', handleMouseMove);
+                window.removeEventListener('mouseup', handleMouseUp);
+            }
+            const handleMouseMove = (evt: MouseEvent) => {
+                updateState(evt.pageX);
+            }
 
-                this.updateState(evt.pageX);
-
-                window.addEventListener('mousemove', this.handleMouseMove);
-                window.addEventListener('mouseup', this.handleMouseUp);
-            },
-            handleMouseUp(evt: MouseEvent) {
-                this.updateState(evt.pageX);
-
-                window.removeEventListener('mousemove', this.handleMouseMove);
-                window.removeEventListener('mouseup', this.handleMouseUp);
-            },
-            handleMouseMove(evt: MouseEvent) {
-                this.updateState(evt.pageX);
-            },
-            updateState(pageX: number) {
-                const rect = this.$refs.slider.getBoundingClientRect();
+            const slider = ref(null);
+            
+            function updateState(pageX: number) {
+                const rect = slider.value.getBoundingClientRect();
                 const x = pageX - rect.left;
                 const width = rect.right - rect.left;
-                const value = this.min + clamp(x / width, 0, 1) * (this.max - this.min);
-                this.$emit('update:value', value);
-            },
-        },
+                const value = props.min + clamp(x / width, 0, 1) * (props.max - props.min);
+                emit('update:value', value);
+            }
+
+            return {
+                slider,
+                progressWidth,
+                handleMouseDown,
+            };
+        }
       });
 </script>
 
