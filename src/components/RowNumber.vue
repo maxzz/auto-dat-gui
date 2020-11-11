@@ -11,10 +11,8 @@
                     :value="currentValue"
                     @update:value="sanitizeNumber"
                 />
-                <!-- <Slider v-model:value="currentValue" /> -->
                 <input
                     type="number"
-                    ref="input"
                     :min="minValue"
                     :max="maxValue"
                     :step="stepValue"

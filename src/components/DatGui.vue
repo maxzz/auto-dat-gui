@@ -21,8 +21,10 @@
 
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" />
 
-                <RowNumber v-model:value="testNumber" label="Font size" :min="-100" :max="100" :step="1" />
+                <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" />
                 <RowNumber v-model:value="testNumber" label="Number" />
+
+                <RowString v-model:value="testString" label="Text" />
 
                 <li class="control-row string">
                         <label>
@@ -55,8 +57,9 @@
 
     <pre class="color: black">
         Test results:
-          Number: {{testNumber}}
+          Number : {{testNumber}}
           Boolean: {{testBoolean}}
+          Text   : {{testString}}
     </pre>
 
 </template>
@@ -66,13 +69,15 @@
     import { name } from './controls/label/index';
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
+    import RowString from "./RowString.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean },
+        components: { RowNumber, RowBoolean, RowString },
         setup() {
             const state = reactive({
                 testNumber: 70,
                 testBoolean: true,
+                testString: 'ABC'
             });
             return {
                 name,
@@ -93,8 +98,13 @@
     $control-row-bkg: rgb(0, 54, 54);
     $control-row-separator: lighten(teal, 1%);
 
+    $control-inp-clr: #ddd;
     $control-inp-bkg: lighten($control-row-bkg, 5%);
     $control-inp-bdr: $row-height-fix solid lighten($control-row-bkg, 1%);
+
+    $hover-lighten: 5%;
+    $border-lighten: 5%;
+    $active-lighten: 10%;
 
     //#endregion variables
 
@@ -107,7 +117,7 @@
         font-size: $font-size;
         font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-        color: #eee;
+        color: $control-inp-clr;
 
         & * {
             box-sizing: border-box;
@@ -170,6 +180,14 @@
                     outline: none;
                     background-color: $control-inp-bkg;
                     border: $control-inp-bdr;
+
+                    &:hover {
+                        background: lighten($control-inp-bkg, $hover-lighten);
+                    }
+                    &:focus {
+                        background: lighten($control-inp-bkg, $active-lighten);
+                        color: #fff;
+                    }                    
                 }
             }
         }
@@ -205,6 +223,10 @@
         }
         &.string {
             background-color: $control-row-bkg;
+
+            input {
+                color: $control-inp-clr;
+            }
         }
         &.boolean {
             background-color: $control-row-bkg;
