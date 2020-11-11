@@ -25,7 +25,7 @@
                 <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                 <RowNumber v-model:value="testNumber" label="Number" />
 
-                <RowButton label="Button" title="What to do with click event" @clicked="buttonClicked" />
+                <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
 
                 <li class="control-row button">
                         <label>
@@ -65,8 +65,8 @@
                 testBoolean: true,
                 testString: 'ABC',
             });
-            function buttonClicked(evt) {
-                console.log('buttonClicked', evt);
+            function buttonClicked(evt: MouseEvent) {
+                console.log(`buttonClicked: What to do with trusted(${evt.isTrusted}) click event`, evt);
             }
             return {
                 name,
