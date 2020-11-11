@@ -19,6 +19,8 @@
                         </label>
                 </li>
 
+                <RowBoolean v-model:checked="testBoolean" label="Boolean" />
+
                 <RowNumber v-model:value="testNumber" label="Font size" :min="-100" :max="100" :step="1" />
                 <RowNumber v-model:value="testNumber" label="Number" />
 
@@ -54,6 +56,7 @@
     <pre class="color: black">
         Test results:
           Number: {{testNumber}}
+          Boolean: {{testBoolean}}
     </pre>
 
 </template>
@@ -62,12 +65,14 @@
     import { defineComponent, ref, reactive, toRefs } from 'vue';
     import { name } from './controls/label/index';
     import RowNumber from "./RowNumber.vue";
+    import RowBoolean from "./RowBoolean.vue";
 
     export default defineComponent({
-        components: { RowNumber },
+        components: { RowNumber, RowBoolean },
         setup() {
             const state = reactive({
-                testNumber: 70
+                testNumber: 70,
+                testBoolean: true,
             });
             return {
                 name,
@@ -203,6 +208,11 @@
         }
         &.boolean {
             background-color: $control-row-bkg;
+
+            .ctrl-value {
+                display: flex;
+                align-items: center;
+            }
         }
         &.button {
             background-color: $control-row-bkg;

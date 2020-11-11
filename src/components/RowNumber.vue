@@ -1,6 +1,6 @@
 <template>
     <li class="control-row number">
-        <label ref="label">
+        <label>
             <span class="ctrl-label">{{ label }}</span>
             <div class="ctrl-value">
                 <Slider 
@@ -13,7 +13,6 @@
                 />
                 <!-- <Slider v-model:value="currentValue" /> -->
                 <input
-                    class="ctrl-value"
                     type="number"
                     ref="input"
                     :min="minValue"
@@ -102,27 +101,29 @@
 </script>
 
 <style lang="scss">
-    .dat-gui .control-row.number {
-        .control {
-            display: inline-flex;
+    // OK: but so far defined in DatGui: DatGui.vue
 
-            .slider {
-                flex: 3;
-            }
-            .input {
-                flex: 1;
-            }
-        }
+    // .dat-gui .control-row.number {
+    //     .control {
+    //         display: inline-flex;
 
-        input[type="number"] {
-            -moz-appearance: textfield;
+    //         .slider {
+    //             flex: 3;
+    //         }
+    //         .input {
+    //             flex: 1;
+    //         }
+    //     }
+
+    //     input[type="number"] {
+    //         -moz-appearance: textfield;
 
 
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-            }
-        }
-    }
+    //         &::-webkit-inner-spin-button,
+    //         &::-webkit-outer-spin-button {
+    //             -webkit-appearance: none;
+    //             margin: 0;
+    //         }
+    //     }
+    // }
 </style>
