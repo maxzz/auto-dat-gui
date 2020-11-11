@@ -27,14 +27,10 @@
 
                 <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
 
-                <li class="control-row button">
-                        <label>
-                            <span class="ctrl-label">button</span>
-                            <div class="ctrl-value">
-                                <input type="text">
-                            </div>
-                        </label>
-                </li>
+                <RowFolder label="Folder">
+                    <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                    <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                </RowFolder>
             </ul>
         </div>
         <div class="toggle-button">Show controls</div>
@@ -56,9 +52,10 @@
     import RowBoolean from "./RowBoolean.vue";
     import RowString from "./RowString.vue";
     import RowButton from "./RowButton.vue";
+    import RowFolder from "./RowFolder.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean, RowString, RowButton },
+        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder },
         setup() {
             const state = reactive({
                 testNumber: 70,
@@ -96,6 +93,10 @@
     $border-lighten: 5%;
     $active-lighten: 10%;
 
+    $nest-margin: 4px;
+    $folder-closed: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) 6px 48% no-repeat;
+    $folder-open: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) 6px 48% no-repeat;
+
     //#endregion variables
 
     .dat-gui {
@@ -122,27 +123,45 @@
             overflow-y: auto;
         }
     }
+    .folder {
+        background-color: brown;
+    }
+
     .group {
         overflow: hidden;
-
         ul {
             margin: 0;
             padding: 0;
         }
-
         li:not(.folder) {
             height: $row-height + $row-height-fix;
             line-height: $row-height;
-
             padding: 0 $single-padding;
             overflow: hidden;
 
             //background-color: $control-row-bkg;
             border-bottom: 1px solid $control-row-separator;
+            cursor: auto;
         }
-    }
-    .folder {
-        background-color: brown;
+        &.group--main {
+            & > ul {
+                max-height: 50vh;
+                overflow-y: auto;
+
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    background: blue;
+                }
+                &::-webkit-scrollbar-corner {
+                    height: 0;
+                    display: none;
+                }
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 5px;
+                    background: lighten(green, 30%);
+                }
+            }
+        }
     }
 
     .control-row {
@@ -177,7 +196,7 @@
                     &:focus {
                         background: lighten($control-inp-bkg, $active-lighten);
                         color: #fff;
-                    }                    
+                    }
                 }
             }
         }
@@ -229,6 +248,29 @@
         &.button {
             background-color: $control-row-bkg;
         }
+        &.folder {
+            .folder-text {
+                font-weight: bold;
+                user-select: none;
+                cursor: pointer;
+                padding: 5px 5px 5px 16px;
+                background: $folder-open;
+                text-align: left;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            ul {
+                margin-left: $nest-margin;
+                width: calc(100% - #{$nest-margin});
+            }
+            &.closed {
+                .title {
+                    background: $folder-closed;
+                }
+                ul {
+                    display: none;
+                }
+            }
+        }
     }
 
     .toggle-button {
@@ -239,4 +281,5 @@
         cursor: pointer;
         user-select: none;
     }
+
 </style>
