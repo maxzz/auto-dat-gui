@@ -154,6 +154,7 @@
                 text-overflow: ellipsis;
                 text-align: left;
                 white-space: nowrap;
+                user-select: none;
             }
             .ctrl-value {
                 width: 60%;
@@ -219,5 +220,6 @@
         text-align: center;
         background-color: #1a1a1a;
         cursor: pointer;
+        user-select: none;
     }
 </style>

@@ -71,7 +71,7 @@
 
     .slider {
         display: block;
-        height: 25px;
+        //height: 25px;
         cursor: ew-resize;
 
         background-color: $input-background-color;
@@ -79,6 +79,6 @@
         background-size: 0% 100%;
         background-repeat: no-repeat;
 
-        border: 1px solid $background-color;
+        //border: 1px solid $background-color;
     }
 </style>

@@ -9,7 +9,7 @@
                     :min="minValue"
                     :max="maxValue"
                     :value="currentValue"
-                    @updateState="sanitizeNumber"
+                    @update:value="sanitizeNumber"
                 />
                 <!-- <Slider v-model:value="currentValue" /> -->
                 <input
@@ -23,7 +23,6 @@
                     @change="handleChange"
                 />
             </div>
-            {{currentValue}}
         </label>
     </li>
 </template>
@@ -50,10 +49,6 @@
                 required: true,
             },
             label: String,
-        },
-        model: {
-            prop: "value",
-            event: "change",
         },
         setup(props, { emit }) {
             let minValue = typeof props.min === "number" ? props.min : Number.NEGATIVE_INFINITY;
@@ -86,10 +81,10 @@
                     safeNumber = Math.round(safeNumber / step) * step;
                 }
                 currentValue.value = safeNumber;
-                emit("change", safeNumber);
+                emit("update:value", safeNumber);
             }
-            function handleChange(evt) {
-                this.sanitizeNumber(evt.target.value);
+            function handleChange(evt: InputEvent) {
+                sanitizeNumber((evt.target as HTMLInputElement).value);
             }
 
             return {
