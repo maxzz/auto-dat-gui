@@ -1,7 +1,7 @@
 <template>
     <li class="control-row number">
         <label>
-            <span class="ctrl-label">{{ label }}</span>
+            <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
                 <Slider 
                     class="slider"
@@ -46,6 +46,10 @@
                 required: true,
             },
             label: String,
+            title: {
+                type: String,
+                default: null
+            }
         },
         setup(props, { emit }) {
             let minValue = typeof props.min === "number" ? props.min : Number.NEGATIVE_INFINITY;

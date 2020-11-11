@@ -1,7 +1,7 @@
 <template>
     <li class="control-row boolean">
         <label>
-            <span class="ctrl-label">{{ label }}</span>
+            <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
                 <input type="checkbox" :checked="currentValue" @change="handleChange" />
             </div>
@@ -17,6 +17,10 @@
         props: {
             checked: Boolean,
             label: String,
+            title: {
+                type: String,
+                default: null
+            },
         },
         setup(props, { emit }) {
             const currentValue = ref(props.checked);

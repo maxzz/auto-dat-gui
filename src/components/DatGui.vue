@@ -19,12 +19,12 @@
                         </label>
                 </li>
 
-                <RowBoolean v-model:checked="testBoolean" label="Boolean" />
+                <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
+                <RowString v-model:value="testString" label="Text" title="... or not" />
 
-                <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" />
+                <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                 <RowNumber v-model:value="testNumber" label="Number" />
 
-                <RowString v-model:value="testString" label="Text" />
 
                 <li class="control-row string">
                         <label>
