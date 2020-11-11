@@ -25,23 +25,8 @@
                 <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                 <RowNumber v-model:value="testNumber" label="Number" />
 
+                <RowButton label="Button" title="What to do with click event" @clicked="buttonClicked" />
 
-                <li class="control-row string">
-                        <label>
-                            <span class="ctrl-label">string</span>
-                            <div class="ctrl-value">
-                                <input type="text">
-                            </div>
-                        </label>
-                </li>
-                <li class="control-row boolean">
-                        <label>
-                            <span class="ctrl-label">boolean</span>
-                            <div class="ctrl-value">
-                                <input type="text">
-                            </div>
-                        </label>
-                </li>
                 <li class="control-row button">
                         <label>
                             <span class="ctrl-label">button</span>
@@ -70,18 +55,23 @@
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
     import RowString from "./RowString.vue";
+    import RowButton from "./RowButton.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean, RowString },
+        components: { RowNumber, RowBoolean, RowString, RowButton },
         setup() {
             const state = reactive({
                 testNumber: 70,
                 testBoolean: true,
-                testString: 'ABC'
+                testString: 'ABC',
             });
+            function buttonClicked(evt) {
+                console.log('buttonClicked', evt);
+            }
             return {
                 name,
                 ...toRefs(state),
+                buttonClicked,
             }
         }
     });
