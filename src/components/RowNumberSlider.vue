@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, watch } from "vue";
+    import { defineComponent, ref, watch, computed } from "vue";
     import toNumber from "lodash.tonumber";
     import clamp from "lodash.clamp";
 
@@ -23,34 +23,15 @@
                 default: 100,
             }
         },
-        // data() {
-        //     return {
-        //         currentValue: toNumber(this.value) || 0,
-        //     };
-        // },
         setup(props) {
-            let currentValue2 = ref(props.value || 0);
+            let currentValue = ref(+props.value || 0);
 
-            watch(() => props.value, () => {
-                currentValue2.value = toNumber(props.value);
-            });
+            watch(() => props.value, () => currentValue.value = toNumber(props.value));
+            let progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
 
             return {
-                currentValue2,
+                progressWidth,
             };
-        },
-        // watch: {
-        //     value(val) {
-        //         this.currentValue2 = toNumber(val);
-        //         // this.currentValue = toNumber(val);
-        //         console.log('111', val, this.currentValue);
-        //     },
-        // },
-        computed: {
-            progressWidth(): number {
-                return clamp((this.currentValue2 - this.min) * 100 / (this.max - this.min), 0, 100);
-                // return clamp((this.currentValue - this.min) * 100 / (this.max - this.min), 0, 100);
-            },
         },
         methods: {
             handleMouseDown(evt: MouseEvent) {
