@@ -11,7 +11,7 @@
     export default defineComponent({
         components: { Slider },
         setup() {
-            const sliderVal = ref(40);
+            const sliderVal = ref(100);
             return {
                 sliderVal,
             }

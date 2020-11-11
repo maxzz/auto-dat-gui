@@ -45,13 +45,22 @@
                 updateState(evt.pageX);
             }
 
-            const slider = ref(null);
+            const slider = ref<HTMLSpanElement>(null);
             
             function updateState(pageX: number) {
                 const rect = slider.value.getBoundingClientRect();
                 const x = pageX - rect.left;
                 const width = rect.right - rect.left;
                 const value = props.min + clamp(x / width, 0, 1) * (props.max - props.min);
+
+                if (value === currentValue.value) {
+                    console.log('===1');
+                    slider.value.style.cursor = 'pointer';
+                } else {
+                    console.log('===2');
+                    slider.value.style.cursor = 'ew-resize';
+                }
+
                 emit('update:value', value);
             }
 
