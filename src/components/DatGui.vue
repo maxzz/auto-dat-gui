@@ -1,5 +1,5 @@
 <template>
-  <div class="dat-gui">
+    <div class="dat-gui">
         <div class="group--main group">
             <ul>
                 <li class="control-row">
@@ -48,23 +48,30 @@
                 </li>
             </ul>
         </div>
-
         <div class="toggle-button">Show controls</div>
-  </div>
+    </div>
+
+    <pre class="color: black">
+        Test results:
+          Number: {{testNumber}}
+    </pre>
+
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref } from 'vue';
+    import { defineComponent, ref, reactive, toRefs } from 'vue';
     import { name } from './controls/label/index';
     import RowNumber from "./RowNumber.vue";
 
     export default defineComponent({
         components: { RowNumber },
         setup() {
-            const testNumber = ref(20);
+            const state = reactive({
+                testNumber: 70
+            });
             return {
                 name,
-                testNumber,
+                ...toRefs(state),
             }
         }
     });
