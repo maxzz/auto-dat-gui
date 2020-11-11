@@ -11,14 +11,9 @@
     export default defineComponent({
         components: { Slider },
         setup() {
-            function updateState(payload: any) {
-                console.log('payload', payload);
-                sliderVal.value = payload;
-            }
             const sliderVal = ref(40);
             return {
                 sliderVal,
-                updateState,
             }
         },
     });
