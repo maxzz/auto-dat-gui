@@ -18,15 +18,10 @@
                             </div>
                         </label>
                 </li>
-                <li class="control-row number">
-                        <label>
-                            <span class="ctrl-label">number</span>
-                            <div class="ctrl-value">
-                                <span class="slider" style="background-size: 40% 100%"></span>
-                                <input type="number" value="100" min="Infinity" max="Infinity" step="Infinity">
-                            </div>
-                        </label>
-                </li>
+
+                <RowNumber v-model:value="testNumber" label="Font size" :min="-100" :max="100" :step="1" />
+                <RowNumber v-model:value="testNumber" label="Number" />
+
                 <li class="control-row string">
                         <label>
                             <span class="ctrl-label">string</span>
@@ -51,9 +46,6 @@
                             </div>
                         </label>
                 </li>
-
-                <RowNumber v-model:value="testNumber1" label="Font size" :min="-100" :max="100" :step="1" />
-                <RowNumber v-model:value="testNumber1" label="Font size" />
             </ul>
         </div>
 
@@ -69,12 +61,10 @@
     export default defineComponent({
         components: { RowNumber },
         setup() {
-            const testNumber1 = ref(20);
-            const testNumber2 = ref(20);
+            const testNumber = ref(20);
             return {
                 name,
-                testNumber1,
-                testNumber2,
+                testNumber,
             }
         }
     });
@@ -171,8 +161,6 @@
                 }
             }
         }
-
-        $temp-fradient: 1;
 
         &.color {
             background-color: $control-row-bkg;
