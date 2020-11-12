@@ -95,6 +95,9 @@
     $control-inp-bkg: lighten($control-row-bkg, 5%);
     $control-inp-bdr: $row-height-fix solid lighten($control-row-bkg, 1%);
 
+    $scrollbar-bkg: $control-row-bkg;
+    $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
+
     $hover-lighten: 5%;
     $border-lighten: 5%;
     $active-lighten: 10%;
@@ -156,9 +159,14 @@
                 max-height: 50vh;
                 overflow-y: auto;
 
+                // Firefox, Chrome scrollbars
+
+                scrollbar-color: $scrollbar-thumb $scrollbar-bkg;
+                scrollbar-width: thin;                
+
                 &::-webkit-scrollbar {
                     width: 5px;
-                    background: blue;
+                    background: $scrollbar-bkg;
                 }
                 &::-webkit-scrollbar-corner {
                     height: 0;
@@ -166,7 +174,7 @@
                 }
                 &::-webkit-scrollbar-thumb {
                     border-radius: 5px;
-                    background: lighten(green, 30%);
+                    background: $scrollbar-thumb;
                 }
             }
         }
