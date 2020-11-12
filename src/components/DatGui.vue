@@ -19,6 +19,8 @@
                         </label>
                 </li>
 
+                <RowSelect label="Select" :items="[{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }]" />
+
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
                 <RowString v-model:value="testString" label="Text" title="... or not" />
 
@@ -65,9 +67,10 @@
     import RowString from "./RowString.vue";
     import RowButton from "./RowButton.vue";
     import RowFolder from "./RowFolder.vue";
+    import RowSelect from "./RowSelect.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder },
+        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect },
         setup() {
             const state = reactive({
                 testNumber: 70,
@@ -98,6 +101,9 @@
     $border-lighten: 5%;
     $active-lighten: 10%;
 
+    $nest-margin: 10px;
+    $folder-margin: 10px;
+
     $control-row-bkg: rgb(0, 54, 54);
     $control-row-separator: lighten(teal, 1%);
 
@@ -107,10 +113,8 @@
 
     $toggle-button-clr: #1a1a1a;
 
-    $nest-margin: 10px;
-    $folder-margin: 10px;
-    
     $folder-bkg: #000;
+    $folder-buttom-bdr: #ffffff33;
     $folder-closed: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) $folder-margin 48% no-repeat;
     $folder-open: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) $folder-margin 48% no-repeat;
 
@@ -194,7 +198,7 @@
             text-align: left;
 
             background: $folder-open;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid $folder-buttom-bdr;
 
             font-weight: bold;
             user-select: none;
@@ -314,6 +318,13 @@
         }
         &.button {
             background-color: $control-row-bkg;
+        }
+        &.select {
+            background-color: red;
+
+            select {
+                width: 100%;
+            }
         }
     }
 
