@@ -19,7 +19,7 @@
                         </label>
                 </li>
 
-                <RowSelect label="Select" :items="[{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }]" v-model:value="testSelect" />
+                <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
 
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
                 <RowString v-model:value="testString" label="Text" title="... or not" />
@@ -55,7 +55,7 @@
           Number : {{testNumber}}
           Boolean: {{testBoolean}}
           Text   : {{testString}}
-          Select : {{testSelect}}
+          Select : {{testSelect}} {{testItems.find(_ => _.value === testSelect)}}
     </pre>
 
 </template>
@@ -78,6 +78,7 @@
                 testBoolean: true,
                 testString: 'ABC',
                 testSelect: 'one',
+                testItems: [{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }],
             });
             function buttonClicked(evt: MouseEvent) {
                 console.log(`buttonClicked: What to do with trusted(${evt.isTrusted}) click event`, evt);
