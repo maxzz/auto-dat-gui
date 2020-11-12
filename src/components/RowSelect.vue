@@ -23,17 +23,19 @@
 
     export default defineComponent({
         name: "RowSelect",
-        props: {
-            value: [String, Number],
-            items: {
-                type: () => [] as SelectItem[]
-            },
-            label: String,
-            title: {
-                type: String,
-                default: null
-            },
-        },
+        // TODO: Types check for array is badly broken in Vue. Code below is OK, but Vue runtime check throws a warning.
+        // props: {
+        //     value: [String, Number],
+        //     items: {
+        //         type: () => [] as SelectItem[]
+        //     },
+        //     label: String,
+        //     title: {
+        //         type: String,
+        //         default: null
+        //     },
+        // },
+        props: ['value', 'items', 'label', 'title' ],
         setup(props, { emit }) {
             const currentValue = ref(props.value);
 
