@@ -328,6 +328,16 @@
                 color: $control-inp-clr;
                 border: $control-inp-bdr;
                 outline: none;
+                
+                // appearance: none;
+                // position: relative;
+                // &::after {
+                //     position: absolute;
+                //     top: 1px;
+                //     right: 20px;
+                //     content: "▼";
+                //     font-size: 1rem;
+                // }                
 
                 &:hover {
                     background: lighten($control-inp-bkg, $hover-lighten);
