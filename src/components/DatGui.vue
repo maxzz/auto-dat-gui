@@ -2,14 +2,8 @@
     <div class="dat-gui">
         <div class="group--main group">
             <ul>
-                <li class="control-row">
-                        <label>
-                            <span class="ctrl-label">{{ name }}</span>
-                            <div class="ctrl-value">
-                                <input type="text">
-                            </div>
-                        </label>
-                </li>
+                <RowTitle label="Title" background="olivedrab" color="#00ffff" />
+
                 <li class="control-row color">
                         <label>
                             <span class="ctrl-label">color</span>
@@ -69,9 +63,10 @@
     import RowButton from "./RowButton.vue";
     import RowFolder from "./RowFolder.vue";
     import RowSelect from "./RowSelect.vue";
+    import RowTitle from "./RowTitle.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect },
+        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle },
         setup() {
             const state = reactive({
                 testNumber: 70,
@@ -115,7 +110,7 @@
     $nest-margin: 10px;
     $folder-margin: 10px;
 
-    $control-row-bkg: rgb(0, 54, 54);
+    $control-row-bkg: #003636;
     $control-row-separator: lighten(teal, 1%);
 
     $control-inp-clr: #ddd;
@@ -151,7 +146,8 @@
     }
 
     .group--main {
-        background-color: olivedrab;
+        background-color: olivedrab; // default for new controls
+        //background-color: $control-row-bkg;
 
         & > ul {
             max-height: 50vh;
@@ -329,6 +325,9 @@
         }
         &.button {
             background-color: $control-row-bkg;
+        }
+        &.title {
+            background-color: olivedrab;
         }
         &.select {
             background-color: $control-row-bkg;
