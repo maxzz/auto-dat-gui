@@ -1,11 +1,11 @@
 <template>
-    <li class="control-row folder" :class="['folder', {'closed': currentValue}]">
-        <label class="group">
-            <span class="folder-text" :title="title" @clcik="handleClick">{{ label }}</span>
+    <li :class="['folder', {'closed': currentValue}]">
+        <div class="group">
+            <div class="folder-text" :title="title" @click="handleClick">{{ label }}</div>
             <ul>
                 <slot></slot>
             </ul>
-        </label>
+        </div>
     </li>
 </template>
 
@@ -29,6 +29,7 @@
 
             const handleClick = () => {
                 currentValue.value = !currentValue.value;
+                console.log(`bt ${currentValue.value}`);
                 emit("update:folded", currentValue.value);
             };
 

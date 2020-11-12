@@ -22,7 +22,7 @@
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
                 <RowString v-model:value="testString" label="Text" title="... or not" />
 
-                <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                <RowNumber v-model:value="testNumber" label="Number slider slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                 <RowNumber v-model:value="testNumber" label="Number" />
 
                 <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
@@ -30,6 +30,12 @@
                 <RowFolder label="Folder">
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+
+                    <RowFolder label="Nested Folder">
+                        <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                        <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                    </RowFolder>
+
                 </RowFolder>
             </ul>
         </div>
@@ -93,9 +99,11 @@
     $border-lighten: 5%;
     $active-lighten: 10%;
 
-    $nest-margin: 4px;
-    $folder-closed: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) 6px 48% no-repeat;
-    $folder-open: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) 6px 48% no-repeat;
+    $nest-margin: 20px;
+    $folder-margin: 10px;
+    
+    $folder-closed: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) $folder-margin 48% no-repeat;
+    $folder-open: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) $folder-margin 48% no-repeat;
 
     //#endregion variables
 
@@ -123,16 +131,15 @@
             overflow-y: auto;
         }
     }
-    .folder {
-        background-color: brown;
-    }
 
     .group {
         overflow: hidden;
+
         ul {
             margin: 0;
             padding: 0;
         }
+
         li:not(.folder) {
             height: $row-height + $row-height-fix;
             line-height: $row-height;
@@ -143,6 +150,7 @@
             border-bottom: 1px solid $control-row-separator;
             cursor: auto;
         }
+
         &.group--main {
             & > ul {
                 max-height: 50vh;
@@ -160,6 +168,34 @@
                     border-radius: 5px;
                     background: lighten(green, 30%);
                 }
+            }
+        }
+    }
+
+    .folder {
+        background-color: $control-row-bkg;
+
+        .folder-text {
+            font-weight: bold;
+            user-select: none;
+            cursor: pointer;
+            padding: 5px 5px 5px $folder-margin * 2;
+            background: $folder-open;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        ul {
+            margin-left: $nest-margin;
+            width: calc(100% - #{$nest-margin});
+        }
+
+        &.closed {
+            .folder-text {
+                background: $folder-closed;
+            }
+            ul {
+                display: none;
             }
         }
     }
@@ -221,8 +257,10 @@
                 flex: 1;
                 color: $slider-clr;
 
-                -moz-appearance: textfield;
+                min-width: .1em; // Firefox does not work without this.
 
+                // remove number slider arrows
+                -moz-appearance: textfield;
                 &::-webkit-inner-spin-button,
                 &::-webkit-outer-spin-button {
                     -webkit-appearance: none;
@@ -247,29 +285,6 @@
         }
         &.button {
             background-color: $control-row-bkg;
-        }
-        &.folder {
-            .folder-text {
-                font-weight: bold;
-                user-select: none;
-                cursor: pointer;
-                padding: 5px 5px 5px 16px;
-                background: $folder-open;
-                text-align: left;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            }
-            ul {
-                margin-left: $nest-margin;
-                width: calc(100% - #{$nest-margin});
-            }
-            &.closed {
-                .title {
-                    background: $folder-closed;
-                }
-                ul {
-                    display: none;
-                }
-            }
         }
     }
 

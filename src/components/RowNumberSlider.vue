@@ -1,5 +1,5 @@
 <template>
-    <span ref="slider" class="slider" :style="{'background-size': `${progressWidth}% 100%`}" @mousedown="handleMouseDown" />
+    <div ref="slider" class="slider" :style="{'background-size': `${progressWidth}% 100%`}" @mousedown="handleMouseDown"></div>
 </template>
 
 <script lang="ts">
