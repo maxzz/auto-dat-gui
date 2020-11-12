@@ -31,9 +31,15 @@
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
 
-                    <RowFolder label="Nested Folder">
+                    <RowFolder label="Nested Folder" closed>
                         <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                         <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+
+                        <RowFolder label="Nested Folder" closed>
+                            <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                            <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
+                        </RowFolder>
+
                     </RowFolder>
 
                 </RowFolder>
@@ -88,6 +94,10 @@
     $row-height-fix: 1px;
     $single-padding: .4em;
 
+    $hover-lighten: 5%;
+    $border-lighten: 5%;
+    $active-lighten: 10%;
+
     $control-row-bkg: rgb(0, 54, 54);
     $control-row-separator: lighten(teal, 1%);
 
@@ -95,18 +105,17 @@
     $control-inp-bkg: lighten($control-row-bkg, 5%);
     $control-inp-bdr: $row-height-fix solid lighten($control-row-bkg, 1%);
 
-    $scrollbar-bkg: $control-row-bkg;
-    $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
+    $toggle-button-clr: #1a1a1a;
 
-    $hover-lighten: 5%;
-    $border-lighten: 5%;
-    $active-lighten: 10%;
-
-    $nest-margin: 20px;
+    $nest-margin: 10px;
     $folder-margin: 10px;
     
-    $folder-closed: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) $folder-margin 48% no-repeat;
-    $folder-open: #000 url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) $folder-margin 48% no-repeat;
+    $folder-bkg: #000;
+    $folder-closed: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) $folder-margin 48% no-repeat;
+    $folder-open: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) $folder-margin 48% no-repeat;
+
+    $scrollbar-bkg: $control-row-bkg;
+    $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
 
     //#endregion variables
 
@@ -127,11 +136,15 @@
     }
 
     .group--main {
-        background-color: red;
+        background-color: olivedrab;
 
         & > ul {
             max-height: 50vh;
             overflow-y: auto;
+        }
+
+        li {
+            list-style-type: none;
         }
     }
 
@@ -184,13 +197,15 @@
         background-color: $control-row-bkg;
 
         .folder-text {
+            padding: 5px 5px 5px $folder-margin * 2;
+            text-align: left;
+
+            background: $folder-open;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
             font-weight: bold;
             user-select: none;
             cursor: pointer;
-            padding: 5px 5px 5px $folder-margin * 2;
-            background: $folder-open;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         ul {
@@ -206,6 +221,15 @@
                 display: none;
             }
         }
+    }
+
+    .toggle-button {
+        height: $row-height * .8;
+        line-height: $row-height * .8;
+        text-align: center;
+        background-color: $toggle-button-clr;
+        cursor: pointer;
+        user-select: none;
     }
 
     .control-row {
@@ -294,15 +318,6 @@
         &.button {
             background-color: $control-row-bkg;
         }
-    }
-
-    .toggle-button {
-        height: $row-height * .8;
-        line-height: $row-height * .8;
-        text-align: center;
-        background-color: #1a1a1a;
-        cursor: pointer;
-        user-select: none;
     }
 
 </style>

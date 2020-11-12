@@ -29,8 +29,7 @@
 
             const handleClick = () => {
                 currentValue.value = !currentValue.value;
-                console.log(`bt ${currentValue.value}`);
-                emit("update:folded", currentValue.value);
+                emit("update:folded", currentValue.value); // TODO: Do it as callback instead of custom event to preserve trust.
             };
 
             return {
