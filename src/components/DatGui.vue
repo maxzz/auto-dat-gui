@@ -55,7 +55,7 @@
           Number : {{testNumber}}
           Boolean: {{testBoolean}}
           Text   : {{testString}}
-          Select : {{testSelect}} {{testItems.find(_ => _.value === testSelect)}}
+          Select : {{testSelect}} -> {{findSelectedValue()}}
     </pre>
 
 </template>
@@ -80,13 +80,21 @@
                 testSelect: 'one',
                 testItems: [{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }],
             });
+
             function buttonClicked(evt: MouseEvent) {
                 console.log(`buttonClicked: What to do with trusted(${evt.isTrusted}) click event`, evt);
             }
+
+            function findSelectedValue() {
+                let item = state.testItems.find(_ => _.value === state.testSelect);
+                return item?.name || 'none';
+            }
+
             return {
                 name,
                 ...toRefs(state),
                 buttonClicked,
+                findSelectedValue,
             }
         }
     });
