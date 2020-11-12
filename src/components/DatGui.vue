@@ -141,6 +141,24 @@
         & > ul {
             max-height: 50vh;
             overflow-y: auto;
+
+            // Firefox, Chrome scrollbars
+
+            scrollbar-color: $scrollbar-thumb $scrollbar-bkg;
+            scrollbar-width: thin;                
+
+            &::-webkit-scrollbar {
+                width: 5px;
+                background: $scrollbar-bkg;
+            }
+            &::-webkit-scrollbar-corner {
+                height: 0;
+                display: none;
+            }
+            &::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background: $scrollbar-thumb;
+            }
         }
 
         li {
@@ -165,31 +183,6 @@
             //background-color: $control-row-bkg;
             border-bottom: 1px solid $control-row-separator;
             cursor: auto;
-        }
-
-        &.group--main {
-            & > ul {
-                max-height: 50vh;
-                overflow-y: auto;
-
-                // Firefox, Chrome scrollbars
-
-                scrollbar-color: $scrollbar-thumb $scrollbar-bkg;
-                scrollbar-width: thin;                
-
-                &::-webkit-scrollbar {
-                    width: 5px;
-                    background: $scrollbar-bkg;
-                }
-                &::-webkit-scrollbar-corner {
-                    height: 0;
-                    display: none;
-                }
-                &::-webkit-scrollbar-thumb {
-                    border-radius: 5px;
-                    background: $scrollbar-thumb;
-                }
-            }
         }
     }
 
@@ -313,6 +306,10 @@
             .ctrl-value {
                 display: flex;
                 align-items: center;
+
+                input[type=checkbox] {
+                    margin-left: 0;
+                }
             }
         }
         &.button {
