@@ -19,7 +19,7 @@
                         </label>
                 </li>
 
-                <RowSelect label="Select" :items="[{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }]" />
+                <RowSelect label="Select" :items="[{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }]" :value="'one'" />
 
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
                 <RowString v-model:value="testString" label="Text" title="... or not" />

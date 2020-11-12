@@ -35,7 +35,7 @@
         //         default: null
         //     },
         // },
-        props: ['value', 'items', 'label', 'title' ],
+        props: ['value', 'items', 'label', 'title' ], // TODO: Add select by index (for localized string values)
         setup(props, { emit }) {
             const currentValue = ref(props.value);
 
