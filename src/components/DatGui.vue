@@ -320,10 +320,22 @@
             background-color: $control-row-bkg;
         }
         &.select {
-            background-color: red;
+            background-color: $control-row-bkg;
 
             select {
                 width: 100%;
+                background-color: $control-row-bkg;
+                color: $control-inp-clr;
+                border: $control-inp-bdr;
+                outline: none;
+
+                &:hover {
+                    background: lighten($control-inp-bkg, $hover-lighten);
+                }
+                &:focus {
+                    background: lighten($control-inp-bkg, $active-lighten);
+                    color: #fff;
+                }
             }
         }
     }
