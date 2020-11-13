@@ -33,7 +33,7 @@
             watch(() => props.checked, () => currentValue.value = props.checked);
 
             const picker = ref(null);
-            
+
             const { x, y } = useMouse(picker);
             watch(x, (val) => console.log('cp-x', val));
             watch(y, (val) => console.log('cp-y', val));
@@ -47,8 +47,24 @@
                 currentValue,
                 handleChange,
                 picker,
+                x,
+                y,
             };
         },
+        watch: {
+            x: {
+                immediate: true,
+                handler(val) {
+                    console.log('---------- x val', val);
+                }
+            },
+            y: {
+                immediate: true,
+                handler(val) {
+                    console.log('---------- y val', val);
+                }
+            }
+        }
     });
 </script>
 
