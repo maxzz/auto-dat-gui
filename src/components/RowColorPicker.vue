@@ -35,7 +35,7 @@
                 <div class="cp__fm-fields">
                     <div v-for="k in colorModes[currentMode]" :key="k">
                         <div style="position: relative;">
-                            <!-- <input @change="handleInput(k, $event)" :value="colorModel[k]" :type="constrains[k].type" :maxlength="constrains[k].maxlength" /> -->
+                            <input @change="handleInput(k, $event)" :value="colorModel[k]" :type="constrains[k].type" :maxlength="constrains[k].maxlength" />
                             <span>{{ k }}</span>
                         </div>
                     </div>
@@ -63,6 +63,44 @@
     import "./RowColorPicker.scss";
     import VCtrl from "./utils/v-ctrl.js";
     import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode } from "./utils/v-color-utils";
+
+    type TConstraint = {
+        type: string; // 'number' | 'string'
+        maxlength: number;
+    }
+
+    type TConstraints = {
+        [key: string]: TConstraint;
+    }
+
+    function constrains(): TConstraints {
+        const commonNumber = {
+            type: "number",
+            maxlength: 3
+        };
+
+        const percentValue = {
+            type: "string",
+            maxlength: 4
+        };
+
+        return {
+            r: commonNumber,
+            g: commonNumber,
+            b: commonNumber,
+            h: commonNumber,
+            s: percentValue,
+            l: percentValue,
+            a: {
+                type: "number",
+                maxlength: 4
+            },
+            hex: {
+                type: "string",
+                maxlength: 9
+            }
+        };
+    }
 
     const COLOR_MODES = {
         rgba: ["r", "g", "b", "a"],
@@ -109,8 +147,9 @@
     }
 
     interface Data extends TColorData {
-        currentMode: string; // ColorMode
+        currentMode: ColorMode;
         colorModel: ColorModel;
+        constrains: TConstraints;
     }
 
     export default defineComponent({
@@ -141,6 +180,7 @@
                     l: '',
                     a: 0
                 },
+                constrains: constrains()
             };
         },
         watch: {
