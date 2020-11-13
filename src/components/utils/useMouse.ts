@@ -8,6 +8,7 @@ export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
     let stop = () => {};
 
     stop = watch(targetRef, (el: HTMLElement, prevEl: HTMLElement, onCleanup) => {
+        
         const moveHandler = (event: MouseEvent) => {
             x.value = event.pageX;
             y.value = event.pageY;
