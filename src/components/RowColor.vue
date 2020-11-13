@@ -1,12 +1,13 @@
 <template>
-    <li class="control-row color">
+    <!-- <li class="control-row color">
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
                 <RowColorPicker />
             </div>
         </label>
-    </li>
+    </li> -->
+    <RowColorPicker />
 </template>
 
 <script lang="ts">

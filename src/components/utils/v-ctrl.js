@@ -9,7 +9,6 @@ const toPrecision = function (num, precision) {
 
 const VueCtrlComponent = {
     name: "v-ctrl",
-    abstract: true,
     props: {
         direction: {
             type: String,
@@ -26,7 +25,6 @@ const VueCtrlComponent = {
             type: Number
         }
     },
-
     methods: {
         msdown(e) {
             e.preventDefault();
@@ -83,7 +81,7 @@ const VueCtrlComponent = {
     },
 
     render(h) {
-        return this.$slots.default[0];
+        return this.$slots.default();
     },
 
     created() {
@@ -101,10 +99,6 @@ const VueCtrlComponent = {
 
     unmounted() {
         this.$el.removeEventListener("mousedown", this.msdown);
-    },
-
-    install() {
-        Vue.component(VueCtrlComponent.name, VueCtrlComponent);
     }
 };
 
