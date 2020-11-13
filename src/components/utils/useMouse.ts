@@ -14,9 +14,14 @@ export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
             y.value = event.pageY;
         };
 
+        console.log('watch', el, prevEl);
+
         document.addEventListener("mousemove", moveHandler);
 
         onCleanup(() => {
+            console.log('watch cleanup', el, prevEl);
+            //debugger;
+
             document.removeEventListener("mousemove", moveHandler);
         });
     }, { immediate: true });
