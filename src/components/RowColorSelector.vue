@@ -12,6 +12,13 @@
 <script lang="ts">
     import { defineComponent, ref, watch } from "vue";
 
+    import parse2rgb from "pure-color/parse";
+    import rgb2hsv from "pure-color/convert/rgb2hsv";
+    import rgb2hex from "pure-color/convert/rgb2hex";
+    import hsv2hsl from "pure-color/convert/hsv2hsl";
+    import hsv2rgb from "pure-color/convert/hsv2rgb";
+    import hsl2rgb from "pure-color/convert/hsl2rgb";
+
     function toPercent(n, precision = 3) {
         const num = (n * 100).toPrecision(precision | 0);
         return `${num}%`;
