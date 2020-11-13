@@ -44,6 +44,8 @@
             </ul>
         </div>
         <div class="toggle-button">Show controls</div>
+
+        <RowColor label="Color" />
     </div>
 
     <pre class="color: black">

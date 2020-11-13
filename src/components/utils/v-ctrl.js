@@ -99,7 +99,7 @@ const VueCtrlComponent = {
         this.$el.addEventListener("mousedown", this.msdown);
     },
 
-    destroyed() {
+    unmounted() {
         this.$el.removeEventListener("mousedown", this.msdown);
     },
 

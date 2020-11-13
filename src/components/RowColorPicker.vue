@@ -33,17 +33,12 @@
 
             <div style="margin-top: 10px">
                 <div class="cp__fm-fields">
-                    <!-- <div v-for="k in colorModes[currentMode]" :key="k">
+                    <div v-for="k in colorModes[currentMode]" :key="k">
                         <div style="position: relative;">
-                            <input
-                                @change="handleInput(k, $event)"
-                                :value="colorModel[k]"
-                                :type="constrains[k].type"
-                                :maxlength="constrains[k].maxlength"
-                            />
+                            <!-- <input @change="handleInput(k, $event)" :value="colorModel[k]" :type="constrains[k].type" :maxlength="constrains[k].maxlength" /> -->
                             <span>{{ k }}</span>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
 
                 <div class="cp__fm-switcher">
@@ -90,8 +85,7 @@
         const rgba = convert.parse2rgb(val);
         const alpha = rgba[3] == null ? 1 : rgba[3];
         const [hue, saturation, value] = convert.rgb2hsv(rgba);
-        // format of alpha: `.2f`
-        // according to Chrome DevTool
+        // format of alpha: `.2f` according to Chrome DevTool
         const _alpha = parseFloat(alpha.toFixed(2));
         return {
             alpha: _alpha,
@@ -114,8 +108,8 @@
         hex: string; // maxlength: 9
     }
 
-    type Data = TColorData | {
-        currentMode: ColorMode;
+    interface Data extends TColorData {
+        currentMode: string; // ColorMode
         colorModel: ColorModel;
     }
 
@@ -220,6 +214,9 @@
                         left: toPercent(1 - hue)
                     }
                 };
+            },
+            colorModes() {
+                return COLOR_MODES;
             }
         },
         methods: {
@@ -323,7 +320,6 @@
             }
         },
         created() {
-            console.log('created');
             this.handleInput = debounce(this.handleInput.bind(this), 50);
         }
     });
