@@ -15,13 +15,13 @@ import debounce from "lodash/debounce";
 
 import "./RowColorPicker.scss";
 import VCtrl from "./utils/v-ctrl.js";
-import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr } from "./utils/v-color-utils";
+import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode } from "./utils/v-color-utils";
 
-const colorModes = Object.freeze({
+const COLOR_MODES = {
     rgba: ["r", "g", "b", "a"],
     hsla: ["h", "s", "l", "a"],
     hex: ["hex"]
-});
+};
 
 type TSaturation = {
     x: number;
@@ -51,61 +51,50 @@ function digestProp(val: string): TColorData {
     };
 }
 
+type ColorModel = {
+    r: number;   // maxLength: 3
+    g: number;   // maxLength: 3
+    b: number;   // maxLength: 3
+    h: number;   // maxLength: 3
+    s: string;   // maxLength: 4
+    l: string;   // maxLength: 4
+    a: number;   // maxlength: 4
+    hex: string; // maxlength: 9
+}
+
+type Data = TColorData | {
+    currentMode: ColorMode;
+    colorModel: ColorModel;
+}
+
 export default defineComponent({
     name: "RowColorPicker",
     props: {
         color: {
             type: String,
-            default: "#7f2f2f"
+            default: "#000000"
         }
     },
     components: { VCtrl },
     // setup(props, { emit }) {
     //     return {};
     // },
-    data() {
+    data(): Data {
         const { color } = this;
-
-        const commonNumber = {
-            type: "number",
-            maxlength: 3
-        };
-
-        const percentValue = {
-            type: "string",
-            maxlength: 4
-        };
 
         return {
             ...digestProp(color),
             currentMode: getColorType(color),
-            colorModes,
             colorModel: {
                 hex: "",
-                r: "",
-                g: "",
-                b: "",
-                h: "",
+                r: 0,
+                g: 0,
+                b: 0,
+                h: 0,
                 s: "",
                 l: "",
-                a: ""
+                a: 0
             },
-            constrains: {
-                r: commonNumber,
-                g: commonNumber,
-                b: commonNumber,
-                h: commonNumber,
-                s: percentValue,
-                l: percentValue,
-                a: {
-                    type: "number",
-                    maxlength: 4
-                },
-                hex: {
-                    type: "string",
-                    maxlength: 9
-                }
-            }
         };
     },
     watch: {
@@ -189,8 +178,7 @@ export default defineComponent({
             this.hue = 1 - e;
         },
         onAlphaChange(e) {
-            // format of alpha: `.2f`
-            // according to Chrome DevTool
+            // format of alpha: `.2f` according to Chrome DevTool
             this.alpha = parseFloat(e.toFixed(2));
         },
 
@@ -200,11 +188,10 @@ export default defineComponent({
 
             this.$emit("change", { rgba, hsla, hex: hexVal });
 
-            // this ensures that every component in
-            // our model is up to date
+            // this ensures that every component in our model is up to date
             const [h, s, l] = hsla;
             const [r, g, b] = rgba;
-            const shortHex = Object.assign(this.colorModel, {
+            Object.assign(this.colorModel, {
                 r,
                 g,
                 b,
@@ -217,10 +204,11 @@ export default defineComponent({
         },
 
         changecurrentMode() {
-            const modes = Object.keys(this.colorModes);
+            const modes = Object.keys(COLOR_MODES);
             const index = modes.indexOf(this.currentMode);
             this.currentMode = modes[(index + 1) % modes.length];
         },
+
         handleInput(type, event) {
             const { currentMode, colorModel } = this;
             const {
@@ -270,8 +258,8 @@ export default defineComponent({
 
             if (changed) {
                 const { h, s, l, r, g, b, a, hex } = colorModel;
-                let literal = hex;
 
+                let literal = hex;
                 if (currentMode === "rgba") {
                     literal = `rgba(${[r, g, b, a]})`;
                 } else if (currentMode === "hsla") {
