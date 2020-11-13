@@ -14,20 +14,9 @@ export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
             y.value = event.pageY;
         };
 
-        console.log('MOUSE', target, targetRef.value, el, prevEl);
+        el && el.addEventListener("mousedown", moveHandler);
 
-        if (el) {
-            el.addEventListener("mousemove", moveHandler);
-        }
-
-        onCleanup(() => {
-            console.log('watch cleanup', el, prevEl);
-            //debugger;
-
-            if (prevEl) {
-                prevEl.removeEventListener("mousemove", moveHandler);
-            }
-        });
+        onCleanup(() => prevEl && prevEl.removeEventListener("mousedown", moveHandler));
     }, { immediate: true });
 
     return {
