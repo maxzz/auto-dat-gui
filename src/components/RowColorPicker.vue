@@ -15,7 +15,7 @@ import debounce from "lodash/debounce";
 
 import "./RowColorPicker.scss";
 import VCtrl from "./utils/v-ctrl.js";
-import { toPercent, getColorType, simplifyHex, convert } from "./utils/v-color-utils";
+import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr } from "./utils/v-color-utils";
 
 const colorModes = Object.freeze({
     rgba: ["r", "g", "b", "a"],
@@ -56,23 +56,26 @@ export default defineComponent({
     props: {
         color: {
             type: String,
-            default: "#ff0000"
+            default: "#7f2f2f"
         }
     },
     components: { VCtrl },
-    setup(props, { emit }) {
-        return {};
-    },
+    // setup(props, { emit }) {
+    //     return {};
+    // },
     data() {
         const { color } = this;
+
         const commonNumber = {
             type: "number",
             maxlength: 3
         };
+
         const percentValue = {
             type: "string",
             maxlength: 4
         };
+
         return {
             ...digestProp(color),
             currentMode: getColorType(color),
@@ -124,29 +127,24 @@ export default defineComponent({
         }
     },
     computed: {
-        hsva() {
+        hsva(): ArrayHsva {
             const { hue, alpha, saturation: { x, y } } = this;
-            return [hue * 360, x * 100, (1 - y) * 100, alpha];
+            return [ hue * 360, x * 100, (1 - y) * 100, alpha ];
         },
-        rgba() {
+        rgba(): ArrayRgba {
             const { alpha, hsva } = this;
             const [r, g, b] = convert.hsv2rgb(hsva);
-            return [Math.round(r), Math.round(g), Math.round(b), alpha];
+            return [ Math.round(r), Math.round(g), Math.round(b), alpha ];
         },
-        hsla() {
+        hsla(): ArrayHsvaStr {
             const { alpha, hsva } = this;
             const [h, s, l] = convert.hsv2hsl(hsva);
-            return [
-                Math.round(h),
-                `${Math.round(s)}%`,
-                `${Math.round(l)}%`,
-                alpha
-            ];
+            return [ Math.round(h), `${Math.round(s)}%`, `${Math.round(l)}%`, alpha ];
         },
-        hex() {
+        hex(): string {
             return convert.rgb2hex(this.rgba);
         },
-        previewBorderColor() {
+        previewBorderColor(): string {
             const [r, g, b] = this.rgba;
             if ((r + g + b) / 3 > 235) {
                 return `rgba(160,160,160,0.8)`;
@@ -154,9 +152,9 @@ export default defineComponent({
             return "transparent";
         },
         styles() {
-            const { rgba, alpha, hue, saturation }: {rgba: number, alpha: number, hue: number, saturation: number} = this;
+            const { rgba, alpha, hue, saturation } = this;
             const strRGB = rgba.slice(0, 3).join(", ");
-            const strHueRGB = convert.hsl2rgb([hue * 360, 100, 50]).map(v => Math.round(v)).join(", ");
+            const strHueRGB = convert.hsl2rgb([hue * 360, 100, 50] as any as ArrayHsl).map(v => Math.round(v)).join(", ");
             return {
                 preview: {
                     backgroundColor: `rgba(${rgba.join(", ")})`,
@@ -195,15 +193,12 @@ export default defineComponent({
             // according to Chrome DevTool
             this.alpha = parseFloat(e.toFixed(2));
         },
+
         emitChange() {
             const { alpha, hex, rgba, hsla } = this;
             const hexVal = simplifyHex(alpha === 1 ? hex.slice(0, 7) : hex);
 
-            this.$emit("change", {
-                rgba,
-                hsla,
-                hex: hexVal
-            });
+            this.$emit("change", { rgba, hsla, hex: hexVal });
 
             // this ensures that every component in
             // our model is up to date
@@ -220,6 +215,7 @@ export default defineComponent({
                 hex: hexVal
             });
         },
+
         changecurrentMode() {
             const modes = Object.keys(this.colorModes);
             const index = modes.indexOf(this.currentMode);
@@ -264,10 +260,7 @@ export default defineComponent({
                     break;
                 case "hex":
                     if (value[0] === "#") {
-                        if (
-                            colorModel[type] !== value &&
-                            convert.parse2rgb(value).every(i => !isNaN(i))
-                        ) {
+                        if (colorModel[type] !== value && convert.parse2rgb(value).every(i => !isNaN(i))) {
                             colorModel[type] = simplifyHex(value);
                             changed = true;
                         }
@@ -278,11 +271,13 @@ export default defineComponent({
             if (changed) {
                 const { h, s, l, r, g, b, a, hex } = colorModel;
                 let literal = hex;
+
                 if (currentMode === "rgba") {
                     literal = `rgba(${[r, g, b, a]})`;
                 } else if (currentMode === "hsla") {
                     literal = `hsla(${[h, s, l, a]})`;
                 }
+
                 Object.assign(this, digestProp(literal));
             }
         }

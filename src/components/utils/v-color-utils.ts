@@ -5,7 +5,11 @@ import hsv2hsl from "pure-color/convert/hsv2hsl";
 import hsv2rgb from "pure-color/convert/hsv2rgb";
 import hsl2rgb from "pure-color/convert/hsl2rgb";
 
-export type ArrayRgba = [r: number, g: number, b: number] | [r: number, g: number, b: number, a: number];
+export type ArrayRgba = [number, number, number, number?]; // Vutue does not like that: [r: number, g: number, b: number, a?: number]
+export type ArrayHsla = [number, number, number, number?];
+export type ArrayHsva = [number, number, number, number?];
+export type ArrayHsvaStr = [number, string, string, number?];
+
 export type ArrayRgb = [r: number, g: number, b: number];
 export type ArrayHsl = [h: number, s: number, l: number];
 export type ArrayHsv = [h: number, s: number, v: number];
@@ -20,7 +24,7 @@ export type TConvert = {
     rgb2hex: (val: ArrayRgba) => StringHex,
     hsv2hsl: (val: ArrayHsv | ArrayRgba) => ArrayHsl,
     hsv2rgb: (val: ArrayHsv | ArrayRgba) => ArrayRgb,
-    hsl2rgb: (val: ArrayRgba) => ArrayRgb, // alpha
+    hsl2rgb: (val: ArrayHsl | ArrayRgba) => ArrayRgb,
 }
 
 export const convert: TConvert = { parse2rgb, rgb2hsv, rgb2hex, hsv2hsl, hsv2rgb, hsl2rgb };
@@ -30,7 +34,9 @@ export function toPercent(n, precision = 3) {
     return `${num}%`;
 }
 
-export function getColorType(color) {
+export type ColorMode = 'hex' | 'rgba' | 'hsla';
+
+export function getColorType(color: string): ColorMode {
     if (color[0] === "#") {
         return "hex";
     }
@@ -41,6 +47,7 @@ export function getColorType(color) {
         return "hsla";
     }
     console.log(`${color} is not valid color value!`);
+    return 'hex';
 }
 
 export function simplifyHex(val) {
