@@ -56,10 +56,12 @@
           Select : {{testSelect}} -> {{findSelectedValue()}}
     </pre>
 
+    <div class="test-picker" ref="picker" ></div>
+
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, reactive, toRefs } from 'vue';
+    import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
     import { name } from './controls/label/index';
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
@@ -69,6 +71,8 @@
     import RowSelect from "./RowSelect.vue";
     import RowTitle from "./RowTitle.vue";
     import RowColor from "./RowColor.vue";
+
+    import { useMouse } from './utils/useMouse';
 
     export default defineComponent({
         components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle, RowColor },
@@ -90,17 +94,32 @@
                 return item?.name || 'none';
             }
 
+            const picker = ref(null);
+            const { x, y } = useMouse(picker);
+            watch(x, (val) => console.log('x', val));
+            watch(y, (val) => console.log('y', val));
+
             return {
                 name,
                 ...toRefs(state),
                 buttonClicked,
                 findSelectedValue,
+                picker,
             }
         }
     });
 </script>
 
 <style lang="scss">
+    .test-picker {
+        position: absolute;
+        top: 10em;
+        left: 1em;
+        width: 200px;
+        height: 150px;
+        background-color: red;
+    }
+
     //#region variables
 
     $font-size: .8em;
