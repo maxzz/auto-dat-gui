@@ -4,14 +4,14 @@
             <ul>
                 <RowTitle label="Title" background="olivedrab" color="#00ffff" />
 
-                <li class="control-row color">
+                <!-- <li class="control-row color">
                         <label>
                             <span class="ctrl-label">color</span>
                             <div class="ctrl-value">
                                 <input type="text">
                             </div>
                         </label>
-                </li>
+                </li> -->
 
                 <RowColor label="Color" />
 

@@ -3,7 +3,7 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
-                <input type="checkbox" :checked="currentValue" @change="handleChange" />
+                <RowColorPicker />
             </div>
         </label>
     </li>
