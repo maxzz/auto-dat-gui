@@ -13,6 +13,8 @@
                         </label>
                 </li>
 
+                <RowColor label="Color" />
+
                 <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
 
                 <RowBoolean v-model:checked="testBoolean" label="Boolean" title="I can explain that" />
@@ -64,9 +66,10 @@
     import RowFolder from "./RowFolder.vue";
     import RowSelect from "./RowSelect.vue";
     import RowTitle from "./RowTitle.vue";
+    import RowColor from "./RowColor.vue";
 
     export default defineComponent({
-        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle },
+        components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle, RowColor },
         setup() {
             const state = reactive({
                 testNumber: 70,

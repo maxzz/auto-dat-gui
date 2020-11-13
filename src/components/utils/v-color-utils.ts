@@ -10,9 +10,9 @@ export type ArrayHsla = [number, number, number, number?];
 export type ArrayHsva = [number, number, number, number?];
 export type ArrayHsvaStr = [number, string, string, number?];
 
-export type ArrayRgb = [r: number, g: number, b: number];
-export type ArrayHsl = [h: number, s: number, l: number];
-export type ArrayHsv = [h: number, s: number, v: number];
+export type ArrayRgb = [number, number, number];
+export type ArrayHsl = [number, number, number];
+export type ArrayHsv = [number, number, number];
 
 export type StringRgb = string; // like rgba(127, 0, 0, .5)
 export type StringHsl = string; // like hsl(240, 50%, 50%, .5)

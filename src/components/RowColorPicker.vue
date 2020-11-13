@@ -86,13 +86,13 @@ export default defineComponent({
             ...digestProp(color),
             currentMode: getColorType(color),
             colorModel: {
-                hex: "",
+                hex: '',
                 r: 0,
                 g: 0,
                 b: 0,
                 h: 0,
-                s: "",
-                l: "",
+                s: '',
+                l: '',
                 a: 0
             },
         };
