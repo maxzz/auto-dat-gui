@@ -108,8 +108,4 @@ const VueCtrlComponent = {
     }
 };
 
-// if (typeof window !== "undefined" && window.Vue) {
-//     Vue.use(VueCtrlComponent);
-// }
-
-export default { VueCtrlComponent };
+export default VueCtrlComponent;

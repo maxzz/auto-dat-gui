@@ -11,6 +11,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, watch } from "vue";
+    import RowColorPicker from "./RowColorPicker.vue";
 
     export default defineComponent({
         name: "RowColor",
@@ -22,6 +23,7 @@
                 default: null
             },
         },
+        components: { RowColorPicker },
         setup(props, { emit }) {
             const currentValue = ref(props.checked);
 
