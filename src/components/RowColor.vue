@@ -7,7 +7,8 @@
             </div>
         </label>
     </li> -->
-    <RowColorPicker ref="picker" />
+    <div class="test-picker" ref="picker" ></div>
+    <RowColorPicker />
 </template>
 
 <script lang="ts">
@@ -51,4 +52,12 @@
 </script>
 
 <style lang="scss">
+    .test-picker {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 150px;
+        background-color: red;
+    }
 </style>

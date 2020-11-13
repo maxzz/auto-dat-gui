@@ -14,15 +14,19 @@ export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
             y.value = event.pageY;
         };
 
-        console.log('watch', el, prevEl);
+        console.log('MOUSE', target, targetRef.value, el, prevEl);
 
-        document.addEventListener("mousemove", moveHandler);
+        if (el) {
+            el.addEventListener("mousemove", moveHandler);
+        }
 
         onCleanup(() => {
             console.log('watch cleanup', el, prevEl);
             //debugger;
 
-            document.removeEventListener("mousemove", moveHandler);
+            if (prevEl) {
+                prevEl.removeEventListener("mousemove", moveHandler);
+            }
         });
     }, { immediate: true });
 
