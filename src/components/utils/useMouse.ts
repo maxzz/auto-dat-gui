@@ -1,5 +1,6 @@
 import { ref, Ref, watch, WatchStopHandle } from "vue";
-import throttle from "lodash/throttle";
+//import throttle from "lodash/throttle";
+import throttle from "./throttle";
 import clamp from "lodash/clamp";
 
 const toPrecision = function (num: number, precision: number): number {
@@ -16,8 +17,8 @@ export function useMouse(target: HTMLElement | Ref<HTMLElement | null>) {
     stop = watch(targetRef, (el: HTMLElement, prevEl: HTMLElement, onCleanup) => {
 
         const precision: number = 2;
-        const throttleAs = 80;
-        const msmove = throttle(onMove, throttleAs);
+        const throttleMs = 80;
+        const msmove = throttle(onMove, throttleMs);
         
         function onDown(event: MouseEvent): void {
             event.preventDefault();

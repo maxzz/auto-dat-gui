@@ -1,24 +1,51 @@
-export default function throttle(callback: Function, delay: number) {
-    let last: number;
-    let timer: number;
+/**
+ * Throttle execution of a function. Especially useful for rate limiting
+ * execution of handlers on events like resize and scroll.
+ *
+ * @param  {Function}  fn             A function to be executed after delay milliseconds. The `this` context and all arguments are passed through, as-is,
+ *                                    to `callback` when the throttled-function is executed.
+ * @param  {Number}    delay          A zero-or-greater delay in milliseconds. For event callbacks, values around 100 or 250 (or even higher) are most useful.
+ *
+ * @return {Function}  A new, throttled, function.
+ * 
+ * https://github.com/antfu/vueuse/blob/master/packages/core/useThrottleFn/index.ts
+ */
+export default function throttle<T extends Function>(fn: T, delay = 200, trailing = true): T {
+    if (delay <= 0) {
+        return fn;
+    }
 
-    // eslint-disable-next-line func-names
-    return function () {
-        const context = this;
-        const newDelay = this.animationDuration > 1000 ? delay : this.animationDuration / 10;
-        const now = +new Date();
-        // eslint-disable-next-line prefer-rest-params
-        const args = arguments;
+    let lastExec = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let lastThis: any;
+    let lastArgs: any[];
 
-        if (last && now < last + newDelay) {
+    function clear() {
+        if (timer) {
             clearTimeout(timer);
-            timer = setTimeout(() => {
-                last = now;
-                callback.apply(context, args);
-            }, newDelay);
-        } else {
-            last = now;
-            callback.apply(context, args);
+            timer = undefined;
         }
-    };
+    }
+
+    function timeoutCallback() {
+        clear();
+        fn.apply(lastThis, lastArgs);
+    }
+
+    function wrapper(this: any, ...args: any[]) {
+        const elapsed = Date.now() - lastExec;
+
+        clear();
+
+        if (elapsed > delay) {
+            lastExec = Date.now();
+            fn.apply(this, args);
+        } else if (trailing) {
+            lastArgs = args;
+            lastThis = this;
+            timer = setTimeout(timeoutCallback, delay);
+        }
+    }
+
+    return (wrapper as any) as T;
 }
