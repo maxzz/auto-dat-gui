@@ -35,7 +35,7 @@
             const picker = ref(null);
 
             const pos = useMouse(picker);
-            watch(() => pos, (val) => console.log('cp-all', val.x.value, val.y.value), {deep: true});
+            //watch(() => pos, (val) => console.log('cp-all', val.x.value, val.y.value), {deep: true});
 
             const handleChange = () => {
                 currentValue.value = !currentValue.value;
@@ -46,22 +46,18 @@
                 currentValue,
                 handleChange,
                 picker,
+                pos,
             };
         },
-        // watch: {
-        //     x: {
-        //         immediate: true,
-        //         handler(val) {
-        //             console.log('---------- x val', val);
-        //         }
-        //     },
-        //     y: {
-        //         immediate: true,
-        //         handler(val) {
-        //             console.log('---------- y val', val);
-        //         }
-        //     }
-        // }
+        watch: {
+            pos: {
+                immediate: true,
+                handler(val) {
+                    console.log('---------- x,y val', val.x.value, val.y.value);
+                },
+                deep: true,
+            },
+        }
     });
 </script>
 
