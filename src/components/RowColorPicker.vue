@@ -218,11 +218,25 @@
             },
             pos_s: {
                 handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
-                    console.log('val', val.pos.x.value, val.pos.y.value);
+                    console.log('sat', val.pos.x.value, val.pos.y.value);
                     this.saturation = { x: val.pos.x.value, y: val.pos.y.value };
                 },
                 deep: true
-            }
+            },
+            pos_h: {
+                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
+                    console.log('hue', val.pos.x.value, val.pos.y.value);
+                    this.hue = 1 - val.pos.x.value;
+                },
+                deep: true
+            },
+            pos_a: {
+                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
+                    console.log('alpha', val.pos.x.value, val.pos.y.value);
+                    this.alpha = parseFloat(val.pos.x.value.toFixed(2));
+                },
+                deep: true
+            },
         },
         computed: {
             hsva(): ArrayHsva {
