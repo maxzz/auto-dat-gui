@@ -95,15 +95,15 @@
             }
 
             const picker = ref(null);
-            const { x, y } = useMouse(picker);
-            watch(x, (val) => console.log('x', val));
-            watch(y, (val) => console.log('y', val));
+            const pos = useMouse(picker);
+            watch(() => pos.pos, (val) => console.log('mouse x,y', val.x.value, val.y.value), {deep: true});
 
             return {
                 name,
                 ...toRefs(state),
                 buttonClicked,
                 findSelectedValue,
+                
                 picker,
             }
         }

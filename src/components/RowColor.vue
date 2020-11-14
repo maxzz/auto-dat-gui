@@ -46,7 +46,7 @@
                 currentValue,
                 handleChange,
                 picker,
-                pos,
+                pos: pos.pos,
             };
         },
         watch: {
