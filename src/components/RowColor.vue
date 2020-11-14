@@ -1,10 +1,12 @@
 <template>
-    <li class="control-row color" style="height: 300px">
+    <li class="control-row color" @mouseleave="onMouseLeave">
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
-            <div class="ctrl-value">
+            <div class="ctrl-value" @mouseover="onMouseOver">
                 <input type="text" v-model="currentValue" readonly> <!-- TODO: digestProp cannot handle validation of untrusted input -->
-                <RowColorPicker :color="currentValue" @update:color="handleChange" />
+                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" /> <!-- TODO: check popup position is inside viewport -->
+                <!-- TODO: Check color contrast if background will show different colors -->
+                <!-- TODO: show current and previous colors -->
             </div>
         </label>
     </li>
@@ -38,13 +40,52 @@
                 emit("update:color", currentValue.value);
             };
 
+            const showPicker = ref(false);
+
+            function onMouseOver() {
+                showPicker.value = true;
+                window.addEventListener('keydown', onKeyDown)
+            }
+            function onMouseLeave() {
+                showPicker.value = false;
+                console.log('removed');
+                window.removeEventListener('keydown', onKeyDown)
+            }
+            function onKeyDown(event) {
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    showPicker.value = false;
+                }
+            }            
+
             return {
                 currentValue,
                 handleChange,
+                showPicker,
+                onMouseOver,
+                onMouseLeave,
             };
         },
     });
 </script>
 
 <style lang="scss">
+    .control-row.color {
+        .ctrl-value {
+            // position: relative;
+            // overflow: visible;
+            // z-index: 1;
+
+            input[type="text"] {
+                text-align: center;
+            }
+
+            & > div {
+                width: 300px;
+                position: absolute;
+                //top: 0;
+                right: 2em;
+                z-index: 2;
+            }
+        }
+    }
 </style>

@@ -3,7 +3,11 @@
         <div class="group--main group">
             <ul>
                 <RowTitle label="Title" background="olivedrab" color="#00ffff" />
+                <RowTitle label="Title" background="olivedrab" color="#00ffff" />
+                <RowTitle label="Title" background="olivedrab" color="#00ffff" />
 
+                <RowColor label="Color" v-model:color="testColor" />
+                <RowColor label="Color" v-model:color="testColor" />
                 <RowColor label="Color" v-model:color="testColor" />
 
                 <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
