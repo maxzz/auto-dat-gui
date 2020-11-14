@@ -1,13 +1,13 @@
 <template>
-    <!-- <li class="control-row color">
+    <li class="control-row color" style="height: 300px">
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
-                <RowColorPicker />
+                <input type="text" v-model="currentValue">
+                <RowColorPicker :color="currentValue" @update:color="handleChange" />
             </div>
         </label>
-    </li> -->
-    <RowColorPicker />
+    </li>
 </template>
 
 <script lang="ts">
@@ -17,7 +17,10 @@
     export default defineComponent({
         name: "RowColor",
         props: {
-            checked: Boolean,
+            color: {
+                type: String,
+                default: '#00f' // TODO: handle color names like 'blue', 'red', and so on.
+            },
             label: String,
             title: {
                 type: String,
@@ -26,13 +29,14 @@
         },
         components: { RowColorPicker },
         setup(props, { emit }) {
-            const currentValue = ref(props.checked);
+            const currentValue = ref(props.color);
 
-            watch(() => props.checked, () => currentValue.value = props.checked);
+            watch(() => props.color, () => currentValue.value = props.color);
 
-            const handleChange = () => {
-                currentValue.value = !currentValue.value;
-                emit("update:checked", currentValue.value);
+            const handleChange = (e) => {
+                currentValue.value = e.hex;
+                console.log('c', currentValue.value);
+                emit("update:color", currentValue.value);
             };
 
             return {

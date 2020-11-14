@@ -49,6 +49,10 @@
 </template>
 
 <script lang="ts">
+    // TODO: DevTools color palletes
+    // TODO: re-work types on pure-colors
+    // TODO: gradients
+
     import { defineComponent, Ref, ref, watch } from "vue";
 
     import clamp from "lodash/clamp";
@@ -113,7 +117,7 @@
     }
 
     function digestProp(val: string): TColorData {
-        const rgba = convert.parse2rgb(val);
+        const rgba = val ? convert.parse2rgb(val) : [0,0,0,1] as ArrayRgba; // TODO: definitely get rid off parse2rgb due to default values
         const alpha = rgba[3] == null ? 1 : rgba[3];
         const [hue, saturation, value] = convert.rgb2hsv(rgba);
         // format of alpha: `.2f` according to Chrome DevTool
@@ -195,7 +199,16 @@
                 immediate: true,
                 handler(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        Object.assign(this, digestProp(newVal));
+                        console.log('before', newVal, oldVal);
+                        try {
+                            let data = digestProp(newVal);
+                            console.log('assign', data, {newVal, oldVal});
+                            Object.assign(this, data);
+                        } catch(err) {
+                            console.log('Invalid NEW', newVal, oldVal);
+                            //console.log('my', err);
+                        }
+                        console.log('after', newVal, oldVal);
                     }
                 }
             },

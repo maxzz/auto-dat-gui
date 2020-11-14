@@ -53,3 +53,7 @@ export function getColorType(color: string): ColorMode {
 export function simplifyHex(val: string): string {
     return val.replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3([0-9a-f]?)\4$/, "#$1$2$3$4");
 }
+
+export function clamp(val: number, min: number, max: number): number {
+    return Math.min(Math.max(val, min), max);
+}

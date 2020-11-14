@@ -4,16 +4,7 @@
             <ul>
                 <RowTitle label="Title" background="olivedrab" color="#00ffff" />
 
-                <!-- <li class="control-row color">
-                        <label>
-                            <span class="ctrl-label">color</span>
-                            <div class="ctrl-value">
-                                <input type="text">
-                            </div>
-                        </label>
-                </li> -->
-
-                <RowColor label="Color" />
+                <RowColor label="Color" v-model:color="testColor" />
 
                 <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
 
@@ -44,8 +35,6 @@
             </ul>
         </div>
         <div class="toggle-button">Show controls</div>
-
-        <RowColor label="Color" />
     </div>
 
     <pre class="color: black">
@@ -54,6 +43,7 @@
           Boolean: {{testBoolean}}
           Text   : {{testString}}
           Select : {{testSelect}} -> {{findSelectedValue()}}
+          Color  : {{testColor}}
     </pre>
 </template>
 
@@ -78,6 +68,7 @@
                 testString: 'ABC',
                 testSelect: 'one',
                 testItems: [{name: 'First option', value: 'one' }, {name: 'Second option', value: 'two' }],
+                testColor: '',
             });
 
             function buttonClicked(evt: MouseEvent) {
