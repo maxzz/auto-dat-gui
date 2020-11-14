@@ -1,7 +1,7 @@
 <template>
     <div class="cp__wrapper">
         <v-ctrl direction="vh" :precision="2" :throttle="80" @change="onSaturationChange">
-            <div class="cp__v-ctrl cp__saturation">
+            <div ref="ref_s" class="cp__v-ctrl cp__saturation">
                 <div class="msk-hue" :style="styles.saturationPane"></div>
                 <div class="msk-white"></div>
                 <div class="msk-black"></div>
@@ -17,13 +17,13 @@
 
                 <div class="cp__tracks">
                     <v-ctrl direction="h" :precision="2" :throttle="80" @change="onHueChange">
-                        <div class="cp__v-ctrl cp__ctrl-bar cp__ctrl-hue">
+                        <div ref="ref_h" class="cp__v-ctrl cp__ctrl-bar cp__ctrl-hue">
                             <div class="cp__thumb" :style="styles.hueThumb"></div>
                         </div>
                     </v-ctrl>
 
                     <v-ctrl direction="h" :precision="2" :throttle="80" @change="onAlphaChange">
-                        <div class="cp__v-ctrl cp__ctrl-alpha">
+                        <div ref="ref_a" class="cp__v-ctrl cp__ctrl-alpha">
                             <div class="cp__thumb" :style="styles.alphaThumb"></div>
                             <div class="cp__ctrl-bar" :style="styles.alphaTrack"></div>
                         </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, watch } from "vue";
+    import { defineComponent, Ref, ref, watch } from "vue";
 
     import clamp from "lodash/clamp";
     import debounce from "lodash/debounce";
@@ -63,6 +63,7 @@
     import "./RowColorPicker.scss";
     import VCtrl from "./utils/v-ctrl.js";
     import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode } from "./utils/v-color-utils";
+    import { useMouse } from './utils/useMouse';
 
     type TConstraint = {
         type: string; // 'number' | 'string'
@@ -161,9 +162,24 @@
             }
         },
         components: { VCtrl },
-        // setup(props, { emit }) {
-        //     return {};
-        // },
+        setup(props, { emit }) {
+            const ref_s = ref(null);
+            const ref_h = ref(null);
+            const ref_a = ref(null);
+
+            const pos_s = useMouse(ref_s);
+            const pos_h = useMouse(ref_h);
+            const pos_a = useMouse(ref_a);
+
+            return {
+                ref_s,
+                ref_h,
+                ref_a,
+                pos_s,
+                pos_h,
+                pos_a,
+            };
+        },
         data(): Data {
             const { color } = this;
 
@@ -199,6 +215,13 @@
                         this.emitChange();
                     }
                 }
+            },
+            pos_s: {
+                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
+                    console.log('val', val.pos.x.value, val.pos.y.value);
+                    this.saturation = { x: val.pos.x.value, y: val.pos.y.value };
+                },
+                deep: true
             }
         },
         computed: {

@@ -27,6 +27,8 @@ const VueCtrlComponent = {
     },
     methods: {
         msdown(e) {
+            console.log('down');
+
             e.preventDefault();
             document.addEventListener("mousemove", this.msmove);
             document.addEventListener("mouseup", this.msup);
@@ -45,6 +47,8 @@ const VueCtrlComponent = {
         },
 
         notify(val) {
+            console.log('change', val);
+
             if (isEqual(this.memo, val) === false) {
                 this.memo = val;
                 this.$emit("change", val);
@@ -85,10 +89,11 @@ const VueCtrlComponent = {
     },
 
     created() {
-        const { msdown, msmove } = this;
+        //console.log('created');
+        //debugger
 
-        this.msdown = msdown.bind(this);
-        this.msmove = throttle(msmove.bind(this), this.throttle);
+        this.msdown = this.msdown.bind(this);
+        this.msmove = throttle(this.msmove.bind(this), this.throttle);
 
         this.memo = null;
     },
