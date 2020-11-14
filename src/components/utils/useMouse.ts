@@ -7,7 +7,7 @@ const toPrecision = function (num: number, precision: number): number {
     return p > 0 ? parseFloat(num.toFixed(p)) : num;
 }
 
-export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
+export function useMouse(target: HTMLElement | Ref<HTMLElement | null>) {
     const targetRef = ref(target);
     const x = ref(0); // in range [0, 1]
     const y = ref(0); // in range [0, 1]
