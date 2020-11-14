@@ -21,6 +21,8 @@
                 <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
 
                 <RowFolder label="Folder">
+                    <RowColor label="Color" v-model:color="testColor" />
+
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
 
@@ -32,9 +34,7 @@
                             <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                             <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                         </RowFolder>
-
                     </RowFolder>
-
                 </RowFolder>
             </ul>
         </div>

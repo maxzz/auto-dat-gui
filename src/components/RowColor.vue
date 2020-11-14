@@ -3,7 +3,7 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value" @mouseover="onMouseOver">
-                <input type="text" v-model="currentValue" readonly> <!-- TODO: digestProp cannot handle validation of untrusted input -->
+                <input type="text" v-model="currentValue" readonly :style="{ 'background-color': currentValue, color: inputColor }"> <!-- TODO: digestProp cannot handle validation of untrusted input -->
                 <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" /> <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, watch } from "vue";
+    import { computed, defineComponent, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
 
     export default defineComponent({
@@ -48,14 +48,26 @@
             }
             function onMouseLeave() {
                 showPicker.value = false;
-                console.log('removed');
+                //console.log('removed');
                 window.removeEventListener('keydown', onKeyDown)
             }
             function onKeyDown(event) {
                 if (event.key === 'Enter' || event.keyCode === 13) {
                     showPicker.value = false;
                 }
-            }            
+            }
+
+            const inputColor = computed(() => {
+                // TODO: does not work well with alpha close to 0.
+                if (props.color.length !== 7 || props.color[0] !== '#') {
+                    return 'black';
+                }
+                const r = parseInt(currentValue.value.substr(1, 2), 16);
+                const g = parseInt(currentValue.value.substr(3, 2), 16);
+                const b = parseInt(currentValue.value.substr(5, 2), 16);
+                const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                return yiq >= 128 ? 'black' : 'white';
+            });
 
             return {
                 currentValue,
@@ -63,6 +75,7 @@
                 showPicker,
                 onMouseOver,
                 onMouseLeave,
+                inputColor,
             };
         },
     });
