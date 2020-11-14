@@ -1,13 +1,11 @@
 <template>
     <div class="cp__wrapper">
-        <v-ctrl direction="vh" :precision="2" :throttle="80" @change="onSaturationChange">
-            <div ref="ref_s" class="cp__v-ctrl cp__saturation">
-                <div class="msk-hue" :style="styles.saturationPane"></div>
-                <div class="msk-white"></div>
-                <div class="msk-black"></div>
-                <p class="cp__thumb" :style="styles.saturationThumb"></p>
-            </div>
-        </v-ctrl>
+        <div ref="ref_s" class="cp__v-ctrl cp__saturation">
+            <div class="msk-hue" :style="styles.saturationPane"></div>
+            <div class="msk-white"></div>
+            <div class="msk-black"></div>
+            <p class="cp__thumb" :style="styles.saturationThumb"></p>
+        </div>
 
         <div class="cp__ctrl-pane">
             <div>
@@ -16,18 +14,14 @@
                 </div>
 
                 <div class="cp__tracks">
-                    <v-ctrl direction="h" :precision="2" :throttle="80" @change="onHueChange">
-                        <div ref="ref_h" class="cp__v-ctrl cp__ctrl-bar cp__ctrl-hue">
-                            <div class="cp__thumb" :style="styles.hueThumb"></div>
-                        </div>
-                    </v-ctrl>
+                    <div ref="ref_h" class="cp__v-ctrl cp__ctrl-bar cp__ctrl-hue">
+                        <div class="cp__thumb" :style="styles.hueThumb"></div>
+                    </div>
 
-                    <v-ctrl direction="h" :precision="2" :throttle="80" @change="onAlphaChange">
-                        <div ref="ref_a" class="cp__v-ctrl cp__ctrl-alpha">
-                            <div class="cp__thumb" :style="styles.alphaThumb"></div>
-                            <div class="cp__ctrl-bar" :style="styles.alphaTrack"></div>
-                        </div>
-                    </v-ctrl>
+                    <div ref="ref_a" class="cp__v-ctrl cp__ctrl-alpha">
+                        <div class="cp__thumb" :style="styles.alphaThumb"></div>
+                        <div class="cp__ctrl-bar" :style="styles.alphaTrack"></div>
+                    </div>
                 </div>
             </div>
 
@@ -61,7 +55,6 @@
     import debounce from "lodash/debounce";
 
     import "./RowColorPicker.scss";
-    import VCtrl from "./utils/v-ctrl.js";
     import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode } from "./utils/v-color-utils";
     import { useMouse } from './utils/useMouse';
 
@@ -161,7 +154,6 @@
                 default: "#000000"
             }
         },
-        components: { VCtrl },
         setup(props, { emit }) {
             const ref_s = ref(null);
             const ref_h = ref(null);
