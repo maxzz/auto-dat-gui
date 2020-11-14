@@ -7,7 +7,7 @@ const toPrecision = function (num: number, precision: number = 2): number {
     return p > 0 ? parseFloat(num.toFixed(p)) : num;
 }
 
-export function useMouse(target: HTMLElement | Ref<HTMLElement | null>) {
+export function useMouse(target: HTMLElement | Ref<HTMLElement | null>, throttleMs: number = 80) {
     const targetRef = ref(target);
     const x = ref(0); // in range [0, 1]
     const y = ref(0); // in range [0, 1]
@@ -16,7 +16,6 @@ export function useMouse(target: HTMLElement | Ref<HTMLElement | null>) {
     stop = watch(targetRef, (el: HTMLElement, prevEl: HTMLElement, onCleanup) => {
 
         const precision: number = 2;
-        const throttleMs = 80;
         const msmove = throttle(onMove, throttleMs);
         
         function onDown(event: MouseEvent): void {

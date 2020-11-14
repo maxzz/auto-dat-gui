@@ -167,9 +167,9 @@
             const ref_h = ref(null);
             const ref_a = ref(null);
 
-            const pos_s = useMouse(ref_s);
-            const pos_h = useMouse(ref_h);
-            const pos_a = useMouse(ref_a);
+            const { pos: pos_s } = useMouse(ref_s);
+            const { pos: pos_h } = useMouse(ref_h);
+            const { pos: pos_a } = useMouse(ref_a);
 
             return {
                 ref_s,
@@ -217,23 +217,20 @@
                 }
             },
             pos_s: {
-                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
-                    console.log('sat', val.pos.x.value, val.pos.y.value);
-                    this.saturation = { x: val.pos.x.value, y: val.pos.y.value };
+                handler(val: {x: Ref<number>, y: Ref<number>}) {
+                    this.saturation = { x: val.x.value, y: val.y.value };
                 },
                 deep: true
             },
             pos_h: {
-                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
-                    console.log('hue', val.pos.x.value, val.pos.y.value);
-                    this.hue = 1 - val.pos.x.value;
+                handler(val: {x: Ref<number>, y: Ref<number>}) {
+                    this.hue = 1 - val.x.value;
                 },
                 deep: true
             },
             pos_a: {
-                handler(val: {pos: { x: Ref<number>, y: Ref<number> }}) {
-                    console.log('alpha', val.pos.x.value, val.pos.y.value);
-                    this.alpha = parseFloat(val.pos.x.value.toFixed(2));
+                handler(val: {x: Ref<number>, y: Ref<number>}) {
+                    this.alpha = parseFloat(val.x.value.toFixed(2)); // format of alpha: `.2f` according to Chrome DevTool
                 },
                 deep: true
             },
