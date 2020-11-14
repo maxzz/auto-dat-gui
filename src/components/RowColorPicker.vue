@@ -268,9 +268,7 @@
                         top: toPercent(saturation.y)
                     },
                     alphaTrack: {
-                        backgroundImage:
-                            `linear-gradient(to right, ` +
-                            `rgba(${strRGB}, 0) 0%, rgb(${strRGB}) 100%)`
+                        backgroundImage: `linear-gradient(to right, rgba(${strRGB}, 0) 0%, rgb(${strRGB}) 100%)`
                     },
                     alphaThumb: {
                         left: toPercent(alpha)
@@ -462,10 +460,11 @@
         background: linear-gradient(-90deg, red, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, red);
     }
 
+    $checker: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==);
+
     .cp__ctrl-alpha {
         margin-top: 8px;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==)
-            left center;
+        background: $checker left center;
     }
 
     .cp__preview {
@@ -475,8 +474,7 @@
         margin-right: 5px;
         overflow: hidden;
         border-radius: 50%;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZhw1gGGYhAGBZIA/nYDCgBDAm9BGDWAAJyRCgLaBCAAgXwixzAS0pgAAAABJRU5ErkJggg==)
-            center;
+        background: $checker center;
 
         & > div {
             position: absolute;

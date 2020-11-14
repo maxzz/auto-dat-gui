@@ -29,7 +29,7 @@ export type TConvert = {
 
 export const convert: TConvert = { parse2rgb, rgb2hsv, rgb2hex, hsv2hsl, hsv2rgb, hsl2rgb };
 
-export function toPercent(n, precision = 3) {
+export function toPercent(n: number, precision: number = 3): string {
     const num = (n * 100).toPrecision(precision | 0);
     return `${num}%`;
 }
@@ -50,6 +50,6 @@ export function getColorType(color: string): ColorMode {
     return 'hex';
 }
 
-export function simplifyHex(val) {
+export function simplifyHex(val: string): string {
     return val.replace(/#([0-9a-f])\1([0-9a-f])\2([0-9a-f])\3([0-9a-f]?)\4$/, "#$1$2$3$4");
 }
