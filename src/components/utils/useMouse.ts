@@ -16,46 +16,40 @@ export function useMouse(target?: HTMLElement | Ref<HTMLElement | null>) {
     stop = watch(targetRef, (el: HTMLElement, prevEl: HTMLElement, onCleanup) => {
 
         const precision: number = 2;
+        const throttleAs = 80;
+        const msmove = throttle(onMove, throttleAs);
         
-        const onDown = (event: MouseEvent): void => {
+        function onDown(event: MouseEvent): void {
             event.preventDefault();
-            document.addEventListener("mousemove", onMove);
+            document.addEventListener("mousemove", msmove);
             document.addEventListener("mouseup", onUp);
             next(event);
         };
 
-        const onUp = (event: MouseEvent): void => {
+        function onUp(event: MouseEvent): void {
             next(event);
-            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mousemove", msmove);
             document.removeEventListener("mouseup", onUp);
         };
 
-        const onMove = (event: MouseEvent): void => {
+        function onMove(event: MouseEvent): void {
             event.preventDefault();
             next(event);
         };
 
-        function next({ clientX = 0, clientY = 0 } = {}) {
+        function next(event: MouseEvent) {
             const rect = el.getBoundingClientRect();
-            x.value = adjust((clientX - rect.left) / rect.width);
-            y.value = adjust((clientY - rect.top) / rect.height);
+            x.value = adjust((event.clientX - rect.left) / rect.width);
+            y.value = adjust((event.clientY - rect.top) / rect.height);
         }
 
         function adjust(num: number): number {
             return toPrecision(clamp(num, 0, 1), precision);
         }
 
-        //console.log('use useMouse', {el, prevEl, targetRef: targetRef.value});
-
         el && el.addEventListener("mousedown", onDown);
-
-        onCleanup(() => {
-            //debugger
-            //console.log('cleanup useMouse', {el, prevEl, targetRef: targetRef.value});
-
-            el && el.removeEventListener("mousedown", onDown);
-        });
-    }, { immediate: true });
+        onCleanup(() => el && el.removeEventListener("mousedown", onDown));
+    });
 
     return {
         pos: {x, y},
