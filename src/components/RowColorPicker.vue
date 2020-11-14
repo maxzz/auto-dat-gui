@@ -96,9 +96,9 @@
     }
 
     const COLOR_MODES = {
-        rgba: ["r", "g", "b", "a"],
-        hsla: ["h", "s", "l", "a"],
-        hex: ["hex"]
+        rgba: ['r', 'g', 'b', 'a'],
+        hsla: ['h', 's', 'l', 'a'],
+        hex: ['hex']
     };
 
     type TSaturation = {
@@ -146,11 +146,11 @@
     }
 
     export default defineComponent({
-        name: "RowColorPicker",
+        name: 'RowColorPicker',
         props: {
             color: {
                 type: String,
-                default: "#000000"
+                default: "#ff0000"
             }
         },
         setup(props, { emit }) {
@@ -249,15 +249,15 @@
                 if ((r + g + b) / 3 > 235) {
                     return `rgba(160,160,160,0.8)`;
                 }
-                return "transparent";
+                return 'transparent';
             },
             styles() {
                 const { rgba, alpha, hue, saturation } = this;
-                const strRGB = rgba.slice(0, 3).join(", ");
-                const strHueRGB = convert.hsl2rgb([hue * 360, 100, 50] as any as ArrayHsl).map(v => Math.round(v)).join(", ");
+                const strRGB = rgba.slice(0, 3).join(', ');
+                const strHueRGB = convert.hsl2rgb([hue * 360, 100, 50] as any as ArrayHsl).map(v => Math.round(v)).join(', ');
                 return {
                     preview: {
-                        backgroundColor: `rgba(${rgba.join(", ")})`,
+                        backgroundColor: `rgba(${rgba.join(', ')})`,
                         borderColor: this.previewBorderColor
                     },
                     saturationPane: {
@@ -287,7 +287,7 @@
                 const { alpha, hex, rgba, hsla } = this;
                 const hexVal = simplifyHex(alpha === 1 ? hex.slice(0, 7) : hex);
 
-                this.$emit("change", { rgba, hsla, hex: hexVal });
+                this.$emit('update:color', { rgba, hsla, hex: hexVal });
 
                 // this ensures that every component in our model is up to date
                 const [h, s, l] = hsla;
@@ -319,36 +319,36 @@
                 let changed = false;
 
                 switch (type) {
-                    case "a":
+                    case 'a':
                         if (colorModel[type] !== num && !isNaN(num)) {
                             colorModel[type] = clamp(num, 0, 1);
                             changed = true;
                         }
                         break;
-                    case "r":
-                    case "g":
-                    case "b":
+                    case 'r':
+                    case 'g':
+                    case 'b':
                         if (colorModel[type] !== num && !isNaN(num)) {
                             colorModel[type] = clamp(num, 0, 255) | 0;
                             changed = true;
                         }
                         break;
-                    case "h":
+                    case 'h':
                         if (colorModel[type] !== num && !isNaN(num)) {
                             colorModel[type] = clamp(num, 0, 360) | 0;
                             changed = true;
                         }
                         break;
-                    case "s":
-                    case "l":
-                        if (value.slice(-1) === "%" && colorModel[type] !== value) {
+                    case 's':
+                    case 'l':
+                        if (value.slice(-1) === '%' && colorModel[type] !== value) {
                             num = parseFloat(value);
                             colorModel[type] = `${clamp(num, 0, 360) | 0}%`;
                             changed = true;
                         }
                         break;
-                    case "hex":
-                        if (value[0] === "#") {
+                    case 'hex':
+                        if (value[0] === '#') {
                             if (colorModel[type] !== value && convert.parse2rgb(value).every(i => !isNaN(i))) {
                                 colorModel[type] = simplifyHex(value);
                                 changed = true;
@@ -361,9 +361,9 @@
                     const { h, s, l, r, g, b, a, hex } = colorModel;
 
                     let literal = hex;
-                    if (currentMode === "rgba") {
+                    if (currentMode === 'rgba') {
                         literal = `rgba(${[r, g, b, a]})`;
-                    } else if (currentMode === "hsla") {
+                    } else if (currentMode === 'hsla') {
                         literal = `hsla(${[h, s, l, a]})`;
                     }
 
