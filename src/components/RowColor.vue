@@ -3,7 +3,7 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
-                <input type="text" v-model="currentValue">
+                <input type="text" v-model="currentValue" readonly> <!-- TODO: digestProp cannot handle validation of untrusted input -->
                 <RowColorPicker :color="currentValue" @update:color="handleChange" />
             </div>
         </label>
@@ -35,7 +35,6 @@
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
-                console.log('c', currentValue.value);
                 emit("update:color", currentValue.value);
             };
 

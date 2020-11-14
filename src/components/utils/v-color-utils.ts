@@ -46,7 +46,7 @@ export function getColorType(color: string): ColorMode {
     if (color.indexOf("hsl") === 0) {
         return "hsla";
     }
-    console.log(`${color} is not valid color value!`);
+    color && console.log(`${color} is not valid color value!`); // Empty string defaults to hex.
     return 'hex';
 }
 

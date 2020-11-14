@@ -116,7 +116,7 @@
         saturation: TSaturation;
     }
 
-    function digestProp(val: string): TColorData {
+    function digestProp(val: string): TColorData { // TODO: digestProp cannot handle validation of untrusted input
         const rgba = val ? convert.parse2rgb(val) : [0,0,0,1] as ArrayRgba; // TODO: definitely get rid off parse2rgb due to default values
         const alpha = rgba[3] == null ? 1 : rgba[3];
         const [hue, saturation, value] = convert.rgb2hsv(rgba);
@@ -177,7 +177,6 @@
         },
         data(): Data {
             const { color } = this;
-
             return {
                 ...digestProp(color),
                 currentMode: getColorType(color),
@@ -199,16 +198,16 @@
                 immediate: true,
                 handler(newVal, oldVal) {
                     if (newVal !== oldVal) {
-                        console.log('before', newVal, oldVal);
+                        //console.log('before', newVal, oldVal);
                         try {
                             let data = digestProp(newVal);
-                            console.log('assign', data, {newVal, oldVal});
+                            //console.log('assign', data, {newVal, oldVal});
                             Object.assign(this, data);
                         } catch(err) {
-                            console.log('Invalid NEW', newVal, oldVal);
+                            //console.log('Invalid NEW', newVal, oldVal);
                             //console.log('my', err);
                         }
-                        console.log('after', newVal, oldVal);
+                        //console.log('after', newVal, oldVal);
                     }
                 }
             },
