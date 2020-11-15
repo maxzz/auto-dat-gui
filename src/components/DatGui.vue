@@ -5,8 +5,8 @@
                 <RowTitle label="Title" background="olivedrab" color="#00ffff" />
 
                 <RowColor label="Color" v-model:color="testColor" />
-                <RowColor label="Color" v-model:color="testColor" />
-                <RowColor label="Color" v-model:color="testColor" />
+                <!-- <RowColor label="Color" v-model:color="testColor" />
+                <RowColor label="Color" v-model:color="testColor" /> -->
 
                 <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
 
@@ -19,7 +19,7 @@
                 <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
 
                 <RowFolder label="Folder">
-                    <RowColor label="Color" v-model:color="testColor" />
+                    <!-- <RowColor label="Color" v-model:color="testColor" /> -->
 
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
@@ -39,14 +39,17 @@
         <div class="toggle-button">Show controls</div>
     </div>
 
-    <pre class="color: black">
-        Test results:
-          Number : {{testNumber}}
-          Boolean: {{testBoolean}}
-          Text   : {{testString}}
-          Select : {{testSelect}} -> {{findSelectedValue()}}
-          Color  : {{testColor}}
-    </pre>
+
+    <div class="results">
+        <pre>
+    Test results:
+        Number : {{testNumber}}
+        Boolean: {{testBoolean}}
+        Text   : {{testString}}
+        Select : {{testSelect}} -> {{findSelectedValue()}}
+        Color  : {{testColor}}
+        </pre><span class="results-color" :style="{ 'background-color': testColor }" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    </div>
 </template>
 
 <script lang="ts">

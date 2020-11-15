@@ -32,6 +32,7 @@
         components: { RowColorPicker },
         setup(props, { emit }) {
             const currentValue = ref(props.color);
+            //debugger
 
             watch(() => props.color, () => currentValue.value = props.color);
 
@@ -57,14 +58,16 @@
                 }
             }
 
-            const inputColor = computed(() => {
-                // TODO: does not work well with alpha close to 0.
-                if (props.color.length !== 7 || props.color[0] !== '#') {
+            const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
+                const isValidColor = props.color.length === 7 || props.color.length === 4 && props.color[0] === '#';
+                if (!isValidColor) {
                     return 'black';
                 }
+
                 const r = parseInt(currentValue.value.substr(1, 2), 16);
                 const g = parseInt(currentValue.value.substr(3, 2), 16);
                 const b = parseInt(currentValue.value.substr(5, 2), 16);
+
                 const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
                 return yiq >= 128 ? 'black' : 'white';
             });
