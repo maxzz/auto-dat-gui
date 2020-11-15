@@ -59,17 +59,27 @@
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
-                const isValidColor = props.color.length === 7 || props.color.length === 4 && props.color[0] === '#';
-                if (!isValidColor) {
-                    return 'black';
+                if (props.color[0] === '#') {
+                    const s = currentValue.value;
+                    let r, g, b;
+                    if (props.color.length === 7) {
+                        r = parseInt(s.substr(1, 2), 16);
+                        g = parseInt(s.substr(3, 2), 16);
+                        b = parseInt(s.substr(5, 2), 16);
+                    } else if (props.color.length === 4) {
+                        r = parseInt(s.substr(1, 1), 16);
+                        g = parseInt(s.substr(2, 1), 16);
+                        b = parseInt(s.substr(3, 1), 16);
+                        r = r + r * 256;
+                        g = g + g * 256;
+                        b = b + b * 256;
+                    } else {
+                        return 'black';
+                    }
+                    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+                    return yiq >= 128 ? 'black' : 'white';
                 }
-
-                const r = parseInt(currentValue.value.substr(1, 2), 16);
-                const g = parseInt(currentValue.value.substr(3, 2), 16);
-                const b = parseInt(currentValue.value.substr(5, 2), 16);
-
-                const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-                return yiq >= 128 ? 'black' : 'white';
+                return 'black';
             });
 
             return {
