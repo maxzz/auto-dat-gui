@@ -8,7 +8,7 @@
         </div>
 
         <div class="cp__ctrl-pane">
-            <div>
+            <div class="cp__previews">
                 <div class="cp__preview">
                     <div :style="styles.preview"></div>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="cp__fm-fields">
                     <div v-for="k in colorModes[currentMode]" :key="k">
                         <div style="position: relative;">
-                            <input @change="handleInput(k, $event)" :value="colorModel[k]" :type="constrains[k].type" :maxlength="constrains[k].maxlength" />
+                            <input class="cp__inp" @change="handleInput(k, $event)" :value="colorModel[k]" :type="constrains[k].type" :maxlength="constrains[k].maxlength" />
                             <span>{{ k }}</span>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
         };
 
         const percentValue = {
-            type: "string",
+            type: "text",
             maxlength: 4
         };
 
@@ -93,7 +93,7 @@
                 maxlength: 4
             },
             hex: {
-                type: "string",
+                type: "text",
                 maxlength: 9
             }
         };
@@ -117,7 +117,7 @@
     }
 
     function digestProp(val: string): TColorData { // TODO: digestProp cannot handle validation of untrusted input
-        const rgba = val ? convert.parse2rgb(val) : [0,0,0,1] as ArrayRgba; // TODO: definitely get rid off parse2rgb due to default values
+        const rgba = val ? convert.parse2rgb(val) : [255,0,0,1] as ArrayRgba; // TODO: definitely get rid off parse2rgb due to default values
         const alpha = rgba[3] == null ? 1 : rgba[3];
         const [hue, saturation, value] = convert.rgb2hsv(rgba);
         // format of alpha: `.2f` according to Chrome DevTool
@@ -452,7 +452,7 @@
         position: relative;
         width: 100%;
         box-sizing: border-box;
-        padding: 16px 16px 12px;
+        padding: 16px 12px 12px;
 
         & > div {
             display: flex;
@@ -477,6 +477,10 @@
     .cp__ctrl-alpha {
         margin-top: 8px;
         background: $checker left center;
+    }
+
+    .cp__previews {
+        padding: 0 4px;
     }
 
     .cp__preview {
@@ -509,21 +513,25 @@
             flex: 1 0 0;
         }
 
-        & input {
+        & input.cp__inp {
+        //& input[type='text'], & input[type='number'] {
             width: 100%;
-            height: 22px;
-            font-size: 11px;
+            height: 26px !important;
+            font-size: .9em !important;
             text-align: center;
-            color: rgb(51, 51, 51);
-            border-radius: 2px;
-            border: none;
+            color: #333;
+            background-color: #fff !important;
+            padding: 4px !important;
+            border-radius: 2px !important;
+            border: none !important;
             box-shadow: rgb(218, 218, 218) 0px 0px 0px 1px inset;
             transition: box-shadow 0.2s ease;
             -moz-appearance: textfield;
 
             &:focus {
-                outline: 0;
-                box-shadow: rgb(0, 125, 255) 0px 0px 0px 1px inset;
+                outline: 0 !important;
+                box-shadow: rgb(0, 125, 255) 0px 0px 0px 1px inset !important;
+                color: #333 !important;
             }
 
             &::-webkit-inner-spin-button,
@@ -535,7 +543,7 @@
 
         & span {
             display: block;
-            margin-top: 12px;
+            margin-top: 6px;
             text-transform: uppercase;
             font-size: 11px;
             line-height: 11px;

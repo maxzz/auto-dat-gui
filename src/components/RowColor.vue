@@ -107,10 +107,10 @@
             }
 
             & > div {
-                width: 200px;
+                width: 218px; // to fit color picker numbers
                 position: absolute;
                 //top: 0;
-                right: 2em;
+                right: 1.4em;
                 
                 z-index: 2;
                 //opacity: .8;
