@@ -84,13 +84,14 @@
 <style lang="scss">
     .control-row.color {
         .ctrl-value {
-            // position: relative;
+            //position: relative;
             // overflow: visible;
             // z-index: 1;
             display: block; // 'block' is to position color-picker with default 'top' position in flow but defined 'right'
 
             input[type="text"] {
                 text-align: center;
+                z-index: 1;
             }
 
             & > div {
@@ -98,7 +99,10 @@
                 position: absolute;
                 //top: 0;
                 right: 2em;
+                
                 z-index: 2;
+                //opacity: .8;
+
             }
         }
     }
