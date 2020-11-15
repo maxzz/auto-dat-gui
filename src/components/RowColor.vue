@@ -87,6 +87,7 @@
             // position: relative;
             // overflow: visible;
             // z-index: 1;
+            display: block; // 'block' is to position color-picker with default 'top' position in flow but defined 'right'
 
             input[type="text"] {
                 text-align: center;
