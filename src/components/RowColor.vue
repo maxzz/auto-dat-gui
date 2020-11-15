@@ -32,7 +32,6 @@
         components: { RowColorPicker },
         setup(props, { emit }) {
             const currentValue = ref(props.color);
-            //debugger
 
             watch(() => props.color, () => currentValue.value = props.color);
 
@@ -62,11 +61,11 @@
                 if (currentValue.value[0] === '#') {
                     const s = currentValue.value;
                     let r, g, b;
-                    if (props.color.length === 7) {
+                    if (s.length === 7 || s.length === 9) {
                         r = s.substr(1, 2);
                         g = s.substr(3, 2);
                         b = s.substr(5, 2);
-                    } else if (props.color.length === 4) {
+                    } else if (s.length === 4) {
                         r = `${s[1]}${s[1]}`;
                         g = `${s[2]}${s[2]}`;
                         b = `${s[3]}${s[3]}`;
@@ -108,7 +107,7 @@
             }
 
             & > div {
-                width: 300px;
+                width: 200px;
                 position: absolute;
                 //top: 0;
                 right: 2em;
