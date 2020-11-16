@@ -4,7 +4,7 @@
             <ul>
                 <RowTitle label="Title" background="olivedrab" color="#00ffff" />
 
-                <RowColor label="Color" v-model:color="testColor" />
+                <RowColor label="Color" v-model:color="testColor" color="#f29305" />
                 <RowColor label="Color" v-model:color="testColor" />
                 <!-- <RowColor label="Color" v-model:color="testColor" /> -->
 
@@ -39,22 +39,22 @@
         <div class="toggle-button">Show controls</div>
     </div>
 
-
     <div class="results">
         <pre>
-    Test results:
-        Number : {{testNumber}}
-        Boolean: {{testBoolean}}
-        Text   : {{testString}}
-        Select : {{testSelect}} -> {{findSelectedValue()}}
-        Color  : {{testColor}}
-        </pre><span class="results-color" :style="{ color: color4Background(testColor), 'background-color': testColor }" >&nbsp;&nbsp;{{testColor}}&nbsp;&nbsp;</span>
+Test results:
+    Number : {{testNumber}}
+    Boolean: {{testBoolean}}
+    Text   : {{testString}}
+    Select : {{testSelect}} -> {{findSelectedValue()}}
+    Color  : {{testColor}}
+        </pre>
+        <span class="results-color" :style="{ color: color4Background(testColor), 'background-color': testColor }" >&nbsp;&nbsp;{{testColor}}&nbsp;&nbsp;</span>
     </div>
+
 </template>
 
 <script lang="ts">
     import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
-    import { name } from './controls/label/index';
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
     import RowString from "./RowString.vue";
@@ -362,5 +362,11 @@
             }
         }
     }
-
 </style>
+
+<style lang="scss">
+    .results {
+        background-color: rgb(190, 231, 255);
+    }
+</style>
+
