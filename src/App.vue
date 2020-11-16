@@ -1,5 +1,5 @@
 <template>
-    <DatGui>
+    <DatGui foldPosition="top">
         <RowTitle label="Title" background="olivedrab" color="#f5dd05" />
         <!-- <RowTitle label="Title" :background="testColor" :color="testColor" /> -->
 
@@ -52,19 +52,19 @@ Test results:
 <script lang="ts">
     import { defineComponent, reactive, ref, toRefs } from "vue";
     import DatGui from "./components/DatGui.vue";
-    import RowNumber from "./components/RowNumber.vue";
-    import RowBoolean from "./components/RowBoolean.vue";
-    import RowString from "./components/RowString.vue";
-    import RowButton from "./components/RowButton.vue";
-    import RowFolder from "./components/RowFolder.vue";
-    import RowSelect from "./components/RowSelect.vue";
     import RowTitle from "./components/RowTitle.vue";
+    import RowFolder from "./components/RowFolder.vue";
+    import RowNumber from "./components/RowNumber.vue";
+    import RowString from "./components/RowString.vue";
+    import RowBoolean from "./components/RowBoolean.vue";
+    import RowButton from "./components/RowButton.vue";
+    import RowSelect from "./components/RowSelect.vue";
     import RowColor from "./components/RowColor.vue";
     import { color4Background } from "./utils/colors";
 
     export default defineComponent({
         name: "App",
-        components: { DatGui,RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle, RowColor },
+        components: { DatGui, RowTitle, RowFolder, RowNumber, RowString, RowBoolean, RowButton, RowSelect, RowColor },
         setup() {
             const state = reactive({
                 testNumber: 70,

@@ -51,6 +51,15 @@ $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
     & * {
         box-sizing: border-box;
     }
+
+    .fold-ui {
+        height: $row-height * .8;
+        line-height: $row-height * .8;
+        text-align: center;
+        background-color: $toggle-button-clr;
+        cursor: pointer;
+        user-select: none;
+    }
 }
 
 .group--main {
@@ -133,15 +142,6 @@ $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
             display: none;
         }
     }
-}
-
-.toggle-button {
-    height: $row-height * .8;
-    line-height: $row-height * .8;
-    text-align: center;
-    background-color: $toggle-button-clr;
-    cursor: pointer;
-    user-select: none;
 }
 
 .control-row {

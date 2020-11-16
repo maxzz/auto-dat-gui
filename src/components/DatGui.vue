@@ -1,11 +1,12 @@
 <template>
     <div :class="['dat-gui', { closed: folded }]">
+        <div v-if="foldPosition === 'top'" class="fold-ui" @click="folded=!folded">{{closeButtonText}}</div>
         <div class="group--main group">
             <ul>
                 <slot></slot>
             </ul>
         </div>
-        <div class="toggle-button" @click="folded=!folded">{{closeButtonText}}</div>
+        <div v-if="foldPosition === 'bottom'" class="fold-ui" @click="folded=!folded">{{closeButtonText}}</div>
     </div>
 </template>
 
@@ -14,6 +15,13 @@
     import "../assets/scss/datgui-default.scss";
 
     export default defineComponent({
+        name: 'DatGui',
+        props: {
+            foldPosition: {
+                type: String, // 'top' | buttom TODO: add 'right', 'left'
+                default: 'bottom'
+            }
+        },
         setup() {
             const folded = ref(false);
             const closeButtonText = computed(() => folded.value ? 'Show controls' : 'Hide controls');
