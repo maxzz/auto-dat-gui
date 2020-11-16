@@ -30,3 +30,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 This project is largely inspired by the following great projects:
 
 [vueuse](https://github.com/antfu/vueuse), [devtools-frontend](https://github.com/ChromeDevTools/devtools-frontend), [pure-color](https://github.com/WickyNilliams/pure-color), [v-color](https://github.com/v-comp/v-color), [v-ctrl](https://github.com/v-comp/v-ctrl), [lodash](https://github.com/lodash/lodash)
+
+## Goals
+
+* Make a modern Vue 3 compatible library for rapid prototyping.
+* Minimize dependencies and make this project extremely lightweight and easy to prototype.
+* Eliminate the use of old libraries and unnecessary outdated polyfills.
+
+## TODO
+
+* Generate data model view on the fly
+* Customizations
+* Bug fixing
+* Switch from webpack to build rollup
+* Make library build
+* npm package deploy
