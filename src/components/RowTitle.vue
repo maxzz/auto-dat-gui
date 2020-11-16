@@ -15,10 +15,7 @@
             color: String,
             background: String,
             label: String,
-            title: {
-                type: String,
-                default: null
-            },
+            title: String,
         },
         setup(props, { emit }) {
             const currentValue = ref(props.background || '');

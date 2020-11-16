@@ -46,10 +46,7 @@
                 required: true,
             },
             label: String,
-            title: {
-                type: String,
-                default: null
-            }
+            title: String,
         },
         setup(props, { emit }) {
             let minValue = typeof props.min === "number" ? props.min : Number.NEGATIVE_INFINITY;
@@ -103,29 +100,4 @@
 </script>
 
 <style lang="scss">
-    // OK: but so far defined in DatGui: DatGui.vue
-
-    // .dat-gui .control-row.number {
-    //     .control {
-    //         display: inline-flex;
-
-    //         .slider {
-    //             flex: 3;
-    //         }
-    //         .input {
-    //             flex: 1;
-    //         }
-    //     }
-
-    //     input[type="number"] {
-    //         -moz-appearance: textfield;
-
-
-    //         &::-webkit-inner-spin-button,
-    //         &::-webkit-outer-spin-button {
-    //             -webkit-appearance: none;
-    //             margin: 0;
-    //         }
-    //     }
-    // }
 </style>

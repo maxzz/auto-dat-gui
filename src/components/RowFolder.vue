@@ -17,10 +17,7 @@
         props: {
             closed: Boolean,
             label: String,
-            title: {
-                type: String,
-                default: null
-            },
+            title: String,
         },
         setup(props, { emit }) {
             const currentValue = ref(props.closed);

@@ -13,10 +13,7 @@
         name: "RowBytton",
         props: {
             label: String,
-            title: {
-                type: String,
-                default: null
-            },
+            title: String,
         },
         setup(props, { emit }) {
             const handleClick = (evt) => {

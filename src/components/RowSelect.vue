@@ -30,10 +30,7 @@
         //         type: () => [] as SelectItem[]
         //     },
         //     label: String,
-        //     title: {
-        //         type: String,
-        //         default: null
-        //     },
+        //     title: String,
         // },
         props: ['value', 'items', 'label', 'title' ], // TODO: Add select by index (for localized string values)
         setup(props, { emit }) {

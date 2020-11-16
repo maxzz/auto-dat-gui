@@ -25,10 +25,7 @@
                 default: '#00f' // TODO: handle color names like 'blue', 'red', and so on.
             },
             label: String,
-            title: {
-                type: String,
-                default: null
-            },
+            title: String,
         },
         components: { RowColorPicker },
         setup(props, { emit }) {
