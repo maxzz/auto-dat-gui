@@ -57,6 +57,7 @@
             }
 
             const currentValue = ref(+props.value || 0);
+            watch(() => props.value, () => currentValue.value = +props.value || 0); // TODO: Do we need to sanitize this value?
 
             const hasSlider = computed(() => props.showSlider && Number.isFinite(minValue) && Number.isFinite(maxValue));
             const stepValue = computed(() => {
@@ -64,25 +65,23 @@
                     const val = maxValue - minValue;
                     return 10 ** Math.floor(Math.log(Math.abs(val)) / Math.LN10) / 10;
                 }
-
                 return props.step;
             });
 
-            watch(() => props.value, () => currentValue.value = +props.value || 0);
+            function sanitizeNumber(number: number) {
+                let safeNumber = clamp(+number || 0, minValue, maxValue);
 
-            function sanitizeNumber(number) {
-                const [min, max, step] = [ minValue, maxValue, stepValue.value ];
-
-                let safeNumber = clamp(+number || 0, min, max);
-
+                const step: number = stepValue.value;
                 if (step !== 0 && Number.isFinite(step)) {
                     safeNumber = Math.round(safeNumber / step) * step;
                 }
+
                 currentValue.value = safeNumber;
                 emit("update:value", safeNumber);
             }
+
             function handleChange(evt: InputEvent) {
-                sanitizeNumber((evt.target as HTMLInputElement).value);
+                sanitizeNumber(+(evt.target as HTMLInputElement).value);
             }
 
             return {
