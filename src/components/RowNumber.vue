@@ -49,11 +49,11 @@
             title: String,
         },
         setup(props, { emit }) {
+
             let minValue = typeof props.min === "number" ? props.min : Number.NEGATIVE_INFINITY;
             let maxValue = typeof props.max === "number" ? props.max : Number.POSITIVE_INFINITY;
             if (minValue > maxValue) {
                 [minValue, maxValue] = [maxValue, minValue];
-                process.env.NODE_ENV !== "production" && console.warn("vue-dat-gui: dat-number: min > max");
             }
 
             const currentValue = ref(+props.value || 0);
