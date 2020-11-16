@@ -251,11 +251,12 @@ Test results:
                 white-space: nowrap;
                 user-select: none;
             }
+
             .ctrl-value {
                 width: 60%;
                 display: inline-flex;
 
-                input[type=text], input[type=number] {
+                .row-input { // input[type=text], input[type=number]
                     width: 100%;
                     padding: $single-padding;
                     font-size: inherit;
@@ -289,6 +290,7 @@ Test results:
                 background-image: linear-gradient(90deg, $slider-clr, $slider-clr);
                 background-repeat: no-repeat;
                 flex: 3;
+                cursor: ew-resize;
             }
 
             input[type="number"] {

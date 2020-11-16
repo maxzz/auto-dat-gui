@@ -3,7 +3,7 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value" @mouseover="onMouseOver">
-                <input type="text" v-model="currentValue" readonly :style="{ 'background-color': currentValue, color: inputColor }"> <!-- TODO: digestProp cannot handle validation of untrusted input -->
+                <input class="row-input" type="text" v-model="currentValue" readonly :style="{ 'background-color': currentValue, color: inputColor }"> <!-- TODO: digestProp cannot handle validation of untrusted input -->
                 <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" /> <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->

@@ -3,7 +3,7 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
-                <input type="text" :value="currentValue" @input="handleChange" />
+                <input class="row-input" type="text" :value="currentValue" @input="handleChange" />
             </div>
         </label>
     </li>

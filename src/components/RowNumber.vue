@@ -12,6 +12,7 @@
                     @update:value="sanitizeNumber"
                 />
                 <input
+                    class="row-input"
                     type="number"
                     :min="minValue"
                     :max="maxValue"

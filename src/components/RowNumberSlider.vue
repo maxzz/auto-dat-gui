@@ -64,20 +64,4 @@
 </script>
 
 <style lang="scss" scoped>
-    $background-color: #1a1a1a;
-    $input-background-color: lighten($background-color, 8.5%);
-    $number-color: #2FA1D6;
-
-    .slider {
-        display: block;
-        //height: 25px;
-        cursor: ew-resize;
-
-        background-color: $input-background-color;
-        background-image: linear-gradient(90deg, $number-color, $number-color);
-        background-size: 0% 100%;
-        background-repeat: no-repeat;
-
-        //border: 1px solid $background-color;
-    }
 </style>
