@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, watch } from 'vue'
+    import { defineComponent, ref, watch } from "vue";
 
     export default defineComponent({
         name: "RowString",
@@ -22,17 +22,17 @@
         setup(props, { emit }) {
             const currentValue = ref(props.value || '');
 
-            watch(() => props.value, () => currentValue.value = props.value);
+            watch(() => props.value, () => (currentValue.value = props.value));
 
-            const handleChange = (evt: InputEvent) => {
+            function handleChange(evt: InputEvent) {
                 currentValue.value = (evt.target as HTMLInputElement).value;
                 emit("update:value", currentValue.value);
-            }
+            };
 
             return {
                 currentValue,
-                handleChange,
+                handleChange
             };
         }
-    })
+    });
 </script>
