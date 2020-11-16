@@ -7,7 +7,7 @@
     import { clamp } from "../utils/colors";
 
     export default defineComponent({
-        name: 'Slider',
+        name: 'RowNumberSlider',
         props: {
             value: {
                 type: [Number, String],
@@ -24,26 +24,25 @@
         },
         setup(props, { emit }) {
             const currentValue = ref(+props.value || 0);
-
             watch(() => props.value, () => currentValue.value = +props.value || 0);
-            const progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
 
-            const handleMouseDown = (evt: MouseEvent) => {
+            function handleMouseDown(evt: MouseEvent) {
                 if (evt.button === 0) {
                     updateState(evt.pageX);
                     window.addEventListener('mousemove', handleMouseMove);
                     window.addEventListener('mouseup', handleMouseUp);
                 }
             }
-            const handleMouseUp = (evt: MouseEvent) => {
+            function handleMouseUp(evt: MouseEvent) {
                 updateState(evt.pageX);
                 window.removeEventListener('mousemove', handleMouseMove);
                 window.removeEventListener('mouseup', handleMouseUp);
             }
-            const handleMouseMove = (evt: MouseEvent) => {
+            function handleMouseMove(evt: MouseEvent) {
                 updateState(evt.pageX);
             }
 
+            const progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
             const slider = ref<HTMLSpanElement>(null);
             
             function updateState(pageX: number) {
