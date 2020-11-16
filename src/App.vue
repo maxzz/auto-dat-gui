@@ -1,11 +1,9 @@
 <template>
     <DatGui foldPosition="top">
-        <RowTitle label="Title" background="olivedrab" color="#f5dd05" />
-        <!-- <RowTitle label="Title" :background="testColor" :color="testColor" /> -->
+        <RowTitle label="Title" background="olivedrab" :color="testBoolean ? '#f5dd05' : testColor " />
 
         <RowColor label="Color" v-model:color="testColor" color="#f29305" />
         <RowColor label="Color" v-model:color="testColor" />
-        <!-- <RowColor label="Color" v-model:color="testColor" /> -->
 
         <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
 
