@@ -101,9 +101,7 @@ Test results:
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
     }
-</style>
 
-<style lang="scss">
     .results {
         background-color: rgb(190, 231, 255);
     }
