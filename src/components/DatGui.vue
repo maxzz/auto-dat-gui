@@ -1,5 +1,5 @@
 <template>
-    <div class="dat-gui">
+    <div :class="['dat-gui', { closed: folded }]">
         <div class="group--main group">
             <ul>
                 <RowTitle label="Title" background="olivedrab" color="#f5dd05" />
@@ -19,7 +19,7 @@
 
                 <RowButton label="Button" title="This handler invoked with isTrusted = true" @clicked="buttonClicked" />
 
-                <RowFolder label="Folder">
+                <RowFolder label="Folder" closed>
                     <!-- <RowColor label="Color" v-model:color="testColor" /> -->
 
                     <RowNumber v-model:value="testNumber" label="Number slider" :min="-100" :max="100" :step="1" title="Here is how it works" />
@@ -37,7 +37,7 @@
                 </RowFolder>
             </ul>
         </div>
-        <div class="toggle-button">Show controls</div>
+        <div class="toggle-button" @click="folded=!folded">Show controls</div>
     </div>
 
 <div class="results">
@@ -55,7 +55,7 @@ Test results:
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
+    import { defineComponent, ref, reactive, toRefs } from 'vue';
     import { color4Background } from "../utils/colors";
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
@@ -78,6 +78,8 @@ Test results:
                 testColor: '',
             });
 
+            const folded = ref(false);
+
             function buttonClicked(evt: MouseEvent) {
                 console.log(`buttonClicked: What to do with trusted(${evt.isTrusted}) click event`, evt);
             }
@@ -88,7 +90,7 @@ Test results:
             }
 
             return {
-                name,
+                folded,
                 ...toRefs(state),
                 buttonClicked,
                 findSelectedValue,
@@ -140,6 +142,12 @@ Test results:
 
         font-size: $font-size;
         font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+        &.closed {
+            ul {
+                display: none;
+            }
+        }
 
         color: $control-inp-clr;
 
