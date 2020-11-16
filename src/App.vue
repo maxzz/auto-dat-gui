@@ -34,7 +34,7 @@
             </RowFolder>
         </RowFolder>
     </DatGui>
-    
+
 <div class="results">
 <pre>
 Test results:
@@ -100,5 +100,11 @@ Test results:
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         color: #2c3e50;
+    }
+</style>
+
+<style lang="scss">
+    .results {
+        background-color: rgb(190, 231, 255);
     }
 </style>

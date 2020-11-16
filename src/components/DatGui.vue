@@ -24,9 +24,3 @@
         }
     });
 </script>
-
-<style lang="scss">
-    .results {
-        background-color: rgb(190, 231, 255);
-    }
-</style>
