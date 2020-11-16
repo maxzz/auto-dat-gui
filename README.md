@@ -34,7 +34,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Thanks🥑
 
-This project is largely inspired by the following great projects: [vueuse](https://github.com/antfu/vueuse), [devtools-frontend](https://github.com/ChromeDevTools/devtools-frontend), [pure-color](https://github.com/WickyNilliams/pure-color), [v-color](https://github.com/v-comp/v-color), [v-ctrl](https://github.com/v-comp/v-ctrl), [lodash](https://github.com/lodash/lodash)
+This project is largely inspired by the following great projects: [vue-dat-gui](https://github.com/cyrilf/vue-dat-gui), [vueuse](https://github.com/antfu/vueuse), [devtools-frontend](https://github.com/ChromeDevTools/devtools-frontend), [pure-color](https://github.com/WickyNilliams/pure-color), [v-color](https://github.com/v-comp/v-color), [v-ctrl](https://github.com/v-comp/v-ctrl), [lodash](https://github.com/lodash/lodash).
 
 ## TODO
 
