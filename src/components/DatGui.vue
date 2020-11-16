@@ -2,7 +2,8 @@
     <div class="dat-gui">
         <div class="group--main group">
             <ul>
-                <RowTitle label="Title" background="olivedrab" color="#00ffff" />
+                <RowTitle label="Title" background="olivedrab" color="#f5dd05" />
+                <!-- <RowTitle label="Title" :background="testColor" :color="testColor" /> -->
 
                 <RowColor label="Color" v-model:color="testColor" color="#f29305" />
                 <RowColor label="Color" v-model:color="testColor" />

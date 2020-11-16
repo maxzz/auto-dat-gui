@@ -1,5 +1,5 @@
 <template>
-    <li class="control-row title" :style="{backgroundColor: currentValue, color: currentColor}">
+    <li class="control-row title" :style="{backgroundColor: currentValue, color: color}">
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
         </label>
@@ -18,15 +18,15 @@
             title: String,
         },
         setup(props, { emit }) {
-            const currentValue = ref(props.background || '');
-            const currentColor = ref(props.color || '');
-
+            const currentValue = ref(props.background); // TODO: Somehow, this is not reactive wo/ watch.
+            // const currentColor = ref(props.color); // This is reactive
+            
             watch(() => props.background, () => currentValue.value = props.background || '');
-            watch(() => props.color, () => currentColor.value = props.color || '');
+            // watch(() => props.color, () => currentColor.value = props.color || '');
 
             return {
                 currentValue,
-                currentColor,
+                //currentColor,
             };
         }
     })
