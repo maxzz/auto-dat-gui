@@ -39,22 +39,23 @@
         <div class="toggle-button">Show controls</div>
     </div>
 
-    <div class="results">
-        <pre>
+<div class="results">
+<pre>
 Test results:
     Number : {{testNumber}}
     Boolean: {{testBoolean}}
     Text   : {{testString}}
     Select : {{testSelect}} -> {{findSelectedValue()}}
     Color  : {{testColor}}
-        </pre>
-        <span class="results-color" :style="{ color: color4Background(testColor), 'background-color': testColor }" >&nbsp;&nbsp;{{testColor}}&nbsp;&nbsp;</span>
-    </div>
+</pre>
+    <span class="results-color" :style="{ color: color4Background(testColor), 'background-color': testColor }" >&nbsp;&nbsp;{{testColor}}&nbsp;&nbsp;</span>
+</div>
 
 </template>
 
 <script lang="ts">
     import { defineComponent, ref, reactive, toRefs, watch } from 'vue';
+    import { color4Background } from "../utils/colors";
     import RowNumber from "./RowNumber.vue";
     import RowBoolean from "./RowBoolean.vue";
     import RowString from "./RowString.vue";
@@ -63,8 +64,6 @@ Test results:
     import RowSelect from "./RowSelect.vue";
     import RowTitle from "./RowTitle.vue";
     import RowColor from "./RowColor.vue";
-    import { color4Background } from "../utils/colors";
-
 
     export default defineComponent({
         components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle, RowColor },
@@ -369,4 +368,3 @@ Test results:
         background-color: rgb(190, 231, 255);
     }
 </style>
-
