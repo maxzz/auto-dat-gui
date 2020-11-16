@@ -54,9 +54,9 @@
     // TODO: gradients
 
     import { defineComponent, Ref, ref, watch } from "vue";
-    import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode, clamp } from "./utils/v-color-utils";
-    import debounce from "./utils/debounce";
-    import { useMouse } from './utils/useMouse';
+    import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode, clamp } from "../utils/colors";
+    import { useMouse } from '../utils/useMouse';
+    import debounce from "../utils/debounce";
 
     type TConstraint = {
         type: string; // 'number' | 'string'

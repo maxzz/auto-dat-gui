@@ -4,7 +4,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, watch, computed } from "vue";
-    import { clamp } from "./utils/v-color-utils";
+    import { clamp } from "../utils/colors";
 
     export default defineComponent({
         name: 'Slider',

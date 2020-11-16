@@ -2,7 +2,7 @@ import { ref, Ref, watch, WatchStopHandle } from "vue";
 import throttle from "./throttle";
 import clamp from "lodash/clamp";
 
-const toPrecision = function (num: number, precision: number = 2): number {
+export function toPrecision(num: number, precision: number = 2): number {
     const p = precision | 0;
     return p > 0 ? parseFloat(num.toFixed(p)) : num;
 }

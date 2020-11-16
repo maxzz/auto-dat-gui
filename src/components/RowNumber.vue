@@ -26,7 +26,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, computed, watch } from "vue";
-    import { clamp } from "./utils/v-color-utils";
+    import { clamp } from "../utils/colors";
     import Slider from "./RowNumberSlider.vue";
 
     export default defineComponent({

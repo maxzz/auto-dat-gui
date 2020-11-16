@@ -15,7 +15,7 @@
 <script lang="ts">
     import { computed, defineComponent, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
-    import { color4Background } from './utils/v-color-utils';
+    import { color4Background } from '../utils/colors';
 
     export default defineComponent({
         name: "RowColor",

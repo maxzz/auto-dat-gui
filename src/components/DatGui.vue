@@ -63,7 +63,7 @@
     import RowSelect from "./RowSelect.vue";
     import RowTitle from "./RowTitle.vue";
     import RowColor from "./RowColor.vue";
-    import { color4Background } from "./utils/v-color-utils";
+    import { color4Background } from "../utils/colors";
 
 
     export default defineComponent({
