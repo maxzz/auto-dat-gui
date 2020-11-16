@@ -15,6 +15,7 @@
 <script lang="ts">
     import { computed, defineComponent, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
+    import { color4Background } from './utils/v-color-utils';
 
     export default defineComponent({
         name: "RowColor",
@@ -58,27 +59,7 @@
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
-                if (currentValue.value[0] === '#') {
-                    const s = currentValue.value;
-                    let r, g, b;
-                    if (s.length === 7 || s.length === 9) {
-                        r = s.substr(1, 2);
-                        g = s.substr(3, 2);
-                        b = s.substr(5, 2);
-                    } else if (s.length === 4) {
-                        r = `${s[1]}${s[1]}`;
-                        g = `${s[2]}${s[2]}`;
-                        b = `${s[3]}${s[3]}`;
-                    } else {
-                        return 'black';
-                    }
-                    r = parseInt(r, 16);
-                    g = parseInt(g, 16);
-                    b = parseInt(b, 16);
-                    const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-                    return yiq >= 128 ? 'black' : 'white';
-                }
-                return 'black';
+                return color4Background(currentValue.value);
             });
 
             return {

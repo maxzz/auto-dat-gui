@@ -48,7 +48,7 @@
         Text   : {{testString}}
         Select : {{testSelect}} -> {{findSelectedValue()}}
         Color  : {{testColor}}
-        </pre><span class="results-color" :style="{ 'background-color': testColor }" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </pre><span class="results-color" :style="{ color: color4Background(testColor), 'background-color': testColor }" >&nbsp;&nbsp;{{testColor}}&nbsp;&nbsp;</span>
     </div>
 </template>
 
@@ -63,6 +63,8 @@
     import RowSelect from "./RowSelect.vue";
     import RowTitle from "./RowTitle.vue";
     import RowColor from "./RowColor.vue";
+    import { color4Background } from "./utils/v-color-utils";
+
 
     export default defineComponent({
         components: { RowNumber, RowBoolean, RowString, RowButton, RowFolder, RowSelect, RowTitle, RowColor },
@@ -90,6 +92,7 @@
                 ...toRefs(state),
                 buttonClicked,
                 findSelectedValue,
+                color4Background,
             }
         }
     });
