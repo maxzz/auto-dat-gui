@@ -16,10 +16,9 @@
             title: String,
         },
         setup(props, { emit }) {
-            const handleClick = (evt) => {
-                emit("clicked", evt);
-            };
-
+            function handleClick(evt) {
+                emit("clicked", evt); // TODO: Check if Vue events are synchronous (if not add callback option, to make call from this event).
+            }
             return {
                 handleClick,
             };

@@ -20,7 +20,7 @@
         setup(props, { emit }) {
             const currentValue = ref(props.background); // TODO: Somehow, this is not reactive wo/ watch.
             // const currentColor = ref(props.color); // This is reactive
-            
+
             watch(() => props.background, () => currentValue.value = props.background || '');
             // watch(() => props.color, () => currentColor.value = props.color || '');
 
@@ -29,5 +29,5 @@
                 //currentColor,
             };
         }
-    })
+    });
 </script>

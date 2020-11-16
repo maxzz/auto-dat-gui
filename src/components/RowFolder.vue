@@ -21,13 +21,12 @@
         },
         setup(props, { emit }) {
             const currentValue = ref(props.closed);
-
             watch(() => props.closed, () => currentValue.value = props.closed);
 
-            const handleClick = () => {
+            function handleClick() {
                 currentValue.value = !currentValue.value;
                 emit("update:folded", currentValue.value); // TODO: Do it as callback instead of custom event to preserve trust.
-            };
+            }
 
             return {
                 currentValue,
