@@ -13,22 +13,23 @@ Check out [the demo page](https://maxzz.github.io/auto-dat-gui/).
 * Minimize dependencies and make this project extremely lightweight and easy to prototype.
 * Eliminate the use of old libraries and unnecessary outdated polyfills.
 
-## Project setup
+## Project
+setup
 ```
 yarn install
 ```
 
-#### Compiles and hot-reloads for development
+Compiles and hot-reloads for development
 ```
 yarn serve
 ```
 
-#### Compiles and minifies for production
+Compiles and minifies for production
 ```
 yarn build
 ```
 
-#### Customize configuration
+<b>Customize configuration</b>
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Thanks🥑
