@@ -5,18 +5,20 @@
                 <slot></slot>
             </ul>
         </div>
-        <div class="toggle-button" @click="folded=!folded">Show controls</div>
+        <div class="toggle-button" @click="folded=!folded">{{closeButtonText}}</div>
     </div>
 </template>
 
 <script lang="ts">
-    import { defineComponent, ref } from 'vue';
+    import { computed, defineComponent, ref } from 'vue';
 
     export default defineComponent({
         setup() {
             const folded = ref(false);
+            const closeButtonText = computed(() => folded.value ? 'Show controls' : 'Hide controls');
             return {
                 folded,
+                closeButtonText,
             };
         }
     });
