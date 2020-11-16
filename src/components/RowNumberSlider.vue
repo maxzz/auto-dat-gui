@@ -4,8 +4,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, watch, computed } from "vue";
-    import toNumber from "lodash.tonumber";
-    import clamp from "lodash.clamp";
+    import { clamp } from "./utils/v-color-utils";
 
     export default defineComponent({
         name: 'Slider',
@@ -26,7 +25,7 @@
         setup(props, { emit }) {
             const currentValue = ref(+props.value || 0);
 
-            watch(() => props.value, () => currentValue.value = toNumber(props.value));
+            watch(() => props.value, () => currentValue.value = +props.value || 0);
             const progressWidth = computed(() => clamp((currentValue.value - props.min) * 100 / (props.max - props.min), 0, 100));
 
             const handleMouseDown = (evt: MouseEvent) => {

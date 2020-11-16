@@ -49,16 +49,13 @@
 </template>
 
 <script lang="ts">
-    // TODO: DevTools color palletes
+    // TODO: DevTools Material UI color palletes
     // TODO: re-work types on pure-colors
     // TODO: gradients
 
     import { defineComponent, Ref, ref, watch } from "vue";
-
-    import clamp from "lodash/clamp";
-    import debounce from "lodash/debounce";
-
-    import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode } from "./utils/v-color-utils";
+    import { toPercent, getColorType, simplifyHex, convert, ArrayHsl, ArrayRgba, ArrayHsva, ArrayHsla, ArrayHsvaStr, ColorMode, clamp } from "./utils/v-color-utils";
+    import debounce from "./utils/debounce";
     import { useMouse } from './utils/useMouse';
 
     type TConstraint = {

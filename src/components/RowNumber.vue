@@ -26,8 +26,7 @@
 
 <script lang="ts">
     import { defineComponent, ref, computed, watch } from "vue";
-    import toNumber from "lodash.tonumber";
-    import clamp from "lodash.clamp";
+    import { clamp } from "./utils/v-color-utils";
     import Slider from "./RowNumberSlider.vue";
 
     export default defineComponent({
@@ -59,7 +58,7 @@
                 process.env.NODE_ENV !== "production" && console.warn("vue-dat-gui: dat-number: min > max");
             }
 
-            const currentValue = ref(toNumber(props.value) || 0);
+            const currentValue = ref(+props.value || 0);
 
             const hasSlider = computed(() => props.showSlider && Number.isFinite(minValue) && Number.isFinite(maxValue));
             const stepValue = computed(() => {
@@ -68,15 +67,15 @@
                     return 10 ** Math.floor(Math.log(Math.abs(val)) / Math.LN10) / 10;
                 }
 
-                return toNumber(props.step);
+                return props.step;
             });
 
-            watch(() => props.value, () => currentValue.value = toNumber(props.value));
+            watch(() => props.value, () => currentValue.value = +props.value || 0);
 
             function sanitizeNumber(number) {
                 const [min, max, step] = [ minValue, maxValue, stepValue.value ];
 
-                let safeNumber = clamp(toNumber(number), min, max);
+                let safeNumber = clamp(+number || 0, min, max);
 
                 if (step !== 0 && Number.isFinite(step)) {
                     safeNumber = Math.round(safeNumber / step) * step;
