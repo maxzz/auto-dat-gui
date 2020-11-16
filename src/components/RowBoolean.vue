@@ -21,13 +21,12 @@
         },
         setup(props, { emit }) {
             const currentValue = ref(props.checked);
-
             watch(() => props.checked, () => currentValue.value = props.checked);
 
-            const handleChange = () => {
+            function handleChange() {
                 currentValue.value = !currentValue.value;
                 emit("update:checked", currentValue.value);
-            };
+            }
 
             return {
                 currentValue,
