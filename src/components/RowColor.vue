@@ -35,8 +35,9 @@
         components: { RowColorPicker },
         setup(props, { emit }) {
             const currentValue = ref(props.color);
-
             watch(() => props.color, () => currentValue.value = props.color);
+
+            let isPickerDown = false;
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
@@ -47,20 +48,24 @@
 
             function onMouseOver() {
                 showPicker.value = true;
-                window.addEventListener('keydown', onKeyDown)
+                window.addEventListener('keydown', onKeyDown);
             }
             function onMouseLeave() {
-                showPicker.value = false;
-                //console.log('removed');
-                window.removeEventListener('keydown', onKeyDown)
+                if (!isPickerDown) {
+                    showPicker.value = false;
+                    console.log('removed');
+                    window.removeEventListener('keydown', onKeyDown);
+                }
             }
             function onKeyDown(event) {
-                if (event.key === 'Enter' || event.keyCode === 13) {
+                console.log('key', {isPickerDown}, event);
+                if (event.key === 'Enter' || event.key === 'Escape') {
                     showPicker.value = false;
                 }
             }
 
             function onDown(isDown: boolean) {
+                isPickerDown = isDown;
                 console.log({isDown});
             }
 
