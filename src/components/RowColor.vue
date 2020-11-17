@@ -3,13 +3,16 @@
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value" @mouseover="onMouseOver">
-                <input class="row-input"
+                <input
+                    class="row-input"
                     type="text"
                     readonly
                     v-model="currentValue"
                     :style="{ 'background-color': currentValue, color: inputColor }"
-                > <!-- TODO: digestProp cannot handle validation of untrusted input -->
-                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" /> <!-- TODO: check popup position is inside viewport -->
+                > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
+
+                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" />
+                <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
             </div>
@@ -53,12 +56,10 @@
             function onMouseLeave() {
                 if (!isPickerDown) {
                     showPicker.value = false;
-                    console.log('removed');
                     window.removeEventListener('keydown', onKeyDown);
                 }
             }
             function onKeyDown(event) {
-                console.log('key', {isPickerDown}, event);
                 if (event.key === 'Enter' || event.key === 'Escape') {
                     showPicker.value = false;
                 }
@@ -66,7 +67,6 @@
 
             function onDown(isDown: boolean) {
                 isPickerDown = isDown;
-                console.log({isDown});
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
