@@ -14,7 +14,7 @@ Check out [the demo page](https://maxzz.github.io/auto-dat-gui/).
 * Eliminate the use of old libraries and unnecessary outdated polyfills.
 
 ## Project
-setup
+Setup
 ```
 yarn install
 ```

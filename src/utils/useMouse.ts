@@ -11,6 +11,7 @@ export function useMouse(target: HTMLElement | Ref<HTMLElement | null>, throttle
     const targetRef = ref(target);
     const x = ref(0); // in range [0, 1]
     const y = ref(0); // in range [0, 1]
+    const down = ref(false);
     let stop: WatchStopHandle = () => {};
 
     stop = watch(targetRef, (el: HTMLElement, prevEl: HTMLElement, onCleanup) => {
@@ -20,12 +21,14 @@ export function useMouse(target: HTMLElement | Ref<HTMLElement | null>, throttle
         
         function onDown(event: MouseEvent): void {
             event.preventDefault();
+            down.value = true;
             document.addEventListener("mousemove", msmove);
             document.addEventListener("mouseup", onUp);
             next(event);
         };
 
         function onUp(event: MouseEvent): void {
+            down.value = false;
             next(event);
             document.removeEventListener("mousemove", msmove);
             document.removeEventListener("mouseup", onUp);
@@ -52,6 +55,7 @@ export function useMouse(target: HTMLElement | Ref<HTMLElement | null>, throttle
 
     return {
         pos: {x, y},
-        stop
+        down,
+        stop,
     };
 }

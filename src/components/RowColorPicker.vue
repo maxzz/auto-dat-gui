@@ -159,9 +159,11 @@
             const ref_h = ref(null);
             const ref_a = ref(null);
 
-            const { pos: pos_s } = useMouse(ref_s);
+            const { pos: pos_s, down: down_s } = useMouse(ref_s);
             const { pos: pos_h } = useMouse(ref_h);
             const { pos: pos_a } = useMouse(ref_a);
+
+            watch(down_s, () => (console.log('picker down', down_s.value), emit('update:down', down_s.value)));
 
             return {
                 ref_s,
@@ -185,7 +187,7 @@
                     h: 0,
                     s: '',
                     l: '',
-                    a: 0
+                    a: 0,
                 },
                 constrains: constrains()
             };
