@@ -1,5 +1,7 @@
 <template>
-    <DatGui foldPosition="top">
+    <DatGui foldPosition="top" v-slot="{ callColorPicker }">
+        {{callColorPicker}}
+
         <RowTitle label="Title" background="olivedrab" :color="testBoolean ? '#f5dd05' : testColor " />
 
         <RowColor label="Color" v-model:color="testColor" @update:selectColor="selectColor" color="#f29305" />

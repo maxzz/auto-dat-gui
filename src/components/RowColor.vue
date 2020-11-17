@@ -1,6 +1,7 @@
 <template>
     <li class="control-row color">
         <label>
+            22{{callColorPicker}}11
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
                 <input
@@ -24,7 +25,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, ref, watch } from "vue";
+    import { computed, defineComponent, onMounted, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
@@ -37,6 +38,8 @@
             },
             label: String,
             title: String,
+
+            callColorPicker: Function,
         },
         components: { RowColorPicker },
         setup(props, ctx) {
@@ -79,6 +82,11 @@
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
                 return color4Background(currentValue.value);
+            });
+
+            onMounted(() => {
+                //debugger
+                console.log('slot');
             });
 
             return {
