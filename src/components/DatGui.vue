@@ -2,7 +2,7 @@
     <div :class="['dat-gui', { closed: folded }]">
         <div v-if="foldPosition === 'top'" class="fold-ui" @click="folded=!folded">{{closeButtonText}}</div>
         <div class="group--main group">
-            <ul @update:selectColor="selectColor">
+            <ul>
                 <slot></slot>
             </ul>
         </div>
@@ -26,14 +26,9 @@
             const folded = ref(false);
             const closeButtonText = computed(() => folded.value ? 'Show controls' : 'Hide controls');
 
-            function selectColor() {
-                console.log('select');
-            }
-
             return {
                 folded,
                 closeButtonText,
-                selectColor,
             };
         }
     });

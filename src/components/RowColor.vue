@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, onMounted, ref, watch } from "vue";
+    import { computed, defineComponent, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
@@ -51,16 +51,6 @@
             };
 
             const showPicker = ref(false);
-
-            console.log('global', { parent });
-            // parent is Window on JS global
-
-            onMounted(() => {
-                console.log("pp", ctx.attrs.parent);
-                // undefined
-                console.log({ parent });
-                // parent is Window on JS global
-            });
 
             // function onMouseOver() {
             //     showPicker.value = true;

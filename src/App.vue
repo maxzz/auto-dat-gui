@@ -2,7 +2,7 @@
     <DatGui foldPosition="top">
         <RowTitle label="Title" background="olivedrab" :color="testBoolean ? '#f5dd05' : testColor " />
 
-        <RowColor label="Color" v-model:color="testColor" color="#f29305" />
+        <RowColor label="Color" v-model:color="testColor" @update:selectColor="selectColor" color="#f29305" />
         <RowColor label="Color" v-model:color="testColor" />
 
         <RowSelect label="Select" :items="testItems" v-model:value="testSelect" />
@@ -82,11 +82,16 @@ Test results:
                 return item?.name || 'none';
             }
 
+            function selectColor() {
+                console.log('select');
+            }
+
             return {
                 ...toRefs(state),
                 buttonClicked,
                 findSelectedValue,
                 color4Background,
+                selectColor,
             };
         }
     });
