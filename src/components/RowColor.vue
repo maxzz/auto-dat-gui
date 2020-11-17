@@ -1,20 +1,23 @@
 <template>
-    <li class="control-row color" @mouseleave="onMouseLeave">
+    <li class="control-row color">
         <label>
             <span class="ctrl-label" :title="title">{{ label }}</span>
-            <div class="ctrl-value" @mouseover="onMouseOver">
+            <div class="ctrl-value">
                 <input
                     class="row-input"
                     type="text"
                     readonly
                     v-model="currentValue"
-                    :style="{ 'background-color': currentValue, color: inputColor }"
                 > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
 
-                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" />
+                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="selectColor">
+                </div>
+
+                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" @keydown="onKeyDown" />
                 <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
+
             </div>
         </label>
     </li>
@@ -49,16 +52,16 @@
 
             const showPicker = ref(false);
 
-            function onMouseOver() {
-                showPicker.value = true;
-                window.addEventListener('keydown', onKeyDown);
-            }
-            function onMouseLeave() {
-                if (!isPickerDown) {
-                    showPicker.value = false;
-                    window.removeEventListener('keydown', onKeyDown);
-                }
-            }
+            // function onMouseOver() {
+            //     showPicker.value = true;
+            //     window.addEventListener('keydown', onKeyDown);
+            // }
+            // function onMouseLeave() {
+            //     if (!isPickerDown) {
+            //         showPicker.value = false;
+            //         window.removeEventListener('keydown', onKeyDown);
+            //     }
+            // }
             function onKeyDown(event) {
                 if (event.key === 'Enter' || event.key === 'Escape') {
                     showPicker.value = false;
@@ -69,6 +72,11 @@
                 isPickerDown = isDown;
             }
 
+            function selectColor() {
+                showPicker.value = !showPicker.value;
+                showPicker.value && emit("update:selectColor", { x: 5 });
+            }
+
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
                 return color4Background(currentValue.value);
             });
@@ -77,11 +85,27 @@
                 currentValue,
                 handleChange,
                 showPicker,
-                onMouseOver,
-                onMouseLeave,
+                // onMouseOver,
+                // onMouseLeave,
+                onKeyDown,
                 inputColor,
                 onDown,
+                selectColor,
             };
         },
     });
 </script>
+
+<style lang="scss">
+    @import "../assets/scss/variables.scss";
+
+    .current-color {
+        //display: inline-block;
+        width: $row-height - 6;
+        height: $row-height - 6;
+        border-radius: 5px;
+        margin-left: .4em;
+        //flex: 1;
+        //background-color: green;
+    }
+</style>

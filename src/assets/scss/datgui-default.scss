@@ -1,35 +1,4 @@
-//#region variables
-
-$font-size: .8em;
-$row-height: 28px;
-$row-height-fix: 1px;
-$single-padding: .4em;
-
-$hover-lighten: 5%;
-$border-lighten: 5%;
-$active-lighten: 10%;
-
-$nest-margin: 10px;
-$folder-margin: 10px;
-
-$control-row-bkg: #003636;
-$control-row-separator: lighten(teal, 1%);
-
-$control-inp-clr: #ddd;
-$control-inp-bkg: lighten($control-row-bkg, 5%);
-$control-inp-bdr: $row-height-fix solid lighten($control-row-bkg, 1%);
-
-$toggle-button-clr: #1a1a1a;
-
-$folder-bkg: #000;
-$folder-buttom-bdr: #ffffff33;
-$folder-closed: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlGIWqMCbWAEAOw==) $folder-margin 48% no-repeat;
-$folder-open: $folder-bkg url(data:image/gif;base64,R0lGODlhBQAFAJEAAP////Pz8////////yH5BAEAAAIALAAAAAAFAAUAAAIIlI+hKgFxoCgAOw==) $folder-margin 48% no-repeat;
-
-$scrollbar-bkg: $control-row-bkg;
-$scrollbar-thumb: lighten($scrollbar-bkg, 20%);
-
-//#endregion variables
+@import "variables.scss";
 
 .dat-gui {
     position: fixed;
@@ -189,14 +158,21 @@ $scrollbar-thumb: lighten($scrollbar-bkg, 20%);
             //position: relative;
             // overflow: visible;
             // z-index: 1;
-            display: block; // 'block' is to position color-picker with default 'top' position in flow but defined 'right'
+
+            //display: block; // 'block' is to position color-picker with default 'top' position in flow but defined 'right'
+            
+            // display: flex;
+            // align-items: center;
+            // justify-items: center;
 
             input[type="text"] {
                 text-align: center;
                 z-index: 1;
+                //width: 30%;
+                flex: 3;
             }
 
-            & > div {
+            & > div.cp__wrapper {
                 width: 218px; // to fit color picker numbers
                 position: absolute;
                 //top: 0;
