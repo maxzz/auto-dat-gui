@@ -7,10 +7,9 @@
                     type="text"
                     readonly
                     v-model="currentValue"
-                    @update.down="onDown"
                     :style="{ 'background-color': currentValue, color: inputColor }"
                 > <!-- TODO: digestProp cannot handle validation of untrusted input -->
-                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" /> <!-- TODO: check popup position is inside viewport -->
+                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" /> <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
             </div>

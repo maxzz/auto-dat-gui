@@ -163,7 +163,7 @@
             const { pos: pos_h } = useMouse(ref_h);
             const { pos: pos_a } = useMouse(ref_a);
 
-            watch(down_s, () => (console.log('picker down', down_s.value), emit('update:down', down_s.value)));
+            watch(down_s, () => (console.log('picker down', down_s.value), emit('update:pickerdown', down_s.value)));
 
             return {
                 ref_s,
