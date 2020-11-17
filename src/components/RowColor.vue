@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, ref, watch } from "vue";
+    import { computed, defineComponent, onMounted, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
@@ -39,7 +39,7 @@
             title: String,
         },
         components: { RowColorPicker },
-        setup(props, { emit }) {
+        setup(props, ctx) {
             const currentValue = ref(props.color);
             watch(() => props.color, () => currentValue.value = props.color);
 
@@ -47,10 +47,20 @@
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
-                emit("update:color", currentValue.value);
+                ctx.emit("update:color", currentValue.value);
             };
 
             const showPicker = ref(false);
+
+            console.log('global', { parent });
+            // parent is Window on JS global
+
+            onMounted(() => {
+                console.log("pp", ctx.attrs.parent);
+                // undefined
+                console.log({ parent });
+                // parent is Window on JS global
+            });
 
             // function onMouseOver() {
             //     showPicker.value = true;
@@ -74,7 +84,7 @@
 
             function selectColor() {
                 showPicker.value = !showPicker.value;
-                showPicker.value && emit("update:selectColor", { x: 5 });
+                showPicker.value && ctx.emit("update:selectColor", { x: 5 });
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
