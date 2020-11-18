@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, onUnmounted, provide, ref } from 'vue';
+    import { computed, defineComponent, provide, readonly, ref } from 'vue';
     import "../assets/scss/datgui-default.scss";
     import { HidePickerFn } from './RowColor.vue';
 
@@ -44,6 +44,7 @@
                 activePicker = onHidePopup;
             }
 
+            /*
             function pointInsideRect(pt: {x: number, y: number}, rc: {x: number, y: number, width: number, height: number}): boolean {
                 return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
             }
@@ -61,8 +62,10 @@
 
             window.addEventListener('mouseup', mouseup);
             onUnmounted(() => window.removeEventListener('mouseup', mouseup));
+            */
 
             provide('pickColor', pickColor);
+            provide('uiRoot', readonly(root));
 
             return {
                 root,

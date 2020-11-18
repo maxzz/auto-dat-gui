@@ -18,6 +18,7 @@
 
                 <RowColorPicker
                     v-show="showPopup"
+                    ref="elPopup"
                     :color="currentValue"
                     @update:color="onColorChange"
                     @update:pickerdown="onColorSelectorDown"
@@ -26,14 +27,13 @@
                 <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
-
             </div>
         </label>
     </li>
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, inject, onMounted, ref, watch } from "vue";
+    import { ComponentPublicInstance, computed, defineComponent, inject, onMounted, onUnmounted, Ref, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
@@ -55,7 +55,9 @@
             watch(() => props.color, () => currentValue.value = props.color);
 
             const pickColor = inject<HidePickerFn>('pickColor');
+            const uiRoot = inject<Ref<HTMLElement>>('uiRoot');
             const elColorRow = ref<HTMLElement>(null);
+            const elPopup = ref<ComponentPublicInstance>(null);
             const showPopup = ref(false);
             let isColorSelectorDown = false;
 
@@ -91,6 +93,62 @@
                 isColorSelectorDown = isDown;
             }
 
+
+
+            function pointInsideRect(pt: {x: number, y: number}, rc: {x: number, y: number, width: number, height: number}): boolean {
+                return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
+            }
+
+            function getOffsetTop(element: HTMLElement): {x: number, y: number} {
+                let offset = {x: 0, y: 0};
+                while (element) {
+                    offset.x += element.offsetLeft;
+                    offset.y += element.offsetTop;
+                    element = element.offsetParent as HTMLElement;
+                }
+                return offset;
+            }
+
+            function mouseup(evt: MouseEvent) {
+                if (showPopup.value) {
+                    console.log({elPopup: elPopup.value.$el});
+
+                    let pt = {x: evt.clientX, y: evt.clientY};
+                    let rectParent = uiRoot.value.getBoundingClientRect();
+
+                    let popup = elPopup.value.$el as HTMLElement;
+
+                    let rectPicker = popup.getBoundingClientRect();
+                    let offset = getOffsetTop(popup)
+                    // rectPicker.x += offset.x;
+                    // rectPicker.y += offset.y;
+
+                    let outside = !pointInsideRect(pt, rectPicker);
+
+                    function rc(r: DOMRect) {
+                        return {
+                            x: r.x.toFixed(2),
+                            y: r.y.toFixed(2),
+                            w: r.width.toFixed(2),
+                            h: r.height.toFixed(2),
+                        }
+                    }
+                    console.log('mouseup2', {inside: !outside, pick: rc(rectPicker), root: rc(rectParent), offset, pt, evt});
+
+
+                    // let outside = !pointInsideRect(pt, rectParent) && !pointInsideRect(pt, rectPicker);
+                    // if (outside) {
+                    //     onShowPopup();
+                    // }
+                    //console.log('mouseup', {inside: !outside, rectPicker, rectParent, pt, evt});
+                }
+            }
+
+            window.addEventListener('mouseup', mouseup);
+            onUnmounted(() => window.removeEventListener('mouseup', mouseup));
+
+
+
             // function onMouseOver() {
             //     showPopup.value = true;
             //     window.addEventListener('keydown', onKeyDown);
@@ -117,6 +175,7 @@
                 onColorSelectorDown,
                 onShowPopup,
                 elColorRow,
+                elPopup,
             };
         },
     });
