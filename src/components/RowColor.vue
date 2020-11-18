@@ -17,7 +17,7 @@
                 </div>
 
                 <RowColorPicker
-                    v-show="showPopup"
+                    v-show="popupVisible"
                     ref="elPopup"
                     :color="currentValue"
                     @update:color="onColorChange"
@@ -58,29 +58,43 @@
             const uiRoot = inject<Ref<HTMLElement>>('uiRoot');
             const elColorRow = ref<HTMLElement>(null);
             const elPopup = ref<ComponentPublicInstance>(null);
-            const showPopup = ref(false);
+            const popupVisible = ref(false);
             let isColorSelectorDown = false;
 
+            // function hidePopup(): void {
+            //     popupVisible.value = false;
+            //     window.removeEventListener('keydown', onKeyDown);
+            // }
+
+            // function showPopup(show: boolean): void {
+            //     if (show) {
+            //         window.addEventListener('keydown', onKeyDown);
+            //         emit("update:selectColor", { testColorSelectEvent: 5 });
+            //         pickColor(onHidePopup);
+            //     } else {
+            //         pickColor(null);
+            //     }
+            // }
+
             function onHidePopup() {
-                console.log('onHidePopup', showPopup.value);
-                showPopup.value = false;
+                popupVisible.value = false;
                 window.removeEventListener('keydown', onKeyDown);
-                console.log('onHidePopup done', showPopup.value);
             }
 
             function onShowPopup() {
-                console.log('\n----------showPopup before', showPopup.value);
-                showPopup.value = !showPopup.value;
-                console.log('showPopup', showPopup.value);
 
-                if (showPopup.value) {
+                console.log('\n------- onShowPopup before', popupVisible.value);
+                popupVisible.value = !popupVisible.value;
+
+                if (popupVisible.value) {
                     window.addEventListener('keydown', onKeyDown);
                     emit("update:selectColor", { testColorSelectEvent: 5 });
                     pickColor(onHidePopup);
                 } else {
                     pickColor(null);
                 }
-                console.log('----------showPopup done', showPopup.value);
+                console.log('------- onShowPopup done', popupVisible.value);
+
             }
 
             function onKeyDown(event) {
@@ -105,12 +119,13 @@
             }
 
             function mouseup(evt: MouseEvent) {
-                if (showPopup.value) {
+                if (popupVisible.value) {
                     let pt = {x: evt.clientX, y: evt.clientY};
                     let outsideRoot = !pointInsideRect(pt, uiRoot.value.getBoundingClientRect());
                     let insidePopup = pointInsideRect(pt, elPopup.value.$el.getBoundingClientRect());
                     if (outsideRoot || !insidePopup) {
-                        onShowPopup();
+                        console.log('mouseup', popupVisible.value);
+                        pickColor(null);
                     }
                 }
             }
@@ -121,12 +136,12 @@
 
 
             // function onMouseOver() {
-            //     showPopup.value = true;
+            //     popupVisible.value = true;
             //     window.addEventListener('keydown', onKeyDown);
             // }
             // function onMouseLeave() {
             //     if (!isColorSelectorDown) {
-            //         showPopup.value = false;
+            //         popupVisible.value = false;
             //         window.removeEventListener('keydown', onKeyDown);
             //     }
             // }
@@ -138,7 +153,7 @@
             return {
                 currentValue,
                 onColorChange,
-                showPopup,
+                popupVisible,
                 // onMouseOver,
                 // onMouseLeave,
                 onKeyDown,
