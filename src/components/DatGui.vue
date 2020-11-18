@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, ref } from 'vue';
+    import { computed, defineComponent, provide, ref } from 'vue';
     import "../assets/scss/datgui-default.scss";
 
     export default defineComponent({
@@ -29,6 +29,8 @@
             function makeColor() {
                 console.log('makeColor');
             }
+
+            provide('makeColor2', makeColor);
 
             return {
                 folded,

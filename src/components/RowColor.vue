@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, onMounted, ref, watch } from "vue";
+    import { computed, defineComponent, inject, onMounted, ref, watch } from "vue";
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
@@ -85,9 +85,11 @@
             });
 
             onMounted(() => {
-                //debugger
-                console.log('slot');
+                debugger
+                console.log('slot', makeColor2);
             });
+
+            const makeColor2 = inject('makeColor2');
 
             return {
                 currentValue,
