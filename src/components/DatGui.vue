@@ -13,7 +13,7 @@
 <script lang="ts">
     import { computed, defineComponent, provide, ref } from 'vue';
     import "../assets/scss/datgui-default.scss";
-    import { ColorPickerFn } from './RowColor.vue';
+    import { HidePickerFn } from './RowColor.vue';
 
     export default defineComponent({
         name: 'DatGui',
@@ -27,8 +27,15 @@
             const folded = ref(false);
             const closeButtonText = computed(() => folded.value ? 'Show controls' : 'Hide controls');
 
-            const pickColor: ColorPickerFn = (...args) => {
-                console.log('makeColor', args);
+            let activePicker: (() => void) | null = null;
+
+            const pickColor: HidePickerFn = (hidePicker) => {
+                console.log('makeColor', hidePicker);
+                if (activePicker) {
+                    activePicker();
+                    activePicker = null;
+                }
+                activePicker = hidePicker;
             }
 
             provide('pickColor', pickColor);

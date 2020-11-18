@@ -27,7 +27,7 @@
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
-    export type ColorPickerFn = (elColorRow: HTMLElement, isDown: boolean, handleChange: (colorHex: string) => void) => void;
+    export type HidePickerFn = (hidePicker: () => void | null) => void;
 
     export default defineComponent({
         name: "RowColor",
@@ -44,11 +44,14 @@
             const currentValue = ref(props.color);
             watch(() => props.color, () => currentValue.value = props.color);
 
-            const pickColor = inject<ColorPickerFn>('pickColor');
+            const pickColor = inject<HidePickerFn>('pickColor');
+            const elColorRow = ref<HTMLElement>(null);
+            const showPicker = ref(false);
             let isPickerDown = false;
 
-            const showPicker = ref(false);
-            const elColorRow = ref<HTMLElement>(null);
+            function hidePicker() {
+                showPicker.value = false;
+            }
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
@@ -65,6 +68,7 @@
             //         window.removeEventListener('keydown', onKeyDown);
             //     }
             // }
+
             function onKeyDown(event) {
                 if (event.key === 'Enter' || event.key === 'Escape') {
                     showPicker.value = false;
@@ -76,9 +80,9 @@
             }
 
             function selectColor() {
-                // showPicker.value = !showPicker.value;
-                // showPicker.value && ctx.emit("update:selectColor", { x: 5 });
-                pickColor(elColorRow.value, showPicker.value, handleChange);
+                showPicker.value = !showPicker.value;
+                showPicker.value && ctx.emit("update:selectColor", { x: 5 });
+                pickColor(showPicker.value ? hidePicker : null);
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
