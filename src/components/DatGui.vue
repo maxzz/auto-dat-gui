@@ -19,7 +19,7 @@
         name: 'DatGui',
         props: {
             foldPosition: {
-                type: String, // 'top' | buttom TODO: add 'right', 'left'
+                type: String, // 'top' | buttom //TBD: add vertical 'right', 'left'.
                 default: 'bottom'
             }
         },
@@ -41,30 +41,9 @@
             }
 
             const pickColor: HidePickerFn = (onHidePopup) => {
-                //console.log('makeColor', onHidePopup);
                 closeActive();
                 activePicker = onHidePopup;
             }
-
-            /*
-            function pointInsideRect(pt: {x: number, y: number}, rc: {x: number, y: number, width: number, height: number}): boolean {
-                return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
-            }
-
-            function mouseup(evt: MouseEvent) {
-                if (activePicker) {
-                    let pt = {x: evt.clientX, y: evt.clientY};
-                    let rect = root.value.getBoundingClientRect();
-                    let inside = pointInsideRect(pt, rect);
-                    closeActive();
-
-                    //console.log('mouseup', {inside, pt, evt, rect});
-                }
-            }
-
-            window.addEventListener('mouseup', mouseup);
-            onUnmounted(() => window.removeEventListener('mouseup', mouseup));
-            */
 
             provide('pickColor', pickColor);
             provide('uiRoot', readonly(root));

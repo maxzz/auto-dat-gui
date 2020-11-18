@@ -11,7 +11,7 @@
                 > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
 
                 <div
-                    class="current-color"
+                    class="picker-btn"
                     :style="{ 'background-color': currentValue, color: inputColor }"
                     @click="onShowPopup">
                 </div>
@@ -61,40 +61,21 @@
             const popupVisible = ref(false);
             let isColorSelectorDown = false;
 
-            // function hidePopup(): void {
-            //     popupVisible.value = false;
-            //     window.removeEventListener('keydown', onKeyDown);
-            // }
-
-            // function showPopup(show: boolean): void {
-            //     if (show) {
-            //         window.addEventListener('keydown', onKeyDown);
-            //         emit("update:selectColor", { testColorSelectEvent: 5 });
-            //         pickColor(onHidePopup);
-            //     } else {
-            //         pickColor(null);
-            //     }
-            // }
-
             function onHidePopup() {
                 popupVisible.value = false;
                 window.removeEventListener('keydown', onKeyDown);
             }
 
             function onShowPopup() {
-
-                console.log('\n------- onShowPopup before', popupVisible.value);
                 popupVisible.value = !popupVisible.value;
-
                 if (popupVisible.value) {
-                    window.addEventListener('keydown', onKeyDown);
                     emit("update:selectColor", { testColorSelectEvent: 5 });
+
+                    window.addEventListener('keydown', onKeyDown);
                     pickColor(onHidePopup);
                 } else {
                     pickColor(null);
                 }
-                console.log('------- onShowPopup done', popupVisible.value);
-
             }
 
             function onKeyDown(event) {
@@ -113,18 +94,16 @@
             }
 
 
-
             function pointInsideRect(pt: {x: number, y: number}, rc: {x: number, y: number, width: number, height: number}): boolean {
                 return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
             }
 
             function mouseup(evt: MouseEvent) {
-                if (popupVisible.value) {
+                if (popupVisible.value && !(evt.target as HTMLElement)?.classList?.contains('picker-btn')) {
                     let pt = {x: evt.clientX, y: evt.clientY};
                     let outsideRoot = !pointInsideRect(pt, uiRoot.value.getBoundingClientRect());
                     let insidePopup = pointInsideRect(pt, elPopup.value.$el.getBoundingClientRect());
                     if (outsideRoot || !insidePopup) {
-                        console.log('mouseup', popupVisible.value);
                         pickColor(null);
                     }
                 }
@@ -134,19 +113,7 @@
             onUnmounted(() => window.removeEventListener('mouseup', mouseup));
 
 
-
-            // function onMouseOver() {
-            //     popupVisible.value = true;
-            //     window.addEventListener('keydown', onKeyDown);
-            // }
-            // function onMouseLeave() {
-            //     if (!isColorSelectorDown) {
-            //         popupVisible.value = false;
-            //         window.removeEventListener('keydown', onKeyDown);
-            //     }
-            // }
-
-            const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
+            const inputColor = computed(() => { // TODO: does not calc color well with alpha close to 0.
                 return color4Background(currentValue.value);
             });
 
@@ -170,7 +137,7 @@
 <style lang="scss">
     @import "../assets/scss/variables.scss";
 
-    .current-color {
+    .picker-btn {
         //display: inline-block;
         width: $row-height - 6;
         height: $row-height - 6;
