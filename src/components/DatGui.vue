@@ -33,7 +33,9 @@
 
             function closeActive() {
                 if (activePicker) {
+                    console.log('GUI: activePicker() before');
                     activePicker();
+                    console.log('GUI: activePicker() done');
                     activePicker = null;
                 }
             }

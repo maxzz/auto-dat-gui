@@ -62,12 +62,16 @@
             let isColorSelectorDown = false;
 
             function onHidePopup() {
+                console.log('onHidePopup', showPopup.value);
                 showPopup.value = false;
                 window.removeEventListener('keydown', onKeyDown);
+                console.log('onHidePopup done', showPopup.value);
             }
 
             function onShowPopup() {
+                console.log('\n----------showPopup before', showPopup.value);
                 showPopup.value = !showPopup.value;
+                console.log('showPopup', showPopup.value);
 
                 if (showPopup.value) {
                     window.addEventListener('keydown', onKeyDown);
@@ -76,6 +80,7 @@
                 } else {
                     pickColor(null);
                 }
+                console.log('----------showPopup done', showPopup.value);
             }
 
             function onKeyDown(event) {
