@@ -170,6 +170,7 @@
                 z-index: 1;
                 //width: 30%;
                 flex: 3;
+                color: $control-inp-clr;
             }
 
             & > div.cp__wrapper {
@@ -186,8 +187,6 @@
     }
     &.number {
         background-color: $control-row-bkg;
-
-        $slider-clr: #2fa1d6;
 
         .slider {
             border: $control-inp-bdr;
@@ -213,6 +212,9 @@
             }
         }
     }
+    &.title {
+        background-color: olivedrab;
+    }
     &.string {
         background-color: $control-row-bkg;
 
@@ -234,9 +236,6 @@
     }
     &.button {
         background-color: $control-row-bkg;
-    }
-    &.title {
-        background-color: olivedrab;
     }
     &.select {
         background-color: $control-row-bkg;

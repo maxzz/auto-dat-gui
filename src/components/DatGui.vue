@@ -29,13 +29,13 @@
 
             let activePicker: (() => void) | null = null;
 
-            const pickColor: HidePickerFn = (hidePicker) => {
-                console.log('makeColor', hidePicker);
+            const pickColor: HidePickerFn = (onHidePopup) => {
+                //console.log('makeColor', onHidePopup);
                 if (activePicker) {
                     activePicker();
                     activePicker = null;
                 }
-                activePicker = hidePicker;
+                activePicker = onHidePopup;
             }
 
             provide('pickColor', pickColor);

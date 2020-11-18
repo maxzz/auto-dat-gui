@@ -10,9 +10,9 @@
                     v-model="currentValue"
                 > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
 
-                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="selectColor"></div>
+                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="onShowPopup"></div>
 
-                <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" @keydown="onKeyDown" />
+                <RowColorPicker v-show="showPopup" :color="currentValue" @update:color="handleChange" @update:pickerdown="onColorSelectorDown" @keydown="onKeyDown" />
                 <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
@@ -27,7 +27,7 @@
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
-    export type HidePickerFn = (hidePicker: () => void | null) => void;
+    export type HidePickerFn = (onHidePopup: () => void | null) => void;
 
     export default defineComponent({
         name: "RowColor",
@@ -40,49 +40,58 @@
             title: String,
         },
         components: { RowColorPicker },
-        setup(props, ctx) {
+        setup(props, { emit }) {
             const currentValue = ref(props.color);
             watch(() => props.color, () => currentValue.value = props.color);
 
             const pickColor = inject<HidePickerFn>('pickColor');
             const elColorRow = ref<HTMLElement>(null);
-            const showPicker = ref(false);
-            let isPickerDown = false;
+            const showPopup = ref(false);
+            let isColorSelectorDown = false;
 
-            function hidePicker() {
-                showPicker.value = false;
+            function onHidePopup() {
+                showPopup.value = false;
+                window.removeEventListener('keydown', onKeyDown);
+            }
+
+            function onShowPopup() {
+                showPopup.value = !showPopup.value;
+
+                if (showPopup.value) {
+                    window.addEventListener('keydown', onKeyDown);
+                    emit("update:selectColor", { x: 5 });
+                    pickColor(onHidePopup);
+                } else {
+                    pickColor(null);
+                }
             }
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
-                ctx.emit("update:color", currentValue.value);
+                emit("update:color", currentValue.value);
             };
 
             // function onMouseOver() {
-            //     showPicker.value = true;
+            //     showPopup.value = true;
             //     window.addEventListener('keydown', onKeyDown);
             // }
             // function onMouseLeave() {
-            //     if (!isPickerDown) {
-            //         showPicker.value = false;
+            //     if (!isColorSelectorDown) {
+            //         showPopup.value = false;
             //         window.removeEventListener('keydown', onKeyDown);
             //     }
             // }
 
             function onKeyDown(event) {
                 if (event.key === 'Enter' || event.key === 'Escape') {
-                    showPicker.value = false;
+                    showPopup.value = false;
+                    window.removeEventListener('keydown', onKeyDown);
+                    pickColor(null);
                 }
             }
 
-            function onDown(isDown: boolean) {
-                isPickerDown = isDown;
-            }
-
-            function selectColor() {
-                showPicker.value = !showPicker.value;
-                showPicker.value && ctx.emit("update:selectColor", { x: 5 });
-                pickColor(showPicker.value ? hidePicker : null);
+            function onColorSelectorDown(isDown: boolean) {
+                isColorSelectorDown = isDown;
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
@@ -92,13 +101,13 @@
             return {
                 currentValue,
                 handleChange,
-                showPicker,
+                showPopup,
                 // onMouseOver,
                 // onMouseLeave,
                 onKeyDown,
                 inputColor,
-                onDown,
-                selectColor,
+                onColorSelectorDown,
+                onShowPopup,
                 elColorRow,
             };
         },
