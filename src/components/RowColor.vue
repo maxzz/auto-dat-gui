@@ -123,7 +123,13 @@
                     // rectPicker.x += offset.x;
                     // rectPicker.y += offset.y;
 
-                    let outside = !pointInsideRect(pt, rectPicker);
+                    let insidePopup = pointInsideRect(pt, rectPicker);
+                    let outsideRoot = !pointInsideRect(pt, rectParent);
+
+                    let allowClose = outsideRoot || !insidePopup;
+                    console.log('mouseup', {allowClose});
+
+                    //let outside = !pointInsideRect(pt, rectPicker);
 
                     function rc(r: DOMRect) {
                         return {
@@ -133,7 +139,7 @@
                             h: r.height.toFixed(2),
                         }
                     }
-                    console.log('mouseup2', {inside: !outside, pick: rc(rectPicker), root: rc(rectParent), offset, pt, evt});
+                    //console.log('mouseup2', {inside: !outside, pick: rc(rectPicker), root: rc(rectParent), offset, pt, evt});
 
 
                     // let outside = !pointInsideRect(pt, rectParent) && !pointInsideRect(pt, rectPicker);
