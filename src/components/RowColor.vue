@@ -139,12 +139,20 @@
 
     .picker-btn {
         //display: inline-block;
-        width: $row-height - 6;
-        height: $row-height - 6;
+
+        $box-padding: 3px;
+
+        margin-top: $box-padding;
+        width: $row-height - $box-padding * 2;
+        height: $row-height - $box-padding * 2;
         border-radius: 5px;
         margin-left: .4em;
         border: 1px solid white;
         //flex: 1;
         //background-color: green;
+
+        // position: absolute;
+        // top: 50%;
+        // transform: translate(-50%);
     }
 </style>

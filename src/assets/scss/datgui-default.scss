@@ -156,7 +156,7 @@
 
         .ctrl-value {
             //position: relative;
-            // overflow: visible;
+            //overflow: visible;
             // z-index: 1;
 
             //display: block; // 'block' is to position color-picker with default 'top' position in flow but defined 'right'
@@ -167,7 +167,7 @@
 
             input[type="text"] {
                 text-align: center;
-                z-index: 1;
+                //z-index: 1;
                 //width: 30%;
                 flex: 3;
                 color: $control-inp-clr;
@@ -176,12 +176,14 @@
             & > div.cp__wrapper {
                 width: 218px; // to fit color picker numbers
                 position: absolute;
+                //overflow: visible;
                 //top: 0;
-                right: 1.4em;
+                right: 2.4em;
                 
-                z-index: 2;
+                //z-index: 2;
                 //opacity: .8;
-
+                //top: 10px;
+                //transform: translateY(5px);
             }
         }
     }
