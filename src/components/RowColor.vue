@@ -99,54 +99,14 @@
                 return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
             }
 
-            function getOffsetTop(element: HTMLElement): {x: number, y: number} {
-                let offset = {x: 0, y: 0};
-                while (element) {
-                    offset.x += element.offsetLeft;
-                    offset.y += element.offsetTop;
-                    element = element.offsetParent as HTMLElement;
-                }
-                return offset;
-            }
-
             function mouseup(evt: MouseEvent) {
                 if (showPopup.value) {
-                    console.log({elPopup: elPopup.value.$el});
-
                     let pt = {x: evt.clientX, y: evt.clientY};
-                    let rectParent = uiRoot.value.getBoundingClientRect();
-
-                    let popup = elPopup.value.$el as HTMLElement;
-
-                    let rectPicker = popup.getBoundingClientRect();
-                    let offset = getOffsetTop(popup)
-                    // rectPicker.x += offset.x;
-                    // rectPicker.y += offset.y;
-
-                    let insidePopup = pointInsideRect(pt, rectPicker);
-                    let outsideRoot = !pointInsideRect(pt, rectParent);
-
-                    let allowClose = outsideRoot || !insidePopup;
-                    console.log('mouseup', {allowClose});
-
-                    //let outside = !pointInsideRect(pt, rectPicker);
-
-                    function rc(r: DOMRect) {
-                        return {
-                            x: r.x.toFixed(2),
-                            y: r.y.toFixed(2),
-                            w: r.width.toFixed(2),
-                            h: r.height.toFixed(2),
-                        }
+                    let outsideRoot = !pointInsideRect(pt, uiRoot.value.getBoundingClientRect());
+                    let insidePopup = pointInsideRect(pt, elPopup.value.$el.getBoundingClientRect());
+                    if (outsideRoot || !insidePopup) {
+                        onShowPopup();
                     }
-                    //console.log('mouseup2', {inside: !outside, pick: rc(rectPicker), root: rc(rectParent), offset, pt, evt});
-
-
-                    // let outside = !pointInsideRect(pt, rectParent) && !pointInsideRect(pt, rectPicker);
-                    // if (outside) {
-                    //     onShowPopup();
-                    // }
-                    //console.log('mouseup', {inside: !outside, rectPicker, rectParent, pt, evt});
                 }
             }
 
