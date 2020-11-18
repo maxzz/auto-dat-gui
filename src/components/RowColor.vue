@@ -1,7 +1,6 @@
 <template>
-    <li class="control-row color">
+    <li class="control-row color" ref="elColorRow">
         <label>
-            22{{callColorPicker}}11
             <span class="ctrl-label" :title="title">{{ label }}</span>
             <div class="ctrl-value">
                 <input
@@ -11,8 +10,7 @@
                     v-model="currentValue"
                 > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
 
-                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="selectColor">
-                </div>
+                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="selectColor"></div>
 
                 <RowColorPicker v-show="showPicker" :color="currentValue" @update:color="handleChange" @update:pickerdown="onDown" @keydown="onKeyDown" />
                 <!-- TODO: check popup position is inside viewport -->
@@ -29,6 +27,8 @@
     import RowColorPicker from "./RowColorPicker.vue";
     import { color4Background } from '../utils/colors';
 
+    export type ColorPickerFn = (elColorRow: HTMLElement, isDown: boolean, handleChange: (colorHex: string) => void) => void;
+
     export default defineComponent({
         name: "RowColor",
         props: {
@@ -38,22 +38,22 @@
             },
             label: String,
             title: String,
-
-            callColorPicker: Function,
         },
         components: { RowColorPicker },
         setup(props, ctx) {
             const currentValue = ref(props.color);
             watch(() => props.color, () => currentValue.value = props.color);
 
+            const pickColor = inject<ColorPickerFn>('pickColor');
             let isPickerDown = false;
+
+            const showPicker = ref(false);
+            const elColorRow = ref<HTMLElement>(null);
 
             const handleChange = (e) => {
                 currentValue.value = e.hex;
                 ctx.emit("update:color", currentValue.value);
             };
-
-            const showPicker = ref(false);
 
             // function onMouseOver() {
             //     showPicker.value = true;
@@ -76,20 +76,14 @@
             }
 
             function selectColor() {
-                showPicker.value = !showPicker.value;
-                showPicker.value && ctx.emit("update:selectColor", { x: 5 });
+                // showPicker.value = !showPicker.value;
+                // showPicker.value && ctx.emit("update:selectColor", { x: 5 });
+                pickColor(elColorRow.value, showPicker.value, handleChange);
             }
 
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
                 return color4Background(currentValue.value);
             });
-
-            onMounted(() => {
-                debugger
-                console.log('slot', makeColor2);
-            });
-
-            const makeColor2 = inject('makeColor2');
 
             return {
                 currentValue,
@@ -101,6 +95,7 @@
                 inputColor,
                 onDown,
                 selectColor,
+                elColorRow,
             };
         },
     });
