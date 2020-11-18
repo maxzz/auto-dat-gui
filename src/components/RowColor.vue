@@ -10,9 +10,19 @@
                     v-model="currentValue"
                 > <!-- TODO: we set readonly bacause digestProp cannot handle validation of untrusted input -->
 
-                <div class="current-color" :style="{ 'background-color': currentValue, color: inputColor }" @click="onShowPopup"></div>
+                <div
+                    class="current-color"
+                    :style="{ 'background-color': currentValue, color: inputColor }"
+                    @click="onShowPopup">
+                </div>
 
-                <RowColorPicker v-show="showPopup" :color="currentValue" @update:color="handleChange" @update:pickerdown="onColorSelectorDown" @keydown="onKeyDown" />
+                <RowColorPicker
+                    v-show="showPopup"
+                    :color="currentValue"
+                    @update:color="onColorChange"
+                    @update:pickerdown="onColorSelectorDown"
+                    @keydown="onKeyDown"
+                />
                 <!-- TODO: check popup position is inside viewport -->
                 <!-- TODO: Check color contrast if background will show different colors -->
                 <!-- TODO: show current and previous colors -->
@@ -59,17 +69,27 @@
 
                 if (showPopup.value) {
                     window.addEventListener('keydown', onKeyDown);
-                    emit("update:selectColor", { x: 5 });
+                    emit("update:selectColor", { testColorSelectEvent: 5 });
                     pickColor(onHidePopup);
                 } else {
                     pickColor(null);
                 }
             }
 
-            const handleChange = (e) => {
+            function onKeyDown(event) {
+                if (event.key === 'Enter' || event.key === 'Escape') {
+                    pickColor(null);
+                }
+            }
+
+            const onColorChange = (e) => {
                 currentValue.value = e.hex;
                 emit("update:color", currentValue.value);
             };
+
+            function onColorSelectorDown(isDown: boolean) {
+                isColorSelectorDown = isDown;
+            }
 
             // function onMouseOver() {
             //     showPopup.value = true;
@@ -82,25 +102,13 @@
             //     }
             // }
 
-            function onKeyDown(event) {
-                if (event.key === 'Enter' || event.key === 'Escape') {
-                    showPopup.value = false;
-                    window.removeEventListener('keydown', onKeyDown);
-                    pickColor(null);
-                }
-            }
-
-            function onColorSelectorDown(isDown: boolean) {
-                isColorSelectorDown = isDown;
-            }
-
             const inputColor = computed(() => { // TODO: does not work well with alpha close to 0.
                 return color4Background(currentValue.value);
             });
 
             return {
                 currentValue,
-                handleChange,
+                onColorChange,
                 showPopup,
                 // onMouseOver,
                 // onMouseLeave,
@@ -123,6 +131,7 @@
         height: $row-height - 6;
         border-radius: 5px;
         margin-left: .4em;
+        border: 1px solid white;
         //flex: 1;
         //background-color: green;
     }

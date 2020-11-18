@@ -1,5 +1,5 @@
 <template>
-    <div :class="['dat-gui', { closed: folded }]">
+    <div ref="root" :class="['dat-gui', { closed: folded }]">
         <div v-if="foldPosition === 'top'" class="fold-ui" @click="folded=!folded">{{closeButtonText}}</div>
         <div class="group--main group">
             <ul>
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-    import { computed, defineComponent, provide, ref } from 'vue';
+    import { computed, defineComponent, onUnmounted, provide, ref } from 'vue';
     import "../assets/scss/datgui-default.scss";
     import { HidePickerFn } from './RowColor.vue';
 
@@ -24,23 +24,48 @@
             }
         },
         setup() {
+            const root = ref<HTMLElement>(null);
+
             const folded = ref(false);
             const closeButtonText = computed(() => folded.value ? 'Show controls' : 'Hide controls');
 
             let activePicker: (() => void) | null = null;
 
-            const pickColor: HidePickerFn = (onHidePopup) => {
-                //console.log('makeColor', onHidePopup);
+            function closeActive() {
                 if (activePicker) {
                     activePicker();
                     activePicker = null;
                 }
+            }
+
+            const pickColor: HidePickerFn = (onHidePopup) => {
+                //console.log('makeColor', onHidePopup);
+                closeActive();
                 activePicker = onHidePopup;
             }
+
+            function pointInsideRect(pt: {x: number, y: number}, rc: {x: number, y: number, width: number, height: number}): boolean {
+                return rc.x < pt.x && pt.x < rc.x + rc.width && rc.y < pt.y && pt.y < rc.y + rc.height;
+            }
+
+            function mouseup(evt: MouseEvent) {
+                if (activePicker) {
+                    let pt = {x: evt.clientX, y: evt.clientY};
+                    let rect = root.value.getBoundingClientRect();
+                    let inside = pointInsideRect(pt, rect);
+                    closeActive();
+
+                    //console.log('mouseup', {inside, pt, evt, rect});
+                }
+            }
+
+            window.addEventListener('mouseup', mouseup);
+            onUnmounted(() => window.removeEventListener('mouseup', mouseup));
 
             provide('pickColor', pickColor);
 
             return {
+                root,
                 folded,
                 closeButtonText,
             };

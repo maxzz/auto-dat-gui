@@ -82,8 +82,8 @@ Test results:
                 return item?.name || 'none';
             }
 
-            function selectColor() {
-                console.log('select');
+            function selectColor(...args) {
+                console.log('select', ...args);
             }
 
             return {
